@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="AntPlusMauiClient/AntPlusMauiClient.csproj" />
+  <Project Path="AntPlusServer/AntPlusServer.csproj" />
+  <Project Path="TailscaleGrpc.Shared/TailscaleGrpc.Shared.csproj" />
+</Solution>
