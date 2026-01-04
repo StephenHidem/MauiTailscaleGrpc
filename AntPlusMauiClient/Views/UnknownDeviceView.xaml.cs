@@ -6,7 +6,7 @@ public partial class UnknownDeviceView : ContentView
 {
 	public UnknownDeviceView(UnknownDeviceViewModel viewModel)
 	{
-		BindingContext = viewModel;
+        BindingContext = viewModel;
         InitializeComponent();
-	}
+    }
 }

@@ -6,18 +6,26 @@ namespace AntPlusMauiClient.ViewModels
     public class UnknownDeviceViewModel
     {
         private UnknownDevice _unknownDevice;
-        public ObservableCollection<string> DataPages { get; } = [];
+        public ObservableCollection<string> DataPages { get; set; } = new ObservableCollection<string>();
 
         public UnknownDeviceViewModel(UnknownDevice unknownDevice)
         {
             _unknownDevice = unknownDevice;
+            foreach (byte[] page in _unknownDevice.DataPages)
+            {
+                DataPages.Add(BitConverter.ToString(page));
+            }
+
             _unknownDevice.DataPages.CollectionChanged += (s, e) =>
             {
-                DataPages.Clear();
-                foreach (byte[] page in _unknownDevice.DataPages)
+                MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    DataPages.Add(BitConverter.ToString(page));
-                }
+                    DataPages.Clear();
+                    foreach (byte[] page in _unknownDevice.DataPages)
+                    {
+                        DataPages.Add(BitConverter.ToString(page));
+                    }
+                });
             };
         }
     }

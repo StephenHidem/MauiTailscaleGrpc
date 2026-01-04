@@ -5,9 +5,15 @@
              x:DataType="vm:UnknownDeviceViewModel"
              x:Class="AntPlusMauiClient.Views.UnknownDeviceView">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <CollectionView ItemsSource="{Binding DataPages}">
+            <CollectionView.Header>
+                <Label Text="Data Pages" FontAttributes="Bold" TextDecorations="Underline"/>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <Label Text="{Binding .}" FontFamily="CascadiaCode" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentView>

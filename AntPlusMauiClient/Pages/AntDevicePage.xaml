@@ -6,7 +6,7 @@
              xmlns:conv="clr-namespace:AntPlusMauiClient.Converters"
              x:DataType="pm:AntDevicePageModel"
              x:Class="AntPlusMauiClient.Pages.AntDevicePage"
-             Title="AntDevicePage">
+             Title="ANT+ Device">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -36,5 +36,6 @@
                      Grid.Row="1"/>
         </Grid>
         <ContentView Content="{Binding AntDeviceView}"/>
+        <Label Style="{StaticResource OfflineStyle}" IsVisible="{Binding Device.Offline}"/>
     </VerticalStackLayout>
 </ContentPage>
