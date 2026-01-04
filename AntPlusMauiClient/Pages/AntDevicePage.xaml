@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ant="clr-namespace:SmallEarthTech.AntPlus;assembly=SmallEarthTech.AntPlus"
+             xmlns:pm="clr-namespace:AntPlusMauiClient.PageModels"
+             xmlns:conv="clr-namespace:AntPlusMauiClient.Converters"
+             x:DataType="pm:AntDevicePageModel"
+             x:Class="AntPlusMauiClient.Pages.AntDevicePage"
+             Title="AntDevicePage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:StreamToImageSourceConverter x:Key="StreamToImage"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Padding="30,0" Spacing="12">
+        <Grid ColumnSpacing="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image Source="{Binding Device, Converter={StaticResource StreamToImage}}"
+                   HeightRequest="60"
+                   Grid.Column="0"
+                   Grid.RowSpan="2"/>
+            <Label Text="{Binding Device}" FontSize="Title" VerticalOptions="Center"
+                   Grid.Column="1"
+                   Grid.Row="0"/>
+            <Label Text="{Binding Device.ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}" FontSize="Subtitle" VerticalOptions="Center"
+                     Grid.Column="1"
+                     Grid.Row="1"/>
+        </Grid>
+        <ContentView Content="{Binding AntDeviceView}"/>
+    </VerticalStackLayout>
+</ContentPage>

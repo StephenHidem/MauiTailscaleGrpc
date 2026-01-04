@@ -1,6 +1,10 @@
-﻿using CommunityToolkit.Maui;
+﻿using AntPlusMauiClient.GrpcServices;
+using AntPlusMauiClient.PageModels;
+using AntPlusMauiClient.Pages;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using SmallEarthTech.AntPlus.Extensions.Hosting;
+using SmallEarthTech.AntRadioInterface;
 using Syncfusion.Maui.Toolkit.Hosting;
 
 namespace AntPlusMauiClient
@@ -14,6 +18,7 @@ namespace AntPlusMauiClient
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
                 .UseAntPlus()
+                .RegisterAppServices()
                 .ConfigureSyncfusionToolkit()
                 .ConfigureFonts(fonts =>
                 {
@@ -26,6 +31,18 @@ namespace AntPlusMauiClient
 #endif
 
             return builder.Build();
+        }
+
+        private static MauiAppBuilder RegisterAppServices(this MauiAppBuilder mauiAppBuilder)
+        {   // Register your services here
+            mauiAppBuilder.Services
+                .AddSingleton<IAntRadio, AntRadioService>()
+                .AddSingleton<CancellationTokenSource>()
+
+                // Register the pages and view models with shell routes
+                .AddTransientWithShellRoute<MainPage, MainPageModel>("MainPage")
+                .AddTransientWithShellRoute<AntDevicePage, AntDevicePageModel>("AntDevicePage");
+            return mauiAppBuilder;
         }
     }
 }

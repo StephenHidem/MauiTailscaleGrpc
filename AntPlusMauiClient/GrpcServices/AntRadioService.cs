@@ -21,10 +21,6 @@ namespace AntPlusMauiClient.GrpcServices
     /// </summary>
     public partial class AntRadioService : IAntRadio
     {
-        private readonly IPAddress grpAddress = IPAddress.Parse("239.55.43.6");
-        private const int multicastPort = 55437;        // multicast port
-        private const int gRPCPort = 5073;              // gRPC port
-
         private readonly ILoggerFactory _loggerFactory;
         private readonly ILogger<AntRadioService> _logger;
         private readonly CancellationTokenSource _cancellationTokenSource;
@@ -33,10 +29,10 @@ namespace AntPlusMauiClient.GrpcServices
         private GrpcChannel? _grpcChannel;
 
         /// <summary>
-        /// Gets the IP address of the server.
+        /// Gets the fully qualified domain name (FQDN) of the tailnet associated with this application.
         /// </summary>
-        public IPAddress ServerIPAddress { get; private set; } = IPAddress.None;
-
+        public static string TailnetFqdn => "hidem-laptop.tail7aec11.ts.net";
+        
         /// <inheritdoc/>
         public int NumChannels => throw new NotImplementedException();
 
@@ -84,9 +80,8 @@ namespace AntPlusMauiClient.GrpcServices
         /// <exception cref="OperationCanceledException">Thrown when the CancellationTokenSource is canceled.</exception>
         public async Task FindAntRadioServerAsync()
         {
-            // use Tailnet fully qualified domain name and gRPCPort to connect to server
-            string tailnetFqdn = "hidem-laptop.tail7aec11.ts.net";
-            UriBuilder uriBuilder = new("https", tailnetFqdn);
+            // use Tailnet fully qualified domain name to connect to server
+            UriBuilder uriBuilder = new("https", AntRadioService.TailnetFqdn);
             try {
                 _grpcChannel = GrpcChannel.ForAddress(uriBuilder.Uri, _grpcChannelOptions);
                 _client = new gRPCAntRadio.gRPCAntRadioClient(_grpcChannel);
@@ -102,7 +97,6 @@ namespace AntPlusMauiClient.GrpcServices
                 ProductDescription = reply.ProductDescription;
                 SerialNumber = reply.SerialNumber;
                 Version = reply.Version;
-                ServerIPAddress = IPAddress.None;
             }
             catch (RpcException ex)
             {

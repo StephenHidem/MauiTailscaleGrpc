@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="AntPlusMauiClient/AntPlusMauiClient.csproj">
     <Deploy Solution="Debug|*" />
   </Project>

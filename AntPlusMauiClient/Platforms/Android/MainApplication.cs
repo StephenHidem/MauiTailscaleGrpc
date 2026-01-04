@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace AntPlusMauiClient
+namespace AntPlusMauiClient.Platforms.Android
 {
     [Application]
     public class MainApplication : MauiApplication

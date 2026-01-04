@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ant="clr-namespace:SmallEarthTech.AntPlus;assembly=SmallEarthTech.AntPlus"
+             xmlns:pm="clr-namespace:AntPlusMauiClient.PageModels"
+             xmlns:conv="clr-namespace:AntPlusMauiClient.Converters"
+             x:Class="AntPlusMauiClient.Pages.MainPage"
+             x:DataType="pm:MainPageModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:StreamToImageSourceConverter x:Key="StreamToImage"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="12">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Image
+                    Margin="0, 0, 16, 0"
+                    Grid.RowSpan="4"
+                    Grid.Column="0"
+                    Source="antplus.png"
+                    HeightRequest="145"
+                    Aspect="AspectFit"
+                    SemanticProperties.Description="ant plus server" />
+
+                <VerticalStackLayout Grid.Column="1">
+                    <Label Text="ANT+ Server" FontSize="Caption" FontAttributes="Bold"/>
+                    <Label Text="{Binding ServerUrl}" FontSize="Default" Margin="16, 0, 0, 0"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" Grid.Row="1">
+                    <Label Text="Product Description" FontSize="Caption" FontAttributes="Bold"/>
+                    <Label Text="{Binding ProductDescription}" FontSize="Default" Margin="16, 0, 0, 0"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" Grid.Row="2">
+                    <Label Text="Serial Number" FontSize="Caption" FontAttributes="Bold"/>
+                    <Label Text="{Binding SerialNumber}" FontSize="Default" Margin="16, 0, 0, 0"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" Grid.Row="3">
+                    <Label Text="Host Version" FontSize="Caption" FontAttributes="Bold"/>
+                    <Label Text="{Binding HostVersion}" FontSize="Default" Margin="16, 0, 0, 0"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <Label Text="ANT+ Devices" FontSize="Title"/>
+            <BoxView HeightRequest="2" HorizontalOptions="Fill"/>
+
+            <CollectionView x:Name="antDevices" ItemsSource="{Binding AntDevices}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding SelectedAntDevice, Mode=TwoWay}"
+                            SelectionChangedCommand="{Binding AntDeviceSelectedCommand}"
+                            SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference antDevices}}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="4"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="ant:AntDevice">
+                        <Border>
+                            <Grid Padding="8" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto">
+                                <Image Margin="0,0,10,0" Grid.RowSpan="2" Source="{Binding ., Converter={StaticResource StreamToImage}}" Aspect="AspectFill" HeightRequest="40" WidthRequest="40"/>
+                                <Label Grid.Column="1" Text="{Binding .}"/>
+                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}"/>
+                                <Image Source="more_arrow.png" Aspect="AspectFill" Background="Transparent"
+                                       Grid.Column="2" Grid.RowSpan="2" HeightRequest="32" WidthRequest="32"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
