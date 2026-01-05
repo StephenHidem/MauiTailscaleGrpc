@@ -71,7 +71,7 @@
                     <DataTemplate x:DataType="ant:AntDevice">
                         <Border>
                             <Grid Padding="8" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto">
-                                <Image Margin="0,0,10,0" Grid.RowSpan="2" Source="{Binding ., Converter={StaticResource StreamToImage}}" Aspect="AspectFill" HeightRequest="40" WidthRequest="40"/>
+                                <Image Margin="0,0,10,0" Grid.RowSpan="2" Source="{Binding ., Converter={StaticResource StreamToImage}}" Aspect="AspectFill" HeightRequest="40"/>
                                 <Label Grid.Column="1" Text="{Binding .}"/>
                                 <Label Grid.Column="1" Grid.Row="1" Text="{Binding ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}"/>
                                 <Image Source="more_arrow.png" Aspect="AspectFill" Background="Transparent"

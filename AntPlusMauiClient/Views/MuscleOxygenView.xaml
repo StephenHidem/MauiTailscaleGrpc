@@ -2,11 +2,59 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
+             xmlns:views="clr-namespace:AntPlusMauiClient.Views"
+             xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
+             x:DataType="vm:MuscleOxygenViewModel"
              x:Class="AntPlusMauiClient.Views.MuscleOxygenView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <tabview:SfTabView>
+        <tabview:SfTabView.Items>
+            <tabview:SfTabItem Header="Muscle Oxygen Data">
+                <tabview:SfTabItem.Content>
+                    <StackLayout>
+                        <Border>
+                            <StackLayout>
+                                <Label Text="Main Data Page" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="{Binding MuscleOxygen.SupportsAntFs, StringFormat='Supports ANT-FS: {0}'}"/>
+                                <Label Text="{Binding MuscleOxygen.UtcTimeRequired, StringFormat='UTC time required: {0}'}"/>
+                                <Label Text="{Binding MuscleOxygen.Interval, StringFormat='Measurement Interval: {0}'}"/>
+                                <Label Text="{Binding MuscleOxygen.TotalHemoglobinConcentration.Concentration, StringFormat='Total Hq concentration: {0}'}"/>
+                                <Label Text="{Binding MuscleOxygen.TotalHemoglobinConcentration.Status, StringFormat='Total Hq status: {0}'}"/>
+                                <Label Text="{Binding MuscleOxygen.PreviousSaturatedHemoglobin.PercentSaturated, StringFormat='Previous saturated Hg: {0}'}"/>
+                                <Label Text="{Binding MuscleOxygen.PreviousSaturatedHemoglobin.Status, StringFormat='Previous saturated Hq status: {0}'}"/>
+                                <Label Text="{Binding MuscleOxygen.CurrentSaturatedHemoglobin.PercentSaturated, StringFormat='Current saturated Hg: {0}'}"/>
+                                <Label Text="{Binding MuscleOxygen.CurrentSaturatedHemoglobin.Status, StringFormat='Current saturated Hq status: {0}'}"/>
+                            </StackLayout>
+                        </Border>
+                        <Border>
+                            <Grid ColumnSpacing="16" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, Auto, Auto">
+                                <Label Text="Local Time Offset" FontAttributes="Bold" TextDecorations="Underline" Grid.ColumnSpan="3"/>
+                                <HorizontalStackLayout Grid.Row="1">
+                                    <Label Text="Hours:" VerticalOptions="Center"/>
+                                    <Picker ItemsSource="{Binding Source={x:Static viewmodels:MuscleOxygenViewModel.HoursSource}}" SelectedItem="{Binding Hours}"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
+                                    <Label Text="Minutes:" VerticalOptions="Center"/>
+                                    <Picker ItemsSource="{Binding Source={x:Static viewmodels:MuscleOxygenViewModel.MinutesSource}}" SelectedItem="{Binding Minutes}"/>
+                                </HorizontalStackLayout>
+                                <Button Margin="4" Text="Set Time" Command="{Binding SetTimeCommand}" Grid.Row="1" Grid.Column="2"/>
+                            </Grid>
+                        </Border>
+                        <Border>
+                            <Grid ColumnSpacing="16" RowSpacing="8" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, Auto, Auto">
+                                <Label Text="Session Control" FontAttributes="Bold" TextDecorations="Underline" Grid.ColumnSpan="3"/>
+                                <Button Grid.Column="0" Grid.Row="1" Text="Start" Command="{Binding StartSessionCommand}"/>
+                                <Button Grid.Column="1" Grid.Row="1" Text="Stop" Command="{Binding StopSessionCommand}"/>
+                                <Button Grid.Column="2" Grid.Row="1" Text="Lap" Command="{Binding LogLapCommand}"/>
+                            </Grid>
+                        </Border>
+                    </StackLayout>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Common Data Pages">
+                <tabview:SfTabItem.Content>
+                    <views:CommonDataPagesView CommonDataPages="{Binding MuscleOxygen.CommonDataPages}"/>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+        </tabview:SfTabView.Items>
+    </tabview:SfTabView>
 </ContentView>

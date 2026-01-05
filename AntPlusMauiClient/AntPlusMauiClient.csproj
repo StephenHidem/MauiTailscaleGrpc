@@ -97,6 +97,9 @@
 	  <MauiXaml Update="Views\BikeSpeedView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\CommonDataPagesView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\CTFView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

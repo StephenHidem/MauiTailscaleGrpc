@@ -3,6 +3,10 @@ using AntPlusMauiClient.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using SmallEarthTech.AntPlus;
 using SmallEarthTech.AntPlus.DeviceProfiles;
+using SmallEarthTech.AntPlus.DeviceProfiles.AssetTracker;
+using SmallEarthTech.AntPlus.DeviceProfiles.BicyclePower;
+using SmallEarthTech.AntPlus.DeviceProfiles.BikeSpeedAndCadence;
+using SmallEarthTech.AntPlus.DeviceProfiles.FitnessEquipment;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,6 +28,39 @@ namespace AntPlusMauiClient.PageModels
             // switch on device type to create appropriate view
             switch (Device)
             {
+                case Tracker trackerDevice:
+                    AntDeviceView = new AssetTrackerView(new AssetTrackerViewModel(trackerDevice));
+                    break;
+                case StandardPowerSensor bikePowerDevice:
+                    AntDeviceView = new BicyclePowerView(new BicyclePowerViewModel(bikePowerDevice));
+                    break;
+                case CrankTorqueFrequencySensor crankTorqueFrequencySensor:
+                    AntDeviceView = new CTFView(new CTFViewModel(crankTorqueFrequencySensor));
+                    break;
+                case BikeSpeedSensor bikeSpeedSensor:
+                    AntDeviceView = new BikeSpeedView(new BikeSpeedViewModel(bikeSpeedSensor));
+                    break;
+                case CombinedSpeedAndCadenceSensor combinedSensor:
+                    AntDeviceView = new BikeSpeedAndCadenceView(new BikeSpeedAndCadenceViewModel(combinedSensor));
+                    break;
+                case BikeCadenceSensor bikeCadenceSensor:
+                    AntDeviceView = new BikeCadenceView(new BikeCadenceViewModel(bikeCadenceSensor));
+                    break;
+                case FitnessEquipment fitnessEquipmentDevice:
+                    AntDeviceView = new FitnessEquipmentView(new FitnessEquipmentViewModel(fitnessEquipmentDevice));
+                    break;
+                case Geocache geocacheDevice:
+                    AntDeviceView = new GeocacheView(new GeocacheViewModel(geocacheDevice));
+                    break;
+                case HeartRate heartRateDevice:
+                    AntDeviceView = new HeartRateView(new HeartRateViewModel(heartRateDevice));
+                    break;
+                case MuscleOxygen muscleOxygenDevice:
+                    AntDeviceView = new MuscleOxygenView(new MuscleOxygenViewModel(muscleOxygenDevice));
+                    break;
+                case StrideBasedSpeedAndDistance speedAndDistanceDevice:
+                    AntDeviceView = new SDMView(new SDMViewModel(speedAndDistanceDevice));
+                    break;
                 case UnknownDevice unknownDevice:
                     AntDeviceView = new UnknownDeviceView(new UnknownDeviceViewModel(unknownDevice));
                     break;

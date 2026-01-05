@@ -2,11 +2,62 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
+             xmlns:views="clr-namespace:AntPlusMauiClient.Views"
+             xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
+             x:DataType="vm:SDMViewModel"
              x:Class="AntPlusMauiClient.Views.SDMView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <tabview:SfTabView>
+        <tabview:SfTabView.Items>
+            <tabview:SfTabItem Header="Speed">
+                <tabview:SfTabItem.Content>
+                    <Border>
+                        <StackLayout>
+                            <Label Text="{Binding StrideSpeedDistanceMonitor.InstantaneousCadence, StringFormat='Cadence: {0}'}"/>
+                            <Label Text="{Binding StrideSpeedDistanceMonitor.InstantaneousSpeed, StringFormat='Speed: {0}'}"/>
+                            <Label Text="{Binding StrideSpeedDistanceMonitor.AccumulatedDistance, StringFormat='Accumulated Distance: {0}'}"/>
+                            <Label Text="{Binding StrideSpeedDistanceMonitor.AccumulatedCalories, StringFormat='Accumulated Calories: {0}'}"/>
+                            <Label Text="{Binding StrideSpeedDistanceMonitor.AccumulatedStrideCount, StringFormat='Accumulated Stride Count: {0}'}"/>
+                            <Label Text="{Binding StrideSpeedDistanceMonitor.AccumulatedTime, StringFormat='Accumulated Time: {0:F2}'}"/>
+                            <Label Text="{Binding StrideSpeedDistanceMonitor.UpdateLatency, StringFormat='Update Latency: {0}'}"/>
+                            <Label Text="{Binding StrideSpeedDistanceMonitor.Status.Location, StringFormat='Location: {0}'}"/>
+                            <Label Text="{Binding StrideSpeedDistanceMonitor.Status.Health, StringFormat='Health: {0}'}"/>
+                            <Label Text="{Binding StrideSpeedDistanceMonitor.Status.Battery, StringFormat='Battery: {0}'}"/>
+                            <Label Text="{Binding StrideSpeedDistanceMonitor.Status.State, StringFormat='State: {0}'}"/>
+                        </StackLayout>
+                    </Border>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Common Data Pages">
+                <tabview:SfTabItem.Content>
+                    <views:CommonDataPagesView CommonDataPages="{Binding StrideSpeedDistanceMonitor.CommonDataPages}"/>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Capabilities and Summary">
+                <tabview:SfTabItem.Content>
+                    <StackLayout>
+                        <Border>
+                            <Grid ColumnSpacing="8" ColumnDefinitions="Auto, *">
+                                <Button Text="Request Capabilities" Command="{Binding RequestCapabilitiesCommand}"/>
+                                <StackLayout Grid.Column="1">
+                                    <Label Text="Capabilities" FontAttributes="Bold" TextDecorations="Underline"/>
+                                    <Label Text="{Binding StrideSpeedDistanceMonitor.Capabilities}"/>
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+
+                        <Border>
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Button Text="Request Summaries" Command="{Binding RequestSummaryCommand}"/>
+                                <StackLayout Grid.Column="1" Margin="8">
+                                    <Label Text="Summaries" FontAttributes="Bold" TextDecorations="Underline"/>
+                                    <Label Text="{Binding StrideSpeedDistanceMonitor.StrideCountSummary, StringFormat='Stride Count: {0}'}"/>
+                                    <Label Text="{Binding StrideSpeedDistanceMonitor.DistanceSummary, StringFormat='Distance: {0}'}"/>
+                                </StackLayout>
+                            </Grid>
+                        </Border>
+                    </StackLayout>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+        </tabview:SfTabView.Items>
+    </tabview:SfTabView>
 </ContentView>

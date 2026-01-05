@@ -2,11 +2,65 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
+             xmlns:views="clr-namespace:AntPlusMauiClient.Views"
+             xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
+             x:DataType="vm:GeocacheViewModel"
              x:Class="AntPlusMauiClient.Views.GeocacheView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <tabview:SfTabView>
+        <tabview:SfTabView.Items>
+            <tabview:SfTabItem Header="Geocache Data">
+                <tabview:SfTabItem.Content>
+                    <StackLayout>
+                        <Border>
+                            <StackLayout>
+                                <Label Text="Data Pages" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="{Binding Geocache.TrackableId, StringFormat='Trackable ID: {0}'}"/>
+                                <Label Text="{Binding Geocache.ProgrammingPIN, StringFormat='Programming PIN: {0}'}"/>
+                                <Label Text="{Binding Geocache.TotalPagesProgrammed, StringFormat='Total Pages Programmed: {0}'}"/>
+                                <Label Text="{Binding Geocache.NextStageLatitude, StringFormat='Next Stage Latitude: {0:F6}'}"/>
+                                <Label Text="{Binding Geocache.NextStageLongitude, StringFormat='Next Stage Longitude: {0:F6}'}"/>
+                                <Label Text="{Binding Geocache.Hint, StringFormat='Hint: {0}'}"/>
+                                <Label Text="{Binding Geocache.NumberOfVisits, StringFormat='Number of visits: {0}'}"/>
+                                <Label Text="{Binding Geocache.LastVisitTimestamp, StringFormat='Last visit: {0}'}"/>
+                                <Button Text="Request PIN" Command="{Binding RequestPINCommand}" Margin="0, 8, 0, 8"/>
+                                <Button Text="Log Visit" Command="{Binding LogVisitCommand}"/>
+                            </StackLayout>
+                        </Border>
+                        <Border>
+                            <StackLayout>
+                                <Label Text="Authentication" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="{Binding AuthToken, StringFormat='Authentication Token: {0}'}"/>
+                                <Button Text="Request Authentication" Command="{Binding RequestAuthenticationCommand}"/>
+                            </StackLayout>
+                        </Border>
+                    </StackLayout>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Programming">
+                <tabview:SfTabItem.Content>
+                    <StackLayout>
+                        <Grid RowDefinitions="*, *, *, *" ColumnDefinitions="Auto, *">
+                            <Label Text="Trackable ID:" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
+                            <Entry Text="{Binding TrackableId}" MaxLength="9" Grid.Row="0" Grid.Column="1"/>
+                            <Label Text="PIN:" Grid.Row="1" Grid.Column="0" VerticalOptions="Center"/>
+                            <Entry Text="{Binding Pin}" MaxLength="10" Grid.Row="1" Grid.Column="1"/>
+                            <Label Text="Latitude:" Grid.Row="2" Grid.Column="0" VerticalOptions="Center"/>
+                            <Entry Text="{Binding Latitude}" Grid.Row="2" Grid.Column="1"/>
+                            <Label Text="Longitude:" Grid.Row="3" Grid.Column="0" VerticalOptions="Center"/>
+                            <Entry Text="{Binding Longitude}" Grid.Row="3" Grid.Column="1"/>
+                        </Grid>
+                        <Label Text="Hint:"/>
+                        <Editor Text="{Binding Hint}" MaxLength="168" AutoSize="TextChanges"/>
+                        <Button Text="Program Geocache" Command="{Binding ProgramGeocacheCommand}"/>
+                        <Button Text="Erase Geocache" Command="{Binding EraseGeocacheCommand}" Margin="0, 8, 0, 8"/>
+                    </StackLayout>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Common Data Pages">
+                <tabview:SfTabItem.Content>
+                    <views:CommonDataPagesView CommonDataPages="{Binding Geocache.CommonDataPages}"/>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+        </tabview:SfTabView.Items>
+    </tabview:SfTabView>
 </ContentView>
