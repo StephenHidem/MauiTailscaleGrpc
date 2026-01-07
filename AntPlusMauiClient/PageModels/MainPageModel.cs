@@ -37,6 +37,12 @@ namespace AntPlusMauiClient.PageModels
         public partial string? HostVersion { get; set; }
 
         [ObservableProperty]
+        public partial DeviceCapabilities? Capabilities { get; set; }
+
+        [ObservableProperty]
+        public partial List<string> Flags { get; set; } = [];
+
+        [ObservableProperty]
         public partial AntCollection? AntDevices { get; set; }
 
         public MainPageModel(IAntRadio antRadioService, AntCollection antDevices, ILogger<MainPageModel> logger)
@@ -58,6 +64,14 @@ namespace AntPlusMauiClient.PageModels
             SerialNumber = _antRadioService.SerialNumber;
             HostVersion = _antRadioService.Version;
             AntDevices = _antCollection;
+
+            // get capabilities from server
+            Capabilities = await _antRadioService.GetDeviceCapabilities();
+            Flags = Capabilities.GetType().GetProperties().
+                Where(t => t.PropertyType == typeof(bool) && (bool)t.GetValue(Capabilities)!).
+                ToList().
+                ConvertAll<string>(e => e.Name);
+            Flags.Sort();
 
             // handle radio response updates
             _antRadioService.RadioResponse += HandleRadioResponse;

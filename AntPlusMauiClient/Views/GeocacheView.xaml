@@ -8,7 +8,7 @@
              x:Class="AntPlusMauiClient.Views.GeocacheView">
     <tabview:SfTabView>
         <tabview:SfTabView.Items>
-            <tabview:SfTabItem Header="Geocache Data">
+            <tabview:SfTabItem Header="Geocache">
                 <tabview:SfTabItem.Content>
                     <StackLayout>
                         <Border>

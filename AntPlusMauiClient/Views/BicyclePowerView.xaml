@@ -2,11 +2,38 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
+             xmlns:bp="clr-namespace:SmallEarthTech.AntPlus.DeviceProfiles.BicyclePower;assembly=SmallEarthTech.AntPlus"
+             xmlns:views="clr-namespace:AntPlusMauiClient.Views"
+             xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
+             x:DataType="vm:BicyclePowerViewModel"
              x:Class="AntPlusMauiClient.Views.BicyclePowerView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <tabview:SfTabView>
+        <tabview:SfTabView.Items>
+            <tabview:SfTabItem Header="Bicycle">
+                <tabview:SfTabItem.Content>
+                    <Border>
+                        <StackLayout>
+                            <Label Text="{Binding Sensor.InstantaneousCadence, StringFormat='Cadence: {0}'}"/>
+                            <Label Text="{Binding Sensor.InstantaneousPower, StringFormat='Instantaneous Power: {0}'}"/>
+                        </StackLayout>
+                    </Border>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Calibration">
+                <tabview:SfTabItem.Content>
+                    
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Parameters">
+                <tabview:SfTabItem.Content>
+
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Common Data Pages">
+                <tabview:SfTabItem.Content>
+                    <views:CommonDataPagesView CommonDataPages="{Binding BicyclePower.CommonDataPages}"/>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+        </tabview:SfTabView.Items>
+    </tabview:SfTabView>
 </ContentView>

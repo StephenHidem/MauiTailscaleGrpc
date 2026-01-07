@@ -4,6 +4,7 @@
              xmlns:ant="clr-namespace:SmallEarthTech.AntPlus;assembly=SmallEarthTech.AntPlus"
              xmlns:pm="clr-namespace:AntPlusMauiClient.PageModels"
              xmlns:conv="clr-namespace:AntPlusMauiClient.Converters"
+             xmlns:exp="clr-namespace:Syncfusion.Maui.Toolkit.Expander;assembly=Syncfusion.Maui.Toolkit"
              x:Class="AntPlusMauiClient.Pages.MainPage"
              x:DataType="pm:MainPageModel">
 
@@ -19,6 +20,7 @@
             Spacing="12">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -40,20 +42,52 @@
 
                 <VerticalStackLayout Grid.Column="1">
                     <Label Text="ANT+ Server" FontSize="Caption" FontAttributes="Bold"/>
-                    <Label Text="{Binding ServerUrl}" FontSize="Default" Margin="16, 0, 0, 0"/>
+                    <Label Text="{Binding ServerUrl}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1" Grid.Row="1">
                     <Label Text="Product Description" FontSize="Caption" FontAttributes="Bold"/>
-                    <Label Text="{Binding ProductDescription}" FontSize="Default" Margin="16, 0, 0, 0"/>
+                    <Label Text="{Binding ProductDescription}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1" Grid.Row="2">
                     <Label Text="Serial Number" FontSize="Caption" FontAttributes="Bold"/>
-                    <Label Text="{Binding SerialNumber}" FontSize="Default" Margin="16, 0, 0, 0"/>
+                    <Label Text="{Binding SerialNumber}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1" Grid.Row="3">
                     <Label Text="Host Version" FontSize="Caption" FontAttributes="Bold"/>
-                    <Label Text="{Binding HostVersion}" FontSize="Default" Margin="16, 0, 0, 0"/>
+                    <Label Text="{Binding HostVersion}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
+
+                <exp:SfExpander Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" HeaderIconPosition="Start">
+                    <exp:SfExpander.Header>
+                        <Grid>
+                            <Label Text="ANT+ Radio Capabilities" FontSize="Subtitle" FontAttributes="Bold"  />
+                        </Grid>
+                    </exp:SfExpander.Header>
+                    <exp:SfExpander.Content>
+                        <Grid Margin="10" RowDefinitions="Auto, *">
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Capabilities" FontAttributes="Bold" TextDecorations="Underline"/>
+                                    <Label Text="{Binding Capabilities.MaxANTChannels, StringFormat='Max. ANT channel - {0}'}" />
+                                    <Label Text="{Binding Capabilities.MaxNetworks, StringFormat='Max. Networks - {0}'}"/>
+                                    <Label Text="{Binding Capabilities.MaxDataChannels, StringFormat='Max. Data Channels - {0}'}" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Row="1">
+                                <StackLayout>
+                                    <Label Text="Flags" FontAttributes="Bold" TextDecorations="Underline"/>
+                                    <CollectionView ItemsSource="{Binding Flags}">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <Label Text="{Binding ., StringFormat='- {0}'}"/>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </StackLayout>
+                            </Border>
+                        </Grid>
+                    </exp:SfExpander.Content>
+                </exp:SfExpander>
             </Grid>
 
             <Label Text="ANT+ Devices" FontSize="Title"/>

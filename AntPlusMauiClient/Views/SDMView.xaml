@@ -27,11 +27,6 @@
                     </Border>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
-            <tabview:SfTabItem Header="Common Data Pages">
-                <tabview:SfTabItem.Content>
-                    <views:CommonDataPagesView CommonDataPages="{Binding StrideSpeedDistanceMonitor.CommonDataPages}"/>
-                </tabview:SfTabItem.Content>
-            </tabview:SfTabItem>
             <tabview:SfTabItem Header="Capabilities and Summary">
                 <tabview:SfTabItem.Content>
                     <StackLayout>
@@ -56,6 +51,11 @@
                             </Grid>
                         </Border>
                     </StackLayout>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Common Data Pages">
+                <tabview:SfTabItem.Content>
+                    <views:CommonDataPagesView CommonDataPages="{Binding StrideSpeedDistanceMonitor.CommonDataPages}"/>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
         </tabview:SfTabView.Items>

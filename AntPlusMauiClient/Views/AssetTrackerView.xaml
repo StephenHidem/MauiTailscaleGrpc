@@ -2,12 +2,44 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
+             xmlns:views="clr-namespace:AntPlusMauiClient.Views"
+             xmlns:tracker="clr-namespace:SmallEarthTech.AntPlus.DeviceProfiles.AssetTracker;assembly=SmallEarthTech.AntPlus"
+             xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
              x:DataType="vm:AssetTrackerViewModel"
              x:Class="AntPlusMauiClient.Views.AssetTrackerView">
-    <VerticalStackLayout>
-        <Label 
-            Text="{Binding Tracker}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <tabview:SfTabView>
+        <tabview:SfTabView.Items>
+            <tabview:SfTabItem Header="Asset Tracker">
+                <tabview:SfTabItem.Content>
+                    <tabview:SfTabView ItemsSource="{Binding Tracker.Assets}" TabBarPlacement="Bottom" IndicatorPlacement="Top" TabWidthMode="SizeToContent">
+                        <tabview:SfTabView.HeaderItemTemplate>
+                            <DataTemplate x:DataType="tracker:Asset">
+                                <Label Text="{Binding Index, StringFormat='Index {0}'}" Margin="16, 8, 16,0"/>
+                            </DataTemplate>
+                        </tabview:SfTabView.HeaderItemTemplate>
+                        <tabview:SfTabView.ContentItemTemplate>
+                            <DataTemplate x:DataType="tracker:Asset">
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Name, StringFormat='Name: {0}'}" FontAttributes="Bold" FontSize="Medium"/>
+                                    <Label Text="{Binding Bearing, StringFormat='Bearing: {0}'}"/>
+                                    <Label Text="{Binding Color, StringFormat='Color: {0}'}"/>
+                                    <Label Text="{Binding Distance, StringFormat='Distance: {0}'}"/>
+                                    <Label Text="{Binding Latitude, StringFormat='Latitude: {0}'}"/>
+                                    <Label Text="{Binding Longitude, StringFormat='Longitude: {0}'}"/>
+                                    <Label Text="{Binding Situation, StringFormat='Situation: {0}'}"/>
+                                    <Label Text="{Binding Status, StringFormat='Status: {0}'}"/>
+                                    <Label Text="{Binding Type, StringFormat='Type: {0}'}"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </tabview:SfTabView.ContentItemTemplate>
+                    </tabview:SfTabView>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Common Data Pages">
+                <tabview:SfTabItem.Content>
+                    <views:CommonDataPagesView CommonDataPages="{Binding Tracker.CommonDataPages}"/>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+        </tabview:SfTabView.Items>
+    </tabview:SfTabView>
 </ContentView>

@@ -3,6 +3,7 @@ using AntPlusMauiClient.PageModels;
 using AntPlusMauiClient.Pages;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using SmallEarthTech.AntPlus.Extensions.Hosting;
 using SmallEarthTech.AntRadioInterface;
 using Syncfusion.Maui.Toolkit.Hosting;
@@ -13,6 +14,14 @@ namespace AntPlusMauiClient
     {
         public static MauiApp CreateMauiApp()
         {
+            // Initialize Serilog early, without access to configuration or services
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Debug(outputTemplate:
+                    "[{Timestamp:HH:mm:ss} {Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}"
+                )
+                .CreateLogger();
+
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
@@ -28,7 +37,8 @@ namespace AntPlusMauiClient
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+    		//builder.Logging.AddDebug();
+            builder.Logging.AddSerilog(dispose: true);
 #endif
 
             return builder.Build();

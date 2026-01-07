@@ -8,7 +8,7 @@
              x:Class="AntPlusMauiClient.Views.MuscleOxygenView">
     <tabview:SfTabView>
         <tabview:SfTabView.Items>
-            <tabview:SfTabItem Header="Muscle Oxygen Data">
+            <tabview:SfTabItem Header="Muscle Oxygen">
                 <tabview:SfTabItem.Content>
                     <StackLayout>
                         <Border>
@@ -30,11 +30,11 @@
                                 <Label Text="Local Time Offset" FontAttributes="Bold" TextDecorations="Underline" Grid.ColumnSpan="3"/>
                                 <HorizontalStackLayout Grid.Row="1">
                                     <Label Text="Hours:" VerticalOptions="Center"/>
-                                    <Picker ItemsSource="{Binding Source={x:Static viewmodels:MuscleOxygenViewModel.HoursSource}}" SelectedItem="{Binding Hours}"/>
+                                    <Picker ItemsSource="{Binding Source={x:Static vm:MuscleOxygenViewModel.HoursSource}}" SelectedItem="{Binding Hours}"/>
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
                                     <Label Text="Minutes:" VerticalOptions="Center"/>
-                                    <Picker ItemsSource="{Binding Source={x:Static viewmodels:MuscleOxygenViewModel.MinutesSource}}" SelectedItem="{Binding Minutes}"/>
+                                    <Picker ItemsSource="{Binding Source={x:Static vm:MuscleOxygenViewModel.MinutesSource}}" SelectedItem="{Binding Minutes}"/>
                                 </HorizontalStackLayout>
                                 <Button Margin="4" Text="Set Time" Command="{Binding SetTimeCommand}" Grid.Row="1" Grid.Column="2"/>
                             </Grid>

@@ -12,6 +12,7 @@ using ChannelType = SmallEarthTech.AntRadioInterface.ChannelType;
 using ChannelTypeExtended = SmallEarthTech.AntRadioInterface.ChannelTypeExtended;
 using MessagingReturnCode = SmallEarthTech.AntRadioInterface.MessagingReturnCode;
 using TransmitPower = SmallEarthTech.AntRadioInterface.TransmitPower;
+using Microsoft.Maui.ApplicationModel;
 
 namespace AntPlusMauiClient.GrpcServices
 {
@@ -45,7 +46,11 @@ namespace AntPlusMauiClient.GrpcServices
             {
                 await foreach (ChannelResponseUpdate? update in response.ResponseStream.ReadAllAsync(cancellationToken))
                 {
-                    ChannelResponse?.Invoke(this, new GrpcAntResponse(update));
+                    // Create the response object on the background thread, then dispatch only the event invocation
+                    var payload = new GrpcAntResponse(update);
+
+                    // Marshal the event invocation to the MAUI main thread to avoid COM/STA thread-affinity exceptions
+                    MainThread.BeginInvokeOnMainThread(() => ChannelResponse?.Invoke(this, payload));
                 }
             }
             catch (RpcException ex) when (ex.StatusCode == StatusCode.Unavailable)

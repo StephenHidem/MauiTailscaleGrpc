@@ -4,11 +4,12 @@
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
              xmlns:views="clr-namespace:AntPlusMauiClient.Views"
              xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:ant="clr-namespace:SmallEarthTech.AntPlus;assembly=SmallEarthTech.AntPlus"
              x:DataType="vm:HeartRateViewModel"
              x:Class="AntPlusMauiClient.Views.HeartRateView">
     <tabview:SfTabView>
         <tabview:SfTabView.Items>
-            <tabview:SfTabItem Header="Heart Rate Data">
+            <tabview:SfTabItem Header="Heart Rate Monitor">
                 <tabview:SfTabItem.Content>
                     <StackLayout>
                         <Border>
@@ -47,10 +48,44 @@
                     </StackLayout>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
-            <tabview:SfTabItem Header="Common Data Pages">
-                <tabview:SfTabItem.Content>
-                    <views:CommonDataPagesView CommonDataPages="{Binding HeartRateMonitor.CommonDataPages}"/>
-                </tabview:SfTabItem.Content>
+            <tabview:SfTabItem Header="Capabilities">
+                <VerticalStackLayout>
+                    <Border>
+                        <StackLayout>
+                            <Label Text="Capabilities" FontAttributes="Bold" TextDecorations="Underline"/>
+                            <Label Text="{Binding HeartRate.Capabilities.Supported, StringFormat='Capabilities Supported: {0}'}"/>
+                            <Label Text="{Binding HeartRate.Capabilities.Enabled, StringFormat='Capabilities Enabled: {0}'}"/>
+                        </StackLayout>
+                    </Border>
+
+                    <Border>
+                        <StackLayout>
+                            <Label Text="Gym Mode" FontAttributes="Bold" TextDecorations="Underline"/>
+                            <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="24">
+                                <HorizontalStackLayout>
+                                    <CheckBox IsChecked="{Binding EnableGymMode}" IsEnabled="{Binding IsGymModeSupported}"/>
+                                    <Label Text="Enable Gym Mode" VerticalOptions="Center" IsEnabled="{Binding IsGymModeSupported}"/>
+                                </HorizontalStackLayout>
+                                <Button Grid.Column="1" Text="Set Gym Mode" Command="{Binding SetGymModeCommand}"/>
+                            </Grid>
+                        </StackLayout>
+                    </Border>
+
+                    <Border>
+                        <StackLayout RadioButtonGroup.GroupName="SportMode" RadioButtonGroup.SelectedValue="{Binding ModeRequested}">
+                            <Label Text="Sport Mode" FontAttributes="Bold" TextDecorations="Underline"/>
+                            <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="24">
+                                <StackLayout>
+                                    <RadioButton Content="Generic" Value="{x:Static ant:SportMode.Generic}"/>
+                                    <RadioButton Content="Running" Value="{x:Static ant:SportMode.Running}" IsEnabled="{Binding IsRunningSupported}"/>
+                                    <RadioButton Content="Cycling" Value="{x:Static ant:SportMode.Cycling}" IsEnabled="{Binding IsCyclingSupported}"/>
+                                    <RadioButton Content="Swimming" Value="{x:Static ant:SportMode.Swimming}" IsEnabled="{Binding IsSwimmingSupported}"/>
+                                </StackLayout>
+                                <Button Grid.Column="1" VerticalOptions="Center" Text="Set Sport Mode" Command="{Binding SetSportModeCommand}"/>
+                            </Grid>
+                        </StackLayout>
+                    </Border>
+                </VerticalStackLayout>
             </tabview:SfTabItem>
         </tabview:SfTabView.Items>
     </tabview:SfTabView>
