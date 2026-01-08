@@ -6,6 +6,9 @@ using AntPlusMauiClient.Views;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using SmallEarthTech.AntPlus.DeviceProfiles.AssetTracker;
+using SmallEarthTech.AntPlus.DeviceProfiles.BicyclePower;
+using SmallEarthTech.AntPlus.DeviceProfiles.BikeSpeedAndCadence;
 using SmallEarthTech.AntPlus.Extensions.Hosting;
 using SmallEarthTech.AntRadioInterface;
 using Syncfusion.Maui.Toolkit.Hosting;
@@ -56,7 +59,7 @@ namespace AntPlusMauiClient
                 .AddTransientWithShellRoute<MainPage, MainPageModel>("MainPage")
                 .AddTransientWithShellRoute<AntDevicePage, AntDevicePageModel>("AntDevicePage")
 
-                // Register the view models as transient services
+                // ViewModels
                 .AddTransient<AssetTrackerViewModel>()
                 .AddTransient<BicyclePowerViewModel>()
                 .AddTransient<CTFViewModel>()
@@ -67,19 +70,46 @@ namespace AntPlusMauiClient
                 .AddTransient<GeocacheViewModel>()
                 .AddTransient<HeartRateViewModel>()
                 .AddTransient<MuscleOxygenViewModel>()
-                .AddTransient<SDMViewModel>()
 
-                // Register the views as transient services
-                .AddTransient<IContentView, AssetTrackerView>()
-                .AddTransient<IContentView, BicyclePowerView>()
-                .AddTransient<IContentView, CTFView>()
-                .AddTransient<IContentView, BikeSpeedView>()
-                .AddTransient<IContentView, BikeSpeedAndCadenceView>()
-                .AddTransient<IContentView, BikeCadenceView>()
-                .AddTransient<IContentView, FitnessEquipmentView>()
-                .AddTransient<IContentView, GeocacheView>()
-                .AddTransient<IContentView, HeartRateView>()
-                .AddTransient<IContentView, MuscleOxygenView>();
+                // Views
+                .AddTransient<AssetTrackerView>()
+                .AddTransient<BicyclePowerView>()
+                .AddTransient<CTFView>()
+                .AddTransient<BikeSpeedView>()
+                .AddTransient<BikeSpeedAndCadenceView>()
+                .AddTransient<BikeCadenceView>()
+                .AddTransient<FitnessEquipmentView>()
+                .AddTransient<GeocacheView>()
+                .AddTransient<HeartRateView>()
+                .AddTransient<MuscleOxygenView>()
+
+                // Factory delegates (examples for common devices)
+                .AddTransient<Func<Tracker, AssetTrackerView>>(sp => tracker =>
+                {
+                    var vm = ActivatorUtilities.CreateInstance<AssetTrackerViewModel>(sp, tracker);
+                    return ActivatorUtilities.CreateInstance<AssetTrackerView>(sp, vm);
+                })
+                .AddTransient<Func<StandardPowerSensor, BicyclePowerView>>(sp => device =>
+                {
+                    var vm = ActivatorUtilities.CreateInstance<BicyclePowerViewModel>(sp, device);
+                    return ActivatorUtilities.CreateInstance<BicyclePowerView>(sp, vm);
+                })
+                .AddTransient<Func<BikeSpeedSensor, BikeSpeedView>>(sp => device =>
+                {
+                    var vm = ActivatorUtilities.CreateInstance<BikeSpeedViewModel>(sp, device);
+                    return ActivatorUtilities.CreateInstance<BikeSpeedView>(sp, vm);
+                })
+                .AddTransient<Func<CombinedSpeedAndCadenceSensor, BikeSpeedAndCadenceView>>(sp => device =>
+                {
+                    var vm = ActivatorUtilities.CreateInstance<BikeSpeedAndCadenceViewModel>(sp, device);
+                    return ActivatorUtilities.CreateInstance<BikeSpeedAndCadenceView>(sp, vm);
+                })
+                .AddTransient<Func<CrankTorqueFrequencySensor, CTFView>>(sp => device =>
+                {
+                    var vm = ActivatorUtilities.CreateInstance<CTFViewModel>(sp, device);
+                    return ActivatorUtilities.CreateInstance<CTFView>(sp, vm);
+                });
+
             return mauiAppBuilder;
         }
     }

@@ -15,7 +15,11 @@ namespace AntPlusMauiClient.PageModels
 {
     public partial class AntDevicePageModel : ObservableObject, IQueryAttributable
     {
-        private IServiceProvider _services;
+        private readonly Func<Tracker, AssetTrackerView> _assetTrackerFactory;
+        private readonly Func<StandardPowerSensor, BicyclePowerView> _bicyclePowerFactory;
+        private readonly Func<BikeSpeedSensor, BikeSpeedView> _bikeSpeedFactory;
+        private readonly Func<CombinedSpeedAndCadenceSensor, BikeSpeedAndCadenceView> _speedAndCadenceFactory;
+        private readonly Func<CrankTorqueFrequencySensor, CTFView> _ctfFactory;
 
         [ObservableProperty]
         public partial AntDevice? Device { get; set; }
@@ -23,11 +27,19 @@ namespace AntPlusMauiClient.PageModels
         [ObservableProperty]
         public partial ContentView? AntDeviceView { get; set; }
 
-        public AntDevicePageModel(IServiceProvider services)
+        public AntDevicePageModel(
+            Func<Tracker, AssetTrackerView> assetTrackerFactory,
+            Func<StandardPowerSensor, BicyclePowerView> bicyclePowerFactory,
+            Func<BikeSpeedSensor, BikeSpeedView> bikeSpeedFactory,
+            Func<CombinedSpeedAndCadenceSensor, BikeSpeedAndCadenceView> speedAndCadenceFactory,
+            Func<CrankTorqueFrequencySensor, CTFView> ctfFactory)
         {
-            _services = services;
+            _assetTrackerFactory = assetTrackerFactory;
+            _bicyclePowerFactory = bicyclePowerFactory;
+            _bikeSpeedFactory = bikeSpeedFactory;
+            _speedAndCadenceFactory = speedAndCadenceFactory;
+            _ctfFactory = ctfFactory;
         }
-
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             Device = (AntDevice)query["AntDevice"];
@@ -36,19 +48,19 @@ namespace AntPlusMauiClient.PageModels
             switch (Device)
             {
                 case Tracker trackerDevice:
-                    AntDeviceView = new AssetTrackerView(new AssetTrackerViewModel(trackerDevice));
+                    AntDeviceView = _assetTrackerFactory(trackerDevice);
                     break;
                 case StandardPowerSensor bikePowerDevice:
-                    AntDeviceView = new BicyclePowerView(new BicyclePowerViewModel(bikePowerDevice));
+                    AntDeviceView = _bicyclePowerFactory(bikePowerDevice);
                     break;
                 case CrankTorqueFrequencySensor crankTorqueFrequencySensor:
-                    AntDeviceView = new CTFView(new CTFViewModel(crankTorqueFrequencySensor));
+                    AntDeviceView = _ctfFactory(crankTorqueFrequencySensor);
                     break;
                 case BikeSpeedSensor bikeSpeedSensor:
-                    AntDeviceView = new BikeSpeedView(new BikeSpeedViewModel(bikeSpeedSensor));
+                    AntDeviceView = _bikeSpeedFactory(bikeSpeedSensor);
                     break;
                 case CombinedSpeedAndCadenceSensor combinedSensor:
-                    AntDeviceView = new BikeSpeedAndCadenceView(new BikeSpeedAndCadenceViewModel(combinedSensor));
+                    AntDeviceView = _speedAndCadenceFactory(combinedSensor);
                     break;
                 case BikeCadenceSensor bikeCadenceSensor:
                     AntDeviceView = new BikeCadenceView(new BikeCadenceViewModel(bikeCadenceSensor));
