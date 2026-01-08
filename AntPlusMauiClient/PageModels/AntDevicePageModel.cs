@@ -15,11 +15,7 @@ namespace AntPlusMauiClient.PageModels
 {
     public partial class AntDevicePageModel : ObservableObject, IQueryAttributable
     {
-        private readonly Func<Tracker, AssetTrackerView> _assetTrackerFactory;
-        private readonly Func<StandardPowerSensor, BicyclePowerView> _bicyclePowerFactory;
-        private readonly Func<BikeSpeedSensor, BikeSpeedView> _bikeSpeedFactory;
-        private readonly Func<CombinedSpeedAndCadenceSensor, BikeSpeedAndCadenceView> _speedAndCadenceFactory;
-        private readonly Func<CrankTorqueFrequencySensor, CTFView> _ctfFactory;
+        private readonly IServiceProvider _serviceProvider;
 
         [ObservableProperty]
         public partial AntDevice? Device { get; set; }
@@ -27,65 +23,72 @@ namespace AntPlusMauiClient.PageModels
         [ObservableProperty]
         public partial ContentView? AntDeviceView { get; set; }
 
-        public AntDevicePageModel(
-            Func<Tracker, AssetTrackerView> assetTrackerFactory,
-            Func<StandardPowerSensor, BicyclePowerView> bicyclePowerFactory,
-            Func<BikeSpeedSensor, BikeSpeedView> bikeSpeedFactory,
-            Func<CombinedSpeedAndCadenceSensor, BikeSpeedAndCadenceView> speedAndCadenceFactory,
-            Func<CrankTorqueFrequencySensor, CTFView> ctfFactory)
+        public AntDevicePageModel(IServiceProvider serviceProvider)
         {
-            _assetTrackerFactory = assetTrackerFactory;
-            _bicyclePowerFactory = bicyclePowerFactory;
-            _bikeSpeedFactory = bikeSpeedFactory;
-            _speedAndCadenceFactory = speedAndCadenceFactory;
-            _ctfFactory = ctfFactory;
+            _serviceProvider = serviceProvider;
         }
+
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             Device = (AntDevice)query["AntDevice"];
+            Type viewModel;
+            Type contentView;
 
             // switch on device type to create appropriate view
             switch (Device)
             {
-                case Tracker trackerDevice:
-                    AntDeviceView = _assetTrackerFactory(trackerDevice);
+                case Tracker:
+                    viewModel = typeof(AssetTrackerViewModel);
+                    contentView = typeof(AssetTrackerView);
                     break;
-                case StandardPowerSensor bikePowerDevice:
-                    AntDeviceView = _bicyclePowerFactory(bikePowerDevice);
+                case StandardPowerSensor:
+                    viewModel = typeof(BicyclePowerViewModel);
+                    contentView = typeof(BicyclePowerView);
                     break;
-                case CrankTorqueFrequencySensor crankTorqueFrequencySensor:
-                    AntDeviceView = _ctfFactory(crankTorqueFrequencySensor);
+                case CrankTorqueFrequencySensor:
+                    viewModel = typeof(CTFViewModel);
+                    contentView = typeof(CTFView);
                     break;
-                case BikeSpeedSensor bikeSpeedSensor:
-                    AntDeviceView = _bikeSpeedFactory(bikeSpeedSensor);
+                case BikeSpeedSensor:
+                    viewModel = typeof(BikeSpeedViewModel);
+                    contentView = typeof(BikeSpeedView);
                     break;
-                case CombinedSpeedAndCadenceSensor combinedSensor:
-                    AntDeviceView = _speedAndCadenceFactory(combinedSensor);
+                case CombinedSpeedAndCadenceSensor:
+                    viewModel = typeof(BikeSpeedAndCadenceViewModel);
+                    contentView = typeof(BikeSpeedAndCadenceView);
                     break;
-                case BikeCadenceSensor bikeCadenceSensor:
-                    AntDeviceView = new BikeCadenceView(new BikeCadenceViewModel(bikeCadenceSensor));
+                case BikeCadenceSensor:
+                    viewModel = typeof(BikeCadenceViewModel);
+                    contentView = typeof(BikeCadenceView);
                     break;
-                case FitnessEquipment fitnessEquipmentDevice:
-                    AntDeviceView = new FitnessEquipmentView(new FitnessEquipmentViewModel(fitnessEquipmentDevice));
+                case FitnessEquipment:
+                    viewModel = typeof(FitnessEquipmentViewModel);
+                    contentView = typeof(FitnessEquipmentView);
                     break;
-                case Geocache geocacheDevice:
-                    AntDeviceView = new GeocacheView(new GeocacheViewModel(geocacheDevice));
+                case Geocache:
+                    viewModel = typeof(GeocacheViewModel);
+                    contentView = typeof(GeocacheView);
                     break;
-                case HeartRate heartRateDevice:
-                    AntDeviceView = new HeartRateView(new HeartRateViewModel(heartRateDevice));
+                case HeartRate:
+                    viewModel = typeof(HeartRateViewModel);
+                    contentView = typeof(HeartRateView);
                     break;
-                case MuscleOxygen muscleOxygenDevice:
-                    AntDeviceView = new MuscleOxygenView(new MuscleOxygenViewModel(muscleOxygenDevice));
+                case MuscleOxygen:
+                    viewModel = typeof(MuscleOxygenViewModel);
+                    contentView = typeof(MuscleOxygenView);
                     break;
-                case StrideBasedSpeedAndDistance speedAndDistanceDevice:
-                    AntDeviceView = new SDMView(new SDMViewModel(speedAndDistanceDevice));
-                    break;
-                case UnknownDevice unknownDevice:
-                    AntDeviceView = new UnknownDeviceView(new UnknownDeviceViewModel(unknownDevice));
+                case StrideBasedSpeedAndDistance:
+                    viewModel = typeof(SDMViewModel);
+                    contentView = typeof(SDMView);
                     break;
                 default:
+                    viewModel = typeof(UnknownDeviceViewModel);
+                    contentView = typeof(UnknownDeviceView);
                     break;
             }
+
+            var viewModelInstance = ActivatorUtilities.CreateInstance(_serviceProvider, viewModel, Device);
+            AntDeviceView = ActivatorUtilities.CreateInstance(_serviceProvider, contentView, viewModelInstance) as ContentView;
         }
     }
 }
