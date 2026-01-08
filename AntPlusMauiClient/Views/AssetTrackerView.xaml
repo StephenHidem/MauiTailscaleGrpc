@@ -12,7 +12,7 @@
         <tabview:SfTabView.Items>
             <tabview:SfTabItem Header="Assets">
                 <tabview:SfTabItem.Content>
-                    <CollectionView ItemsSource="{Binding Tracker.Assets}" VerticalScrollBarVisibility="Never">
+                    <CollectionView ItemsSource="{Binding Tracker.Assets}" VerticalScrollBarVisibility="Default">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Vertical" ItemSpacing="4"/>
                         </CollectionView.ItemsLayout>
