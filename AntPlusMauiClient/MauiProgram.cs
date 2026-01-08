@@ -70,6 +70,8 @@ namespace AntPlusMauiClient
                 .AddTransient<GeocacheViewModel>()
                 .AddTransient<HeartRateViewModel>()
                 .AddTransient<MuscleOxygenViewModel>()
+                .AddTransient<SDMViewModel>()
+                .AddTransient<UnknownDeviceViewModel>()
 
                 // Views
                 .AddTransient<AssetTrackerView>()
@@ -82,6 +84,8 @@ namespace AntPlusMauiClient
                 .AddTransient<GeocacheView>()
                 .AddTransient<HeartRateView>()
                 .AddTransient<MuscleOxygenView>()
+                .AddTransient<SDMView>()
+                .AddTransient<UnknownDeviceView>()
 
                 // Factory delegates (examples for common devices)
                 .AddTransient<Func<Tracker, AssetTrackerView>>(sp => tracker =>
