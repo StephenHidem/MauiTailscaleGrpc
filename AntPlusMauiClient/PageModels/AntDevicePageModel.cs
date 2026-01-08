@@ -1,6 +1,7 @@
 ﻿using AntPlusMauiClient.ViewModels;
 using AntPlusMauiClient.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.Logging;
 using SmallEarthTech.AntPlus;
 using SmallEarthTech.AntPlus.DeviceProfiles;
 using SmallEarthTech.AntPlus.DeviceProfiles.AssetTracker;
@@ -31,6 +32,7 @@ namespace AntPlusMauiClient.PageModels
             { typeof(StrideBasedSpeedAndDistance), (typeof(SDMViewModel), typeof(SDMView)) }
         };
         private readonly IServiceProvider _serviceProvider;
+        private readonly ILogger<AntDevicePageModel> _logger;
 
         [ObservableProperty]
         public partial AntDevice? Device { get; set; }
@@ -38,21 +40,29 @@ namespace AntPlusMauiClient.PageModels
         [ObservableProperty]
         public partial ContentView? AntDeviceView { get; set; }
 
-        public AntDevicePageModel(IServiceProvider serviceProvider)
+        public AntDevicePageModel(IServiceProvider serviceProvider, ILogger<AntDevicePageModel> logger)
         {
             _serviceProvider = serviceProvider;
+            _logger = logger;
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            Device = (AntDevice)query["AntDevice"];
+            if (!query.TryGetValue("AntDevice", out var deviceObj) || deviceObj is not AntDevice device)
+            {
+                // It's good practice to handle cases where expected query parameters are missing or of the wrong type.
+                // Consider logging this and/or navigating back.
+                _logger.LogWarning("AntDevice query parameter is missing or invalid.");
+                return;
+            }
+            Device = device;
 
             // Determine the ViewModel and View types based on the device type
             var deviceType = Device.GetType();
             var (viewModelType, contentViewType) = DeviceViewMap.GetValueOrDefault(deviceType, (typeof(UnknownDeviceViewModel), typeof(UnknownDeviceView)));
 
             var viewModelInstance = ActivatorUtilities.CreateInstance(_serviceProvider, viewModelType, Device);
-            AntDeviceView = ActivatorUtilities.CreateInstance(_serviceProvider, contentViewType, viewModelInstance) as ContentView;
+            AntDeviceView = (ContentView)ActivatorUtilities.CreateInstance(_serviceProvider, contentViewType, viewModelInstance);
         }
     }
 }
