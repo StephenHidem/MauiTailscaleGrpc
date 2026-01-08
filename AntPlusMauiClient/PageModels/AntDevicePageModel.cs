@@ -15,11 +15,18 @@ namespace AntPlusMauiClient.PageModels
 {
     public partial class AntDevicePageModel : ObservableObject, IQueryAttributable
     {
+        private IServiceProvider _services;
+
         [ObservableProperty]
         public partial AntDevice? Device { get; set; }
 
         [ObservableProperty]
         public partial ContentView? AntDeviceView { get; set; }
+
+        public AntDevicePageModel(IServiceProvider services)
+        {
+            _services = services;
+        }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
@@ -66,7 +73,7 @@ namespace AntPlusMauiClient.PageModels
                     break;
                 default:
                     break;
-            }    
+            }
         }
     }
 }

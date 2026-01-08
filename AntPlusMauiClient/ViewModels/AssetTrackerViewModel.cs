@@ -1,9 +1,16 @@
-﻿using SmallEarthTech.AntPlus.DeviceProfiles.AssetTracker;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SmallEarthTech.AntPlus.DeviceProfiles.AssetTracker;
 
 namespace AntPlusMauiClient.ViewModels
 {
-    public class AssetTrackerViewModel(Tracker tracker)
+    public partial class AssetTrackerViewModel : ObservableObject
     {
-        public Tracker Tracker { get; } = tracker;
+        [ObservableProperty]
+        public partial Tracker Tracker { get; set; }
+
+        public AssetTrackerViewModel(Tracker tracker)
+        {
+            Tracker = tracker;
+        }
     }
 }

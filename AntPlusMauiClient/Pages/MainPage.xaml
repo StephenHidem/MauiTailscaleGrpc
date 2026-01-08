@@ -57,7 +57,7 @@
                     <Label Text="{Binding HostVersion}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
 
-                <exp:SfExpander Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" HeaderIconPosition="Start">
+                <exp:SfExpander Grid.Column="1" Grid.Row="4">
                     <exp:SfExpander.Header>
                         <Grid>
                             <Label Text="ANT+ Radio Capabilities" FontSize="Subtitle" FontAttributes="Bold"  />

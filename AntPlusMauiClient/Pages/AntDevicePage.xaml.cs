@@ -6,7 +6,7 @@ public partial class AntDevicePage : ContentPage
 {
 	public AntDevicePage(AntDevicePageModel pageModel)
 	{
-		BindingContext = pageModel;
         InitializeComponent();
-	}
+        BindingContext = pageModel;
+    }
 }
