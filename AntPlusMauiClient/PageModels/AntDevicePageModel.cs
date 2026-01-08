@@ -15,6 +15,21 @@ namespace AntPlusMauiClient.PageModels
 {
     public partial class AntDevicePageModel : ObservableObject, IQueryAttributable
     {
+        // Map of device types to their corresponding ViewModel and View types
+        private static readonly Dictionary<Type, (Type, Type)> DeviceViewMap = new()
+        {
+            { typeof(Tracker), (typeof(AssetTrackerViewModel), typeof(AssetTrackerView)) },
+            { typeof(StandardPowerSensor), (typeof(BicyclePowerViewModel), typeof(BicyclePowerView)) },
+            { typeof(CrankTorqueFrequencySensor), (typeof(CTFViewModel), typeof(CTFView)) },
+            { typeof(BikeSpeedSensor), (typeof(BikeSpeedViewModel), typeof(BikeSpeedView)) },
+            { typeof(CombinedSpeedAndCadenceSensor), (typeof(BikeSpeedAndCadenceViewModel), typeof(BikeSpeedAndCadenceView)) },
+            { typeof(BikeCadenceSensor), (typeof(BikeCadenceViewModel), typeof(BikeCadenceView)) },
+            { typeof(FitnessEquipment), (typeof(FitnessEquipmentViewModel), typeof(FitnessEquipmentView)) },
+            { typeof(Geocache), (typeof(GeocacheViewModel), typeof(GeocacheView)) },
+            { typeof(HeartRate), (typeof(HeartRateViewModel), typeof(HeartRateView)) },
+            { typeof(MuscleOxygen), (typeof(MuscleOxygenViewModel), typeof(MuscleOxygenView)) },
+            { typeof(StrideBasedSpeedAndDistance), (typeof(SDMViewModel), typeof(SDMView)) }
+        };
         private readonly IServiceProvider _serviceProvider;
 
         [ObservableProperty]
@@ -31,64 +46,13 @@ namespace AntPlusMauiClient.PageModels
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             Device = (AntDevice)query["AntDevice"];
-            Type viewModel;
-            Type contentView;
 
-            // switch on device type to create appropriate view
-            switch (Device)
-            {
-                case Tracker:
-                    viewModel = typeof(AssetTrackerViewModel);
-                    contentView = typeof(AssetTrackerView);
-                    break;
-                case StandardPowerSensor:
-                    viewModel = typeof(BicyclePowerViewModel);
-                    contentView = typeof(BicyclePowerView);
-                    break;
-                case CrankTorqueFrequencySensor:
-                    viewModel = typeof(CTFViewModel);
-                    contentView = typeof(CTFView);
-                    break;
-                case BikeSpeedSensor:
-                    viewModel = typeof(BikeSpeedViewModel);
-                    contentView = typeof(BikeSpeedView);
-                    break;
-                case CombinedSpeedAndCadenceSensor:
-                    viewModel = typeof(BikeSpeedAndCadenceViewModel);
-                    contentView = typeof(BikeSpeedAndCadenceView);
-                    break;
-                case BikeCadenceSensor:
-                    viewModel = typeof(BikeCadenceViewModel);
-                    contentView = typeof(BikeCadenceView);
-                    break;
-                case FitnessEquipment:
-                    viewModel = typeof(FitnessEquipmentViewModel);
-                    contentView = typeof(FitnessEquipmentView);
-                    break;
-                case Geocache:
-                    viewModel = typeof(GeocacheViewModel);
-                    contentView = typeof(GeocacheView);
-                    break;
-                case HeartRate:
-                    viewModel = typeof(HeartRateViewModel);
-                    contentView = typeof(HeartRateView);
-                    break;
-                case MuscleOxygen:
-                    viewModel = typeof(MuscleOxygenViewModel);
-                    contentView = typeof(MuscleOxygenView);
-                    break;
-                case StrideBasedSpeedAndDistance:
-                    viewModel = typeof(SDMViewModel);
-                    contentView = typeof(SDMView);
-                    break;
-                default:
-                    viewModel = typeof(UnknownDeviceViewModel);
-                    contentView = typeof(UnknownDeviceView);
-                    break;
-            }
+            // Determine the ViewModel and View types based on the device type
+            var deviceType = Device.GetType();
+            var (viewModelType, contentViewType) = DeviceViewMap.GetValueOrDefault(deviceType, (typeof(UnknownDeviceViewModel), typeof(UnknownDeviceView)));
 
-            var viewModelInstance = ActivatorUtilities.CreateInstance(_serviceProvider, viewModel, Device);
-            AntDeviceView = ActivatorUtilities.CreateInstance(_serviceProvider, contentView, viewModelInstance) as ContentView;
+            var viewModelInstance = ActivatorUtilities.CreateInstance(_serviceProvider, viewModelType, Device);
+            AntDeviceView = ActivatorUtilities.CreateInstance(_serviceProvider, contentViewType, viewModelInstance) as ContentView;
         }
     }
 }

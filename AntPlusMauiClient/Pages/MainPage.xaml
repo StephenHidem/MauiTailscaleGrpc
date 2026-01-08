@@ -12,22 +12,6 @@
         <ResourceDictionary>
             <conv:StreamToImageSourceConverter x:Key="StreamToImage"/>
         </ResourceDictionary>
-
-        <Style TargetType="Grid">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal" />
-                        <VisualState x:Name="Selected">
-                            <VisualState.Setters>
-                                <Setter Property="BackgroundColor"
-                                        Value="LightSkyBlue" />
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
     </ContentPage.Resources>
     
     <ScrollView>
@@ -119,17 +103,15 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="ant:AntDevice">
-                        <Grid>
-                            <Border>
-                                <Grid Padding="8" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto">
-                                    <Image Margin="0,0,10,0" Grid.RowSpan="2" Source="{Binding ., Converter={StaticResource StreamToImage}}" Aspect="AspectFit" HeightRequest="40"/>
-                                    <Label Grid.Column="1" Text="{Binding .}"/>
-                                    <Label Grid.Column="1" Grid.Row="1" Text="{Binding ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}"/>
-                                    <Image Source="more_arrow.png" Aspect="AspectFill" Background="Transparent"
+                        <Border>
+                            <Grid Padding="8" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto">
+                                <Image Margin="0,0,10,0" Grid.RowSpan="2" Source="{Binding ., Converter={StaticResource StreamToImage}}" Aspect="AspectFit" HeightRequest="40"/>
+                                <Label Grid.Column="1" Text="{Binding .}"/>
+                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}"/>
+                                <Image Source="more_arrow.png" Aspect="AspectFill" Background="Transparent"
                                        Grid.Column="2" Grid.RowSpan="2" HeightRequest="32" WidthRequest="32"/>
-                                </Grid>
-                            </Border>
-                        </Grid>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
