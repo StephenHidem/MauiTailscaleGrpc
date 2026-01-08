@@ -6,7 +6,7 @@ public partial class BikeCadenceView : ContentView
 {
 	public BikeCadenceView(BikeCadenceViewModel viewModel)
 	{
-		BindingContext = viewModel;
         InitializeComponent();
+		BindingContext = viewModel;
 	}
 }

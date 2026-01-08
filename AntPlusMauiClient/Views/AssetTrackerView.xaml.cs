@@ -6,7 +6,7 @@ public partial class AssetTrackerView : ContentView
 {
 	public AssetTrackerView(AssetTrackerViewModel viewModel)
 	{
-		BindingContext = viewModel;
         InitializeComponent();
-	}
+        BindingContext = viewModel;
+    }
 }

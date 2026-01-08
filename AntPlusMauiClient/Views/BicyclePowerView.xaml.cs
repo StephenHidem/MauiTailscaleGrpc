@@ -6,7 +6,7 @@ public partial class BicyclePowerView : ContentView
 {
 	public BicyclePowerView(BicyclePowerViewModel viewModel)
 	{
-		BindingContext = viewModel;
         InitializeComponent();
-	}
+        BindingContext = viewModel;
+    }
 }

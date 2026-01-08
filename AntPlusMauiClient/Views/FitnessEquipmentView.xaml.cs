@@ -6,7 +6,7 @@ public partial class FitnessEquipmentView : ContentView
 {
 	public FitnessEquipmentView(FitnessEquipmentViewModel viewModel)
 	{
-		BindingContext = viewModel;
         InitializeComponent();
+		BindingContext = viewModel;
 	}
 }

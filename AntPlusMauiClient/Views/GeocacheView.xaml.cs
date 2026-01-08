@@ -6,7 +6,7 @@ public partial class GeocacheView : ContentView
 {
 	public GeocacheView(GeocacheViewModel viewModel)
 	{
-		BindingContext = viewModel;
         InitializeComponent();
+		BindingContext = viewModel;
 	}
 }

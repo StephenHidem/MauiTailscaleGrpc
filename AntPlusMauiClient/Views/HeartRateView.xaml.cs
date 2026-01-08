@@ -6,7 +6,7 @@ public partial class HeartRateView : ContentView
 {
 	public HeartRateView(HeartRateViewModel viewModel)
 	{
-		BindingContext = viewModel;
         InitializeComponent();
+		BindingContext = viewModel;
 	}
 }

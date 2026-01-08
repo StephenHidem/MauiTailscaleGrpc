@@ -6,7 +6,7 @@ public partial class MuscleOxygenView : ContentView
 {
 	public MuscleOxygenView(MuscleOxygenViewModel viewModel)
 	{
-		BindingContext = viewModel;
         InitializeComponent();
+		BindingContext = viewModel;
 	}
 }

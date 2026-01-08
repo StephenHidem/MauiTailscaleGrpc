@@ -6,7 +6,7 @@ public partial class BikeSpeedView : ContentView
 {
 	public BikeSpeedView(BikeSpeedViewModel viewModel)
 	{
-		BindingContext = viewModel;
         InitializeComponent();
+		BindingContext = viewModel;
 	}
 }

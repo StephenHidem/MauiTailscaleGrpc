@@ -6,7 +6,7 @@ public partial class CTFView : ContentView
 {
 	public CTFView(CTFViewModel viewModel)
 	{
-		BindingContext = viewModel;
         InitializeComponent();
+		BindingContext = viewModel;
 	}
 }
