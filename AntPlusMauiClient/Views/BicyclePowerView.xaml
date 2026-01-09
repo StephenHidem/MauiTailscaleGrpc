@@ -15,7 +15,7 @@
                         <ContentView Content="{Binding TorqueSensorView}"/>
                         <Border>
                             <StackLayout>
-                                <Label Text="Standard Power" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="Standard Power" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding Sensor.PedalPower, StringFormat='Pedal Power (%): {0}'}"/>
                                 <Label Text="{Binding Sensor.PedalContribution, StringFormat='Pedal Contribution: {0}'}"/>
                                 <Label Text="{Binding Sensor.InstantaneousCadence, StringFormat='Instantaneous Cadence (RPM): {0}'}"/>
@@ -25,7 +25,7 @@
                         </Border>
                         <Border>
                             <StackLayout>
-                                <Label Text="Torque Effectivenes and Pedal Smoothness" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="Torque Effectivenes and Pedal Smoothness" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding Sensor.CombinedPedalSmoothness, StringFormat='Combined Pedal Smoothness: {0}'}"/>
                                 <Label Text="{Binding Sensor.LeftPedalSmoothness, StringFormat='Left Pedal Smoothness: {0}'}"/>
                                 <Label Text="{Binding Sensor.LeftTorqueEffectiveness, StringFormat='Left Torque Effectiveness: {0}'}"/>
@@ -41,7 +41,7 @@
                     <StackLayout>
                         <Border>
                             <StackLayout>
-                                <Label Text="Status" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="Status" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding Sensor.CalibrationStatus, StringFormat='Calibration Status: {0}'}"/>
                                 <Label Text="{Binding Sensor.AutoZeroSupported, StringFormat='Auto Zero Supported: {0}'}"/>
                                 <Label Text="{Binding Sensor.AutoZeroStatus, StringFormat='Auto Zero Status: {0}'}"/>
@@ -52,7 +52,7 @@
                         </Border>
                         <Border>
                             <StackLayout>
-                                <Label Text="Measurement Output Data" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="Measurement Output Data" Style="{StaticResource HeaderLabelStyle}"/>
                                 <CollectionView ItemsSource="{Binding Sensor.Measurements}">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="bp:MeasurementOutputData">
@@ -68,7 +68,7 @@
                         </Border>
                         <Border>
                             <StackLayout>
-                                <Label Text="Custom Calibration Parameters" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="Custom Calibration Parameters" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8" Margin="8">
                                     <Button Text="Get Parameters" Command="{Binding GetCustomCalParametersCommand}"/>
                                     <Label Text="{Binding Sensor.CustomCalibrationParameters, StringFormat='Parameters: {0}'}" Grid.Column="1" VerticalOptions="Center"/>
@@ -85,7 +85,7 @@
                     <StackLayout>
                         <Border>
                             <StackLayout>
-                                <Label Text="Crank Settings" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="Crank Settings" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding Sensor.Crank.CrankLength, StringFormat='Crank Length: {0}'}"/>
                                 <Label Text="{Binding Sensor.Crank.CrankStatus, StringFormat='Crank Status: {0}'}"/>
                                 <Label Text="{Binding Sensor.Crank.MismatchStatus, StringFormat='Mismatch Status: {0}'}"/>
@@ -96,7 +96,7 @@
                         </Border>
                         <Border>
                             <StackLayout>
-                                <Label Text="Crank Control" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="Crank Control" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="*, *" ColumnSpacing="16" RowSpacing="8" Margin="8">
                                     <Button Text="Get Crank Settings" Command="{Binding GetParametersCommand}"
                                             CommandParameter="{x:Static bp:SubPage.CrankParameters}"/>

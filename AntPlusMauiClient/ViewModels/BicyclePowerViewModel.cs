@@ -21,28 +21,32 @@ public partial class BicyclePowerViewModel : ObservableObject
     [ObservableProperty]
     public partial ContentView? TorqueSensorView { get; set; }
 
-    public BicyclePowerViewModel(StandardPowerSensor sensor, IServiceProvider serviceProvider)
+    public BicyclePowerViewModel(StandardPowerSensor sensor, IServiceProvider serviceProvider, ILogger<BicyclePowerViewModel> logger)
     {
         Sensor = sensor;
         _serviceProvider = serviceProvider;
 
         if (Sensor.TorqueSensor != null)
         {
-            TorqueSensorView = (ContentView)ActivatorUtilities.CreateInstance(
-                _serviceProvider,
-                Sensor.TorqueSensor switch
-                {
-                    StandardCrankTorqueSensor _ => typeof(BicycleCrankTorqueView),
-                    StandardWheelTorqueSensor _ => typeof(BicycleWheelTorqueView),
-                    _ => throw new NotSupportedException("Unsupported torque sensor type")
-                },
-                Sensor.TorqueSensor
-            );
+            Type viewType;
+            if (Sensor.TorqueSensor is StandardCrankTorqueSensor)
+            {
+                viewType = typeof(BicycleCrankTorqueView);
+            }
+            else if (Sensor.TorqueSensor is StandardWheelTorqueSensor)
+            {
+                viewType = typeof(BicycleWheelTorqueView);
+            }
+            else
+            {
+                logger.LogError("Unsupported torque sensor type: {TorqueSensorType}", Sensor.TorqueSensor.GetType().Name);
+                throw new NotSupportedException($"Unsupported torque sensor type: {Sensor.TorqueSensor.GetType().Name}");
+            }
+            TorqueSensorView = (ContentView)ActivatorUtilities.CreateInstance(_serviceProvider, viewType, Sensor.TorqueSensor);
         }
 
         Sensor.PropertyChanged += OnPropertyChanged;
     }
-
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == "AutoZeroSupported")
