@@ -10,6 +10,12 @@ namespace AntPlusMauiClient.ViewModels;
 
 public partial class BicyclePowerViewModel : ObservableObject
 {
+    private static readonly Dictionary<Type, Type> torqueSensorViewMap = new()
+    {
+        { typeof(StandardCrankTorqueSensor), typeof(BicycleCrankTorqueView) },
+        { typeof(StandardWheelTorqueSensor), typeof(BicycleWheelTorqueView) }
+    };
+
     [ObservableProperty]
     public partial StandardPowerSensor? Sensor { get; private set; }
 
@@ -25,12 +31,6 @@ public partial class BicyclePowerViewModel : ObservableObject
 
         if (Sensor.TorqueSensor != null)
         {
-            var torqueSensorViewMap = new Dictionary<Type, Type>
-            {
-                { typeof(StandardCrankTorqueSensor), typeof(BicycleCrankTorqueView) },
-                { typeof(StandardWheelTorqueSensor), typeof(BicycleWheelTorqueView) }
-            };
-
             Type sensorType = Sensor.TorqueSensor.GetType();
             if (torqueSensorViewMap.TryGetValue(sensorType, out var viewType))
             {
