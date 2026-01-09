@@ -25,21 +25,24 @@ public partial class BicyclePowerViewModel : ObservableObject
 
         if (Sensor.TorqueSensor != null)
         {
-            Type viewType;
-            switch (Sensor.TorqueSensor)
+            var torqueSensorViewMap = new Dictionary<Type, Type>
             {
-                case StandardCrankTorqueSensor:
-                    viewType = typeof(BicycleCrankTorqueView);
-                    break;
-                case StandardWheelTorqueSensor:
-                    viewType = typeof(BicycleWheelTorqueView);
-                    break;
-                default:
-                    logger.LogError("Unsupported torque sensor type: {TorqueSensorType}", Sensor.TorqueSensor.GetType().Name);
-                    throw new NotSupportedException($"Unsupported torque sensor type: {Sensor.TorqueSensor.GetType().Name}");
+                { typeof(StandardCrankTorqueSensor), typeof(BicycleCrankTorqueView) },
+                { typeof(StandardWheelTorqueSensor), typeof(BicycleWheelTorqueView) }
+            };
+
+            Type sensorType = Sensor.TorqueSensor.GetType();
+            if (torqueSensorViewMap.TryGetValue(sensorType, out var viewType))
+            {
+                TorqueSensorView = (ContentView)ActivatorUtilities.CreateInstance(serviceProvider, viewType, Sensor.TorqueSensor);
             }
-            TorqueSensorView = (ContentView)ActivatorUtilities.CreateInstance(serviceProvider, viewType, Sensor.TorqueSensor);
+            else
+            {
+                logger.LogError("Unsupported torque sensor type: {TorqueSensorType}", sensorType.Name);
+                throw new NotSupportedException($"Unsupported torque sensor type: {sensorType.Name}");
+            }
         }
+
         Sensor.PropertyChanged += OnPropertyChanged;
     }
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
