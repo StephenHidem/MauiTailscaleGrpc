@@ -41,26 +41,26 @@
                     SemanticProperties.Description="ant plus server" />
 
                 <VerticalStackLayout Grid.Column="1">
-                    <Label Text="ANT+ Server" FontSize="Caption" FontAttributes="Bold"/>
+                    <Label Text="ANT+ Server" FontSize="Caption" FontAttributes="Bold" TextDecorations="Underline"/>
                     <Label Text="{Binding ServerUrl}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1" Grid.Row="1">
-                    <Label Text="Product Description" FontSize="Caption" FontAttributes="Bold"/>
+                    <Label Text="Product Description" FontSize="Caption" FontAttributes="Bold" TextDecorations="Underline"/>
                     <Label Text="{Binding ProductDescription}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1" Grid.Row="2">
-                    <Label Text="Serial Number" FontSize="Caption" FontAttributes="Bold"/>
+                    <Label Text="Serial Number" FontSize="Caption" FontAttributes="Bold" TextDecorations="Underline"/>
                     <Label Text="{Binding SerialNumber}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1" Grid.Row="3">
-                    <Label Text="Host Version" FontSize="Caption" FontAttributes="Bold"/>
+                    <Label Text="Host Version" FontSize="Caption" FontAttributes="Bold" TextDecorations="Underline"/>
                     <Label Text="{Binding HostVersion}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
 
                 <exp:SfExpander Grid.ColumnSpan="2" Grid.Row="4">
                     <exp:SfExpander.Header>
                         <Grid>
-                            <Label Text="ANT+ Radio Capabilities" FontSize="Subtitle" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                            <Label Text="ANT+ Radio Capabilities" FontSize="Subtitle" FontAttributes="Bold" TextDecorations="Underline" HorizontalTextAlignment="Center"/>
                         </Grid>
                     </exp:SfExpander.Header>
                     <exp:SfExpander.Content>

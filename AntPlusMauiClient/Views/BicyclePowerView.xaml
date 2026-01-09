@@ -72,7 +72,7 @@
                                 <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8" Margin="8">
                                     <Button Text="Get Parameters" Command="{Binding GetCustomCalParametersCommand}"/>
                                     <Label Text="{Binding Sensor.CustomCalibrationParameters, StringFormat='Parameters: {0}'}" Grid.Column="1" VerticalOptions="Center"/>
-                                    <Button Text="Set Parameters" Command="{Binding SetCustomCalParametersCommand}" CommandParameter="{Binding Text, Source={x:Reference CustomCalParms}, x:DataType=Entry}" Grid.Row="1"/>
+                                    <Button Text="Set Parameters" Command="{Binding SetCustomCalParametersCommand}" CommandParameter="{Binding Text, Source={x:Reference CustomCalParms}}" Grid.Row="1"/>
                                     <Entry Placeholder="Enter 6 hae bytes" x:Name="CustomCalParms" Grid.Column="1" Grid.Row="1"/>
                                 </Grid>
                             </StackLayout>
@@ -101,7 +101,7 @@
                                     <Button Text="Get Crank Settings" Command="{Binding GetParametersCommand}"
                                             CommandParameter="{x:Static bp:SubPage.CrankParameters}"/>
                                     <Button Text="Set Crank Length" Grid.Row="1" Command="{Binding SetCrankLengthCommand}"
-                                            CommandParameter="{Binding Text, Source={x:Reference CrankLength}, x:DataType=Entry}"/>
+                                            CommandParameter="{Binding Text, Source={x:Reference CrankLength}}"/>
                                     <Entry x:Name="CrankLength" Placeholder="Crank length from 110mm to 236.6mm" Grid.Row="1" Grid.Column="1"/>
                                 </Grid>
                             </StackLayout>

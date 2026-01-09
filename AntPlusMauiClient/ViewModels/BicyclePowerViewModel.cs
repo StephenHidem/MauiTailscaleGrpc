@@ -11,7 +11,6 @@ namespace AntPlusMauiClient.ViewModels;
 public partial class BicyclePowerViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<AntDevicePageModel> _logger;
 
     [ObservableProperty]
     public partial StandardPowerSensor? Sensor { get; set; }
@@ -22,11 +21,10 @@ public partial class BicyclePowerViewModel : ObservableObject
     [ObservableProperty]
     public partial ContentView? TorqueSensorView { get; set; }
 
-    public BicyclePowerViewModel(StandardPowerSensor sensor, IServiceProvider serviceProvider, ILogger<AntDevicePageModel> logger)
+    public BicyclePowerViewModel(StandardPowerSensor sensor, IServiceProvider serviceProvider)
     {
         Sensor = sensor;
         _serviceProvider = serviceProvider;
-        _logger = logger;
 
         if (Sensor.TorqueSensor != null)
         {
