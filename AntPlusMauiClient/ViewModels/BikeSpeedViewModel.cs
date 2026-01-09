@@ -6,7 +6,7 @@ namespace AntPlusMauiClient.ViewModels
     public partial class BikeSpeedViewModel : ObservableObject
     {
         [ObservableProperty]
-        public partial BikeSpeedSensor? BikeSpeedSensor { get; set; }
+        public partial BikeSpeedSensor? BikeSpeedSensor { get; private set; }
 
         public BikeSpeedViewModel(BikeSpeedSensor bikeSpeedSensor)
         {

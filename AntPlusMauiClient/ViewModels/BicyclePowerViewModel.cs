@@ -11,13 +11,13 @@ namespace AntPlusMauiClient.ViewModels;
 public partial class BicyclePowerViewModel : ObservableObject
 {
     [ObservableProperty]
-    public partial StandardPowerSensor? Sensor { get; set; }
+    public partial StandardPowerSensor? Sensor { get; private set; }
 
     [ObservableProperty]
     public partial bool AutoCrankLength { get; set; }
 
     [ObservableProperty]
-    public partial ContentView? TorqueSensorView { get; set; }
+    public partial ContentView? TorqueSensorView { get; private set; }
 
     public BicyclePowerViewModel(StandardPowerSensor sensor, IServiceProvider serviceProvider, ILogger<BicyclePowerViewModel> logger)
     {

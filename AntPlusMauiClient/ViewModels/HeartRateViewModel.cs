@@ -9,7 +9,7 @@ namespace AntPlusMauiClient.ViewModels
     public partial class HeartRateViewModel : ObservableObject
     {
         [ObservableProperty]
-        public partial HeartRate? HeartRate { get; set; }
+        public partial HeartRate? HeartRate { get; private set; }
 
         [ObservableProperty]
         public partial SportMode ModeRequested { get; set; }

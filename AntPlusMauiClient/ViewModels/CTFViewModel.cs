@@ -7,7 +7,7 @@ namespace AntPlusMauiClient.ViewModels
     public partial class CTFViewModel : ObservableObject
     {
         [ObservableProperty]
-        public partial CrankTorqueFrequencySensor? Sensor { get; set; }
+        public partial CrankTorqueFrequencySensor? Sensor { get; private set; }
 
         public CTFViewModel(CrankTorqueFrequencySensor crankTorqueFrequencySensor)
         {
