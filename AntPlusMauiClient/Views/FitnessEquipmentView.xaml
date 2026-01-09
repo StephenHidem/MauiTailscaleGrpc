@@ -2,11 +2,98 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
+             xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:exp="clr-namespace:Syncfusion.Maui.Toolkit.Expander;assembly=Syncfusion.Maui.Toolkit"
+             x:DataType="vm:FitnessEquipmentViewModel"
              x:Class="AntPlusMauiClient.Views.FitnessEquipmentView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <tabview:SfTabView>
+        <tabview:SfTabItem Header="Fitness Equipment" FontAttributes="Bold">
+            <tabview:SfTabItem.Content>
+                <StackLayout>
+                    <Border>
+                        <StackLayout>
+                            <ContentView Content="{Binding SpecificEquipmentView}"/>
+                            <Label Text="{Binding FitnessEquipment.State, StringFormat='Equipment State: {0}'}" Margin="8, 0"/>
+                        </StackLayout>
+                    </Border>
+                    <Border>
+                        <exp:SfExpander>
+                            <exp:SfExpander.Header>
+                                <Label Text="General Data" FontAttributes="Bold" FontSize="Medium" Margin="0, 8, 0, 8"/>
+                            </exp:SfExpander.Header>
+                            <exp:SfExpander.Content>
+                                <StackLayout Margin="8, 0, 0, 0">
+                                    <Label Text="{Binding FitnessEquipment.GeneralData.EquipmentType, StringFormat='Equipment Type: {0}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralData.ElapsedTime, StringFormat='Elapsed Time: {0:hh\\:mm\\:ss}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralData.DistanceTraveled, StringFormat='Distance Traveled: {0}'}" IsVisible="{Binding FitnessEquipment.GeneralData.DistanceTraveledEnabled}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralData.InstantaneousSpeed, StringFormat='Speed: {0}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralData.InstantaneousHeartRate, StringFormat='Heart Rate: {0}'}"/>
+                                    <Label Text="{Binding LapSplitTime, StringFormat='Lap Split Time: {0:hh\\:mm\\:ss\\.ff}'}"/>
+                                </StackLayout>
+                            </exp:SfExpander.Content>
+                        </exp:SfExpander>
+                    </Border>
+                    <Border>
+                        <exp:SfExpander>
+                            <exp:SfExpander.Header>
+                                <Label Text="General Settings" FontAttributes="Bold" FontSize="Medium" Margin="0, 8, 0, 8"/>
+                            </exp:SfExpander.Header>
+                            <exp:SfExpander.Content>
+                                <StackLayout Margin="8, 0, 0, 0">
+                                    <Label Text="{Binding FitnessEquipment.GeneralSettings.CycleLength, StringFormat='Cycle Length: {0}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralSettings.Incline, StringFormat='Incline: {0}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralSettings.ResistanceLevel, StringFormat='Resistance Level: {0}'}"/>
+                                </StackLayout>
+                            </exp:SfExpander.Content>
+                        </exp:SfExpander>
+                    </Border>
+                    <Border>
+                        <exp:SfExpander>
+                            <exp:SfExpander.Header>
+                                <Label Text="General Metabolic" FontAttributes="Bold" FontSize="Medium" Margin="0, 8, 0, 8"/>
+                            </exp:SfExpander.Header>
+                            <exp:SfExpander.Content>
+                                <StackLayout Margin="8, 0, 0, 0">
+                                    <Label Text="{Binding FitnessEquipment.GeneralMetabolic.AccumulatedCalories, StringFormat='Accumulated Calories: {0}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralMetabolic.CaloricBurnRate, StringFormat='Caloric Burn Rate: {0:F1}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralMetabolic.InstantaneousMET, StringFormat='Instantaneous MET: {0:F2}'}"/>
+                                </StackLayout>
+                            </exp:SfExpander.Content>
+                        </exp:SfExpander>
+                    </Border>
+                </StackLayout>
+            </tabview:SfTabItem.Content>
+        </tabview:SfTabItem>
+        <tabview:SfTabItem Header="Capabilities and Settings" FontAttributes="Bold">
+            <StackLayout>
+                <Border>
+                    <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8">
+                        <StackLayout>
+                            <Label Text="Supported Training Modes" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Label Text="{Binding FitnessEquipment.TrainingModes, StringFormat='Capabiities: {0}'}"/>
+                            <Label Text="{Binding FitnessEquipment.MaxTrainerResistance, StringFormat='Max. Resistance (Newtons): {0}'}"/>
+                        </StackLayout>
+                    </Grid>
+                </Border>
+                <Border>
+                    <StackLayout>
+                        <Label Text="Resistance Settings" Style="{StaticResource HeaderLabelStyle}"/>
+                        <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8">
+                            <Button Text="Set Target Power" Command="{Binding SetTargetPowerCommand}" CommandParameter="{Binding Text, Source={x:Reference TargetPower}, x:DataType=Entry}"/>
+                            <Entry Grid.Column="1" x:Name="TargetPower" Placeholder="Target Power"/>
+                            <Button Grid.Row="1" Text="Set Basic Resistance" Command="{Binding SetBasicResistanceCommand}" CommandParameter="{Binding Text, Source={x:Reference BasicResistance}, x:DataType=Entry}"/>
+                            <Entry Grid.Column="1" Grid.Row="1" x:Name="BasicResistance" Placeholder="Basic Resistance"/>
+                            <Button Grid.Row="2" Text="Set Track Resistance" Command="{Binding SetTrackResistanceCommand}"/>
+                            <StackLayout Grid.Column="1" Grid.Row="2">
+                                <Entry Placeholder="Grade"/>
+                                <Entry Placeholder="Coeff. of Rolling Resistance"/>
+                            </StackLayout>
+                            <Button Grid.Row="3" Text="Set Wind Resistance" Command="{Binding SetWindResistanceCommand}" CommandParameter="{Binding Text, Source={x:Reference WindResistance}, x:DataType=Entry}"/>
+                            <Entry Grid.Column="1" Grid.Row="3" Placeholder="Wind Resistance" x:Name="WindResistance"/>
+                        </Grid>
+                    </StackLayout>
+                </Border>
+            </StackLayout>
+        </tabview:SfTabItem>
+    </tabview:SfTabView>
 </ContentView>

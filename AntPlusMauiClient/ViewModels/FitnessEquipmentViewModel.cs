@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AntPlusMauiClient.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using SmallEarthTech.AntPlus.DeviceProfiles.FitnessEquipment;
 using static SmallEarthTech.AntPlus.DeviceProfiles.FitnessEquipment.FitnessEquipment;
 
@@ -7,6 +9,16 @@ namespace AntPlusMauiClient.ViewModels
 {
     public partial class FitnessEquipmentViewModel : ObservableObject
     {
+        private static readonly Dictionary<Type, Type> equipmentViewMap = new()
+        {
+            { typeof(Treadmill), typeof(TreadmillView) },
+            { typeof(Elliptical), typeof(EllipticalView) },
+            { typeof(Rower), typeof(RowerView) },
+            { typeof(Climber), typeof(ClimberView) },
+            { typeof(NordicSkier), typeof(NordicSkierView) },
+            { typeof(TrainerStationaryBike), typeof(TrainerStationaryBikeView) }
+        };
+
         [ObservableProperty]
         public partial FitnessEquipment? FitnessEquipment { get; set; }
         [ObservableProperty]
@@ -40,43 +52,23 @@ namespace AntPlusMauiClient.ViewModels
         [ObservableProperty]
         public partial string[]? Capabilities { get; set; }
 
-        public FitnessEquipmentViewModel(FitnessEquipment fitnessEquipment)
+        public FitnessEquipmentViewModel(FitnessEquipment fitnessEquipment, IServiceProvider serviceProvider, ILogger<FitnessEquipmentViewModel> logger)
         {
             FitnessEquipment = fitnessEquipment;
+
+            // Initialize the specific equipment view based on the type of fitness equipment
+            Type equipmentType = FitnessEquipment.GetType();
+            if (equipmentViewMap.TryGetValue(equipmentType, out var viewType))
+            {
+                SpecificEquipmentView = (ContentView)ActivatorUtilities.CreateInstance(serviceProvider, viewType, FitnessEquipment);
+            }
+            else
+            {
+                logger.LogError("Unsupported fitness equipment type: {EquipmentType}", equipmentType.Name);
+            }
+
             FitnessEquipment.LapToggled += FitnessEquipment_LapToggled;
             FitnessEquipment.PropertyChanged += FitnessEquipment_PropertyChanged;
-        }
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            FitnessEquipment = (FitnessEquipment)query["Sensor"];
-            FitnessEquipment.LapToggled += FitnessEquipment_LapToggled;
-            FitnessEquipment.PropertyChanged += FitnessEquipment_PropertyChanged;
-
-            //switch (FitnessEquipment)
-            //{
-            //    case Treadmill:
-            //        SpecificEquipmentView = new TreadmillView((Treadmill)FitnessEquipment);
-            //        break;
-            //    case Elliptical:
-            //        SpecificEquipmentView = new EllipticalView((Elliptical)FitnessEquipment);
-            //        break;
-            //    case Rower:
-            //        SpecificEquipmentView = new RowerView((Rower)FitnessEquipment);
-            //        break;
-            //    case Climber:
-            //        SpecificEquipmentView = new ClimberView((Climber)FitnessEquipment);
-            //        break;
-            //    case NordicSkier:
-            //        SpecificEquipmentView = new NordicSkierView((NordicSkier)FitnessEquipment);
-            //        break;
-            //    case TrainerStationaryBike:
-            //        SpecificEquipmentView = new TrainerStationaryBikeView((TrainerStationaryBike)FitnessEquipment);
-            //        break;
-            //    default:
-            //        break;
-            //}
-
             _ = FitnessEquipment.RequestFECapabilities();
         }
 

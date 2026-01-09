@@ -23,6 +23,7 @@ namespace AntPlusMauiClient.PageModels
             { typeof(CombinedSpeedAndCadenceSensor), (typeof(BikeSpeedAndCadenceViewModel), typeof(BikeSpeedAndCadenceView)) },
             { typeof(BikeCadenceSensor), (typeof(BikeCadenceViewModel), typeof(BikeCadenceView)) },
             { typeof(FitnessEquipment), (typeof(FitnessEquipmentViewModel), typeof(FitnessEquipmentView)) },
+            { typeof(Treadmill), (typeof(FitnessEquipmentViewModel), typeof(FitnessEquipmentView)) },
             { typeof(Geocache), (typeof(GeocacheViewModel), typeof(GeocacheView)) },
             { typeof(HeartRate), (typeof(HeartRateViewModel), typeof(HeartRateView)) },
             { typeof(MuscleOxygen), (typeof(MuscleOxygenViewModel), typeof(MuscleOxygenView)) },
