@@ -36,7 +36,7 @@
                     Grid.RowSpan="4"
                     Grid.Column="0"
                     Source="antplus.png"
-                    HeightRequest="145"
+                    HeightRequest="140"
                     Aspect="AspectFit"
                     SemanticProperties.Description="ant plus server" />
 
@@ -57,10 +57,10 @@
                     <Label Text="{Binding HostVersion}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
 
-                <exp:SfExpander Grid.Column="1" Grid.Row="4">
+                <exp:SfExpander Grid.ColumnSpan="2" Grid.Row="4">
                     <exp:SfExpander.Header>
                         <Grid>
-                            <Label Text="ANT+ Radio Capabilities" FontSize="Subtitle" FontAttributes="Bold"  />
+                            <Label Text="ANT+ Radio Capabilities" FontSize="Subtitle" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                         </Grid>
                     </exp:SfExpander.Header>
                     <exp:SfExpander.Content>
@@ -79,7 +79,7 @@
                                     <CollectionView ItemsSource="{Binding Flags}">
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate x:DataType="x:String">
-                                                <Label Text="{Binding ., StringFormat='- {0}'}"/>
+                                                <Label Text="{Binding ., StringFormat='- {0}'}" LineBreakMode="NoWrap"/>
                                             </DataTemplate>
                                         </CollectionView.ItemTemplate>
                                     </CollectionView>
@@ -105,7 +105,7 @@
                     <DataTemplate x:DataType="ant:AntDevice">
                         <Border>
                             <Grid Padding="8" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto">
-                                <Image Margin="0,0,10,0" Grid.RowSpan="2" Source="{Binding ., Converter={StaticResource StreamToImage}}" Aspect="AspectFill" HeightRequest="40"/>
+                                <Image Margin="0,0,10,0" Grid.RowSpan="2" Source="{Binding ., Converter={StaticResource StreamToImage}}" Aspect="AspectFit" HeightRequest="40"/>
                                 <Label Grid.Column="1" Text="{Binding .}"/>
                                 <Label Grid.Column="1" Grid.Row="1" Text="{Binding ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}"/>
                                 <Image Source="more_arrow.png" Aspect="AspectFill" Background="Transparent"

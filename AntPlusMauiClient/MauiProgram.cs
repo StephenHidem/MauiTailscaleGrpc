@@ -85,34 +85,7 @@ namespace AntPlusMauiClient
                 .AddTransient<HeartRateView>()
                 .AddTransient<MuscleOxygenView>()
                 .AddTransient<SDMView>()
-                .AddTransient<UnknownDeviceView>()
-
-                // Factory delegates (examples for common devices)
-                .AddTransient<Func<Tracker, AssetTrackerView>>(sp => tracker =>
-                {
-                    var vm = ActivatorUtilities.CreateInstance<AssetTrackerViewModel>(sp, tracker);
-                    return ActivatorUtilities.CreateInstance<AssetTrackerView>(sp, vm);
-                })
-                .AddTransient<Func<StandardPowerSensor, BicyclePowerView>>(sp => device =>
-                {
-                    var vm = ActivatorUtilities.CreateInstance<BicyclePowerViewModel>(sp, device);
-                    return ActivatorUtilities.CreateInstance<BicyclePowerView>(sp, vm);
-                })
-                .AddTransient<Func<BikeSpeedSensor, BikeSpeedView>>(sp => device =>
-                {
-                    var vm = ActivatorUtilities.CreateInstance<BikeSpeedViewModel>(sp, device);
-                    return ActivatorUtilities.CreateInstance<BikeSpeedView>(sp, vm);
-                })
-                .AddTransient<Func<CombinedSpeedAndCadenceSensor, BikeSpeedAndCadenceView>>(sp => device =>
-                {
-                    var vm = ActivatorUtilities.CreateInstance<BikeSpeedAndCadenceViewModel>(sp, device);
-                    return ActivatorUtilities.CreateInstance<BikeSpeedAndCadenceView>(sp, vm);
-                })
-                .AddTransient<Func<CrankTorqueFrequencySensor, CTFView>>(sp => device =>
-                {
-                    var vm = ActivatorUtilities.CreateInstance<CTFViewModel>(sp, device);
-                    return ActivatorUtilities.CreateInstance<CTFView>(sp, vm);
-                });
+                .AddTransient<UnknownDeviceView>();
 
             return mauiAppBuilder;
         }

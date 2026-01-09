@@ -1,6 +1,7 @@
 ﻿using AntPlusMauiClient.ViewModels;
 using AntPlusMauiClient.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.Logging;
 using SmallEarthTech.AntPlus;
 using SmallEarthTech.AntPlus.DeviceProfiles;
 using SmallEarthTech.AntPlus.DeviceProfiles.AssetTracker;
@@ -15,11 +16,23 @@ namespace AntPlusMauiClient.PageModels
 {
     public partial class AntDevicePageModel : ObservableObject, IQueryAttributable
     {
-        private readonly Func<Tracker, AssetTrackerView> _assetTrackerFactory;
-        private readonly Func<StandardPowerSensor, BicyclePowerView> _bicyclePowerFactory;
-        private readonly Func<BikeSpeedSensor, BikeSpeedView> _bikeSpeedFactory;
-        private readonly Func<CombinedSpeedAndCadenceSensor, BikeSpeedAndCadenceView> _speedAndCadenceFactory;
-        private readonly Func<CrankTorqueFrequencySensor, CTFView> _ctfFactory;
+        // Map of device types to their corresponding ViewModel and View types
+        private static readonly Dictionary<Type, (Type, Type)> DeviceViewMap = new()
+        {
+            { typeof(Tracker), (typeof(AssetTrackerViewModel), typeof(AssetTrackerView)) },
+            { typeof(StandardPowerSensor), (typeof(BicyclePowerViewModel), typeof(BicyclePowerView)) },
+            { typeof(CrankTorqueFrequencySensor), (typeof(CTFViewModel), typeof(CTFView)) },
+            { typeof(BikeSpeedSensor), (typeof(BikeSpeedViewModel), typeof(BikeSpeedView)) },
+            { typeof(CombinedSpeedAndCadenceSensor), (typeof(BikeSpeedAndCadenceViewModel), typeof(BikeSpeedAndCadenceView)) },
+            { typeof(BikeCadenceSensor), (typeof(BikeCadenceViewModel), typeof(BikeCadenceView)) },
+            { typeof(FitnessEquipment), (typeof(FitnessEquipmentViewModel), typeof(FitnessEquipmentView)) },
+            { typeof(Geocache), (typeof(GeocacheViewModel), typeof(GeocacheView)) },
+            { typeof(HeartRate), (typeof(HeartRateViewModel), typeof(HeartRateView)) },
+            { typeof(MuscleOxygen), (typeof(MuscleOxygenViewModel), typeof(MuscleOxygenView)) },
+            { typeof(StrideBasedSpeedAndDistance), (typeof(SDMViewModel), typeof(SDMView)) }
+        };
+        private readonly IServiceProvider _serviceProvider;
+        private readonly ILogger<AntDevicePageModel> _logger;
 
         [ObservableProperty]
         public partial AntDevice? Device { get; set; }
@@ -27,64 +40,37 @@ namespace AntPlusMauiClient.PageModels
         [ObservableProperty]
         public partial ContentView? AntDeviceView { get; set; }
 
-        public AntDevicePageModel(
-            Func<Tracker, AssetTrackerView> assetTrackerFactory,
-            Func<StandardPowerSensor, BicyclePowerView> bicyclePowerFactory,
-            Func<BikeSpeedSensor, BikeSpeedView> bikeSpeedFactory,
-            Func<CombinedSpeedAndCadenceSensor, BikeSpeedAndCadenceView> speedAndCadenceFactory,
-            Func<CrankTorqueFrequencySensor, CTFView> ctfFactory)
+        public AntDevicePageModel(IServiceProvider serviceProvider, ILogger<AntDevicePageModel> logger)
         {
-            _assetTrackerFactory = assetTrackerFactory;
-            _bicyclePowerFactory = bicyclePowerFactory;
-            _bikeSpeedFactory = bikeSpeedFactory;
-            _speedAndCadenceFactory = speedAndCadenceFactory;
-            _ctfFactory = ctfFactory;
+            _serviceProvider = serviceProvider;
+            _logger = logger;
         }
+
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            Device = (AntDevice)query["AntDevice"];
-
-            // switch on device type to create appropriate view
-            switch (Device)
+            if (!query.TryGetValue("AntDevice", out var deviceObj) || deviceObj is not AntDevice device)
             {
-                case Tracker trackerDevice:
-                    AntDeviceView = _assetTrackerFactory(trackerDevice);
-                    break;
-                case StandardPowerSensor bikePowerDevice:
-                    AntDeviceView = _bicyclePowerFactory(bikePowerDevice);
-                    break;
-                case CrankTorqueFrequencySensor crankTorqueFrequencySensor:
-                    AntDeviceView = _ctfFactory(crankTorqueFrequencySensor);
-                    break;
-                case BikeSpeedSensor bikeSpeedSensor:
-                    AntDeviceView = _bikeSpeedFactory(bikeSpeedSensor);
-                    break;
-                case CombinedSpeedAndCadenceSensor combinedSensor:
-                    AntDeviceView = _speedAndCadenceFactory(combinedSensor);
-                    break;
-                case BikeCadenceSensor bikeCadenceSensor:
-                    AntDeviceView = new BikeCadenceView(new BikeCadenceViewModel(bikeCadenceSensor));
-                    break;
-                case FitnessEquipment fitnessEquipmentDevice:
-                    AntDeviceView = new FitnessEquipmentView(new FitnessEquipmentViewModel(fitnessEquipmentDevice));
-                    break;
-                case Geocache geocacheDevice:
-                    AntDeviceView = new GeocacheView(new GeocacheViewModel(geocacheDevice));
-                    break;
-                case HeartRate heartRateDevice:
-                    AntDeviceView = new HeartRateView(new HeartRateViewModel(heartRateDevice));
-                    break;
-                case MuscleOxygen muscleOxygenDevice:
-                    AntDeviceView = new MuscleOxygenView(new MuscleOxygenViewModel(muscleOxygenDevice));
-                    break;
-                case StrideBasedSpeedAndDistance speedAndDistanceDevice:
-                    AntDeviceView = new SDMView(new SDMViewModel(speedAndDistanceDevice));
-                    break;
-                case UnknownDevice unknownDevice:
-                    AntDeviceView = new UnknownDeviceView(new UnknownDeviceViewModel(unknownDevice));
-                    break;
-                default:
-                    break;
+                // It's good practice to handle cases where expected query parameters are missing or of the wrong type.
+                // Consider logging this and/or navigating back.
+                _logger.LogWarning("AntDevice query parameter is missing or invalid.");
+                return;
+            }
+            Device = device;
+
+            // Determine the ViewModel and View types based on the device type
+            var deviceType = Device.GetType();
+            var (viewModelType, contentViewType) = DeviceViewMap.GetValueOrDefault(deviceType, (typeof(UnknownDeviceViewModel), typeof(UnknownDeviceView)));
+
+            try
+            {
+                var viewModelInstance = ActivatorUtilities.CreateInstance(_serviceProvider, viewModelType, Device);
+                AntDeviceView = (ContentView)ActivatorUtilities.CreateInstance(_serviceProvider, contentViewType, viewModelInstance);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating view for device type {DeviceType}", deviceType.Name);
+                var fallbackViewModel = ActivatorUtilities.CreateInstance(_serviceProvider, typeof(UnknownDeviceViewModel), Device);
+                AntDeviceView = (ContentView)ActivatorUtilities.CreateInstance(_serviceProvider, typeof(UnknownDeviceView), fallbackViewModel);
             }
         }
     }
