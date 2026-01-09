@@ -10,8 +10,6 @@ namespace AntPlusMauiClient.ViewModels;
 
 public partial class BicyclePowerViewModel : ObservableObject
 {
-    private readonly IServiceProvider _serviceProvider;
-
     [ObservableProperty]
     public partial StandardPowerSensor? Sensor { get; set; }
 
@@ -24,27 +22,24 @@ public partial class BicyclePowerViewModel : ObservableObject
     public BicyclePowerViewModel(StandardPowerSensor sensor, IServiceProvider serviceProvider, ILogger<BicyclePowerViewModel> logger)
     {
         Sensor = sensor;
-        _serviceProvider = serviceProvider;
 
         if (Sensor.TorqueSensor != null)
         {
             Type viewType;
-            if (Sensor.TorqueSensor is StandardCrankTorqueSensor)
+            switch (Sensor.TorqueSensor)
             {
-                viewType = typeof(BicycleCrankTorqueView);
+                case StandardCrankTorqueSensor:
+                    viewType = typeof(BicycleCrankTorqueView);
+                    break;
+                case StandardWheelTorqueSensor:
+                    viewType = typeof(BicycleWheelTorqueView);
+                    break;
+                default:
+                    logger.LogError("Unsupported torque sensor type: {TorqueSensorType}", Sensor.TorqueSensor.GetType().Name);
+                    throw new NotSupportedException($"Unsupported torque sensor type: {Sensor.TorqueSensor.GetType().Name}");
             }
-            else if (Sensor.TorqueSensor is StandardWheelTorqueSensor)
-            {
-                viewType = typeof(BicycleWheelTorqueView);
-            }
-            else
-            {
-                logger.LogError("Unsupported torque sensor type: {TorqueSensorType}", Sensor.TorqueSensor.GetType().Name);
-                throw new NotSupportedException($"Unsupported torque sensor type: {Sensor.TorqueSensor.GetType().Name}");
-            }
-            TorqueSensorView = (ContentView)ActivatorUtilities.CreateInstance(_serviceProvider, viewType, Sensor.TorqueSensor);
+            TorqueSensorView = (ContentView)ActivatorUtilities.CreateInstance(serviceProvider, viewType, Sensor.TorqueSensor);
         }
-
         Sensor.PropertyChanged += OnPropertyChanged;
     }
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)

@@ -41,33 +41,33 @@
                     SemanticProperties.Description="ant plus server" />
 
                 <VerticalStackLayout Grid.Column="1">
-                    <Label Text="ANT+ Server" FontSize="Caption" FontAttributes="Bold" TextDecorations="Underline"/>
+                    <Label Text="ANT+ Server" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
                     <Label Text="{Binding ServerUrl}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1" Grid.Row="1">
-                    <Label Text="Product Description" FontSize="Caption" FontAttributes="Bold" TextDecorations="Underline"/>
+                    <Label Text="Product Description" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
                     <Label Text="{Binding ProductDescription}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1" Grid.Row="2">
-                    <Label Text="Serial Number" FontSize="Caption" FontAttributes="Bold" TextDecorations="Underline"/>
+                    <Label Text="Serial Number" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
                     <Label Text="{Binding SerialNumber}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1" Grid.Row="3">
-                    <Label Text="Host Version" FontSize="Caption" FontAttributes="Bold" TextDecorations="Underline"/>
+                    <Label Text="Host Version" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
                     <Label Text="{Binding HostVersion}" FontSize="Default" Margin="24, 0, 0, 8"/>
                 </VerticalStackLayout>
 
                 <exp:SfExpander Grid.ColumnSpan="2" Grid.Row="4">
                     <exp:SfExpander.Header>
                         <Grid>
-                            <Label Text="ANT+ Radio Capabilities" FontSize="Subtitle" FontAttributes="Bold" TextDecorations="Underline" HorizontalTextAlignment="Center"/>
+                            <Label Text="ANT+ Radio Capabilities" FontSize="Subtitle" Style="{StaticResource HeaderLabelStyle}" HorizontalTextAlignment="Center"/>
                         </Grid>
                     </exp:SfExpander.Header>
                     <exp:SfExpander.Content>
                         <Grid Margin="10" RowDefinitions="Auto, *">
                             <Border>
                                 <VerticalStackLayout>
-                                    <Label Text="Capabilities" FontAttributes="Bold" TextDecorations="Underline"/>
+                                    <Label Text="Capabilities" Style="{StaticResource HeaderLabelStyle}"/>
                                     <Label Text="{Binding Capabilities.MaxANTChannels, StringFormat='Max. ANT channel - {0}'}" />
                                     <Label Text="{Binding Capabilities.MaxNetworks, StringFormat='Max. Networks - {0}'}"/>
                                     <Label Text="{Binding Capabilities.MaxDataChannels, StringFormat='Max. Data Channels - {0}'}" />
@@ -75,7 +75,7 @@
                             </Border>
                             <Border Grid.Row="1">
                                 <StackLayout>
-                                    <Label Text="Flags" FontAttributes="Bold" TextDecorations="Underline"/>
+                                    <Label Text="Flags" Style="{StaticResource HeaderLabelStyle}"/>
                                     <CollectionView ItemsSource="{Binding Flags}">
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate x:DataType="x:String">
