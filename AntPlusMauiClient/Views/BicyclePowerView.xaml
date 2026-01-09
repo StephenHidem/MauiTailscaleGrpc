@@ -25,7 +25,7 @@
                         </Border>
                         <Border>
                             <StackLayout>
-                                <Label Text="Torque Effectivenes and Pedal Smoothness" Style="{StaticResource HeaderLabelStyle}"/>
+                                <Label Text="Torque Effectiveness and Pedal Smoothness" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding Sensor.CombinedPedalSmoothness, StringFormat='Combined Pedal Smoothness: {0}'}"/>
                                 <Label Text="{Binding Sensor.LeftPedalSmoothness, StringFormat='Left Pedal Smoothness: {0}'}"/>
                                 <Label Text="{Binding Sensor.LeftTorqueEffectiveness, StringFormat='Left Torque Effectiveness: {0}'}"/>
