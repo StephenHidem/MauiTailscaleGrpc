@@ -39,7 +39,6 @@ public partial class BicyclePowerViewModel : ObservableObject
             else
             {
                 logger.LogError("Unsupported torque sensor type: {TorqueSensorType}", sensorType.Name);
-                throw new NotSupportedException($"Unsupported torque sensor type: {sensorType.Name}");
             }
         }
 
