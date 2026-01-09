@@ -76,6 +76,8 @@ namespace AntPlusMauiClient
                 // Views
                 .AddTransient<AssetTrackerView>()
                 .AddTransient<BicyclePowerView>()
+                .AddTransient<BicycleCrankTorqueView>()
+                .AddTransient<BicycleWheelTorqueView>()
                 .AddTransient<CTFView>()
                 .AddTransient<BikeSpeedView>()
                 .AddTransient<BikeSpeedAndCadenceView>()

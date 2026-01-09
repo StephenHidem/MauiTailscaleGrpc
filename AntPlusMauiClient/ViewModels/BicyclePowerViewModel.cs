@@ -1,5 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AntPlusMauiClient.PageModels;
+using AntPlusMauiClient.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using SmallEarthTech.AntPlus.DeviceProfiles.BicyclePower;
 using System.ComponentModel;
 
@@ -7,6 +10,9 @@ namespace AntPlusMauiClient.ViewModels;
 
 public partial class BicyclePowerViewModel : ObservableObject
 {
+    private readonly IServiceProvider _serviceProvider;
+    private readonly ILogger<AntDevicePageModel> _logger;
+
     [ObservableProperty]
     public partial StandardPowerSensor? Sensor { get; set; }
 
@@ -16,33 +22,27 @@ public partial class BicyclePowerViewModel : ObservableObject
     [ObservableProperty]
     public partial ContentView? TorqueSensorView { get; set; }
 
-    public BicyclePowerViewModel(StandardPowerSensor sensor)
+    public BicyclePowerViewModel(StandardPowerSensor sensor, IServiceProvider serviceProvider, ILogger<AntDevicePageModel> logger)
     {
-        SendOrPostCallback action = (o) =>
-        {
-            Sensor = sensor;
-            Sensor.PropertyChanged += OnPropertyChanged;
-        };
-    }
+        Sensor = sensor;
+        _serviceProvider = serviceProvider;
+        _logger = logger;
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        //Sensor = (StandardPowerSensor)query["Sensor"];
-        //Sensor.PropertyChanged += OnPropertyChanged;
-        //if (Sensor.TorqueSensor != null)
-        //{
-        //    switch (Sensor.TorqueSensor)
-        //    {
-        //        case StandardCrankTorqueSensor:
-        //            TorqueSensorView = new BicycleCrankTorqueView((StandardCrankTorqueSensor)Sensor.TorqueSensor);
-        //            break;
-        //        case StandardWheelTorqueSensor:
-        //            TorqueSensorView = new BicycleWheelTorqueView((StandardWheelTorqueSensor)Sensor.TorqueSensor);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+        if (Sensor.TorqueSensor != null)
+        {
+            TorqueSensorView = (ContentView)ActivatorUtilities.CreateInstance(
+                _serviceProvider,
+                Sensor.TorqueSensor switch
+                {
+                    StandardCrankTorqueSensor _ => typeof(BicycleCrankTorqueView),
+                    StandardWheelTorqueSensor _ => typeof(BicycleWheelTorqueView),
+                    _ => throw new NotSupportedException("Unsupported torque sensor type")
+                },
+                Sensor.TorqueSensor
+            );
+        }
+
+        Sensor.PropertyChanged += OnPropertyChanged;
     }
 
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
