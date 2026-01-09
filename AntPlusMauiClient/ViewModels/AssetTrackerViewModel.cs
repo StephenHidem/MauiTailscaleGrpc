@@ -6,7 +6,7 @@ namespace AntPlusMauiClient.ViewModels
     public partial class AssetTrackerViewModel : ObservableObject
     {
         [ObservableProperty]
-        public partial Tracker Tracker { get; set; }
+        public partial Tracker Tracker { get; private set; }
 
         public AssetTrackerViewModel(Tracker tracker)
         {

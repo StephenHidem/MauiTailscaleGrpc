@@ -8,9 +8,6 @@ using SmallEarthTech.AntPlus.DeviceProfiles.AssetTracker;
 using SmallEarthTech.AntPlus.DeviceProfiles.BicyclePower;
 using SmallEarthTech.AntPlus.DeviceProfiles.BikeSpeedAndCadence;
 using SmallEarthTech.AntPlus.DeviceProfiles.FitnessEquipment;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AntPlusMauiClient.PageModels
 {

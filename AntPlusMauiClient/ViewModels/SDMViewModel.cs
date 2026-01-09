@@ -7,7 +7,7 @@ namespace AntPlusMauiClient.ViewModels
     public partial class SDMViewModel : ObservableObject
     {
         [ObservableProperty]
-        public partial StrideBasedSpeedAndDistance? StrideSpeedDistanceMonitor { get; set; }
+        public partial StrideBasedSpeedAndDistance? StrideSpeedDistanceMonitor { get; private set; }
 
         public SDMViewModel(StrideBasedSpeedAndDistance strideBasedSpeedAndDistance)
         {

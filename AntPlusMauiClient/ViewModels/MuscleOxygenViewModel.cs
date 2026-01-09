@@ -9,7 +9,7 @@ namespace AntPlusMauiClient.ViewModels
         private bool started = false;
 
         [ObservableProperty]
-        public partial MuscleOxygen? MuscleOxygen { get; set; }
+        public partial MuscleOxygen? MuscleOxygen { get; private set; }
 
         [ObservableProperty]
         public partial int Hours { get; set; }

@@ -16,7 +16,7 @@ namespace AntPlusMauiClient.ViewModels
         public partial bool IsBusy { get; set; }
 
         [ObservableProperty]
-        public partial Geocache? Geocache { get; set; }
+        public partial Geocache? Geocache { get; private set; }
 
         [ObservableProperty]
         public partial uint Pin { get; set; }

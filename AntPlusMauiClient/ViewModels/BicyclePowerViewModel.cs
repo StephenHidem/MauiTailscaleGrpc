@@ -1,5 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AntPlusMauiClient.PageModels;
+using AntPlusMauiClient.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using SmallEarthTech.AntPlus.DeviceProfiles.BicyclePower;
 using System.ComponentModel;
 
@@ -7,44 +10,40 @@ namespace AntPlusMauiClient.ViewModels;
 
 public partial class BicyclePowerViewModel : ObservableObject
 {
+    private static readonly Dictionary<Type, Type> torqueSensorViewMap = new()
+    {
+        { typeof(StandardCrankTorqueSensor), typeof(BicycleCrankTorqueView) },
+        { typeof(StandardWheelTorqueSensor), typeof(BicycleWheelTorqueView) }
+    };
+
     [ObservableProperty]
-    public partial StandardPowerSensor? Sensor { get; set; }
+    public partial StandardPowerSensor? Sensor { get; private set; }
 
     [ObservableProperty]
     public partial bool AutoCrankLength { get; set; }
 
     [ObservableProperty]
-    public partial ContentView? TorqueSensorView { get; set; }
+    public partial ContentView? TorqueSensorView { get; private set; }
 
-    public BicyclePowerViewModel(StandardPowerSensor sensor)
+    public BicyclePowerViewModel(StandardPowerSensor sensor, IServiceProvider serviceProvider, ILogger<BicyclePowerViewModel> logger)
     {
-        SendOrPostCallback action = (o) =>
+        Sensor = sensor;
+
+        if (Sensor.TorqueSensor != null)
         {
-            Sensor = sensor;
-            Sensor.PropertyChanged += OnPropertyChanged;
-        };
-    }
+            Type sensorType = Sensor.TorqueSensor.GetType();
+            if (torqueSensorViewMap.TryGetValue(sensorType, out var viewType))
+            {
+                TorqueSensorView = (ContentView)ActivatorUtilities.CreateInstance(serviceProvider, viewType, Sensor.TorqueSensor);
+            }
+            else
+            {
+                logger.LogError("Unsupported torque sensor type: {TorqueSensorType}", sensorType.Name);
+            }
+        }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        //Sensor = (StandardPowerSensor)query["Sensor"];
-        //Sensor.PropertyChanged += OnPropertyChanged;
-        //if (Sensor.TorqueSensor != null)
-        //{
-        //    switch (Sensor.TorqueSensor)
-        //    {
-        //        case StandardCrankTorqueSensor:
-        //            TorqueSensorView = new BicycleCrankTorqueView((StandardCrankTorqueSensor)Sensor.TorqueSensor);
-        //            break;
-        //        case StandardWheelTorqueSensor:
-        //            TorqueSensorView = new BicycleWheelTorqueView((StandardWheelTorqueSensor)Sensor.TorqueSensor);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+        Sensor.PropertyChanged += OnPropertyChanged;
     }
-
     private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == "AutoZeroSupported")
