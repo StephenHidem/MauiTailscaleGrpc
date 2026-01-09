@@ -61,8 +61,17 @@ namespace AntPlusMauiClient.PageModels
             var deviceType = Device.GetType();
             var (viewModelType, contentViewType) = DeviceViewMap.GetValueOrDefault(deviceType, (typeof(UnknownDeviceViewModel), typeof(UnknownDeviceView)));
 
-            var viewModelInstance = ActivatorUtilities.CreateInstance(_serviceProvider, viewModelType, Device);
-            AntDeviceView = (ContentView)ActivatorUtilities.CreateInstance(_serviceProvider, contentViewType, viewModelInstance);
+            try
+            {
+                var viewModelInstance = ActivatorUtilities.CreateInstance(_serviceProvider, viewModelType, Device);
+                AntDeviceView = (ContentView)ActivatorUtilities.CreateInstance(_serviceProvider, contentViewType, viewModelInstance);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating view for device type {DeviceType}", deviceType.Name);
+                var fallbackViewModel = ActivatorUtilities.CreateInstance(_serviceProvider, typeof(UnknownDeviceViewModel), Device);
+                AntDeviceView = (ContentView)ActivatorUtilities.CreateInstance(_serviceProvider, typeof(UnknownDeviceView), fallbackViewModel);
+            }
         }
     }
 }
