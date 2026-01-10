@@ -6,7 +6,7 @@ public partial class TreadmillView : ContentView
 {
     public TreadmillView(Treadmill treadmill)
     {
-        BindingContext = treadmill;
         InitializeComponent();
+        BindingContext = treadmill;
     }
 }

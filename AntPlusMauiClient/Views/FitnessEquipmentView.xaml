@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
              xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:exp="clr-namespace:Syncfusion.Maui.Toolkit.Expander;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Toolkit.NumericUpDown;assembly=Syncfusion.Maui.Toolkit"
              x:DataType="vm:FitnessEquipmentViewModel"
              x:Class="AntPlusMauiClient.Views.FitnessEquipmentView">
     <tabview:SfTabView>
@@ -70,7 +71,7 @@
                     <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8">
                         <StackLayout>
                             <Label Text="Supported Training Modes" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{Binding FitnessEquipment.TrainingModes, StringFormat='Capabiities: {0}'}"/>
+                            <Label Text="{Binding FitnessEquipment.TrainingModes, StringFormat='Capabilities: {0}'}"/>
                             <Label Text="{Binding FitnessEquipment.MaxTrainerResistance, StringFormat='Max. Resistance (Newtons): {0}'}"/>
                         </StackLayout>
                     </Grid>
@@ -79,17 +80,69 @@
                     <StackLayout>
                         <Label Text="Resistance Settings" Style="{StaticResource HeaderLabelStyle}"/>
                         <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8">
-                            <Button Text="Set Target Power" Command="{Binding SetTargetPowerCommand}" CommandParameter="{Binding Text, Source={x:Reference TargetPower}, x:DataType=Entry}"/>
-                            <Entry Grid.Column="1" x:Name="TargetPower" Placeholder="Target Power"/>
-                            <Button Grid.Row="1" Text="Set Basic Resistance" Command="{Binding SetBasicResistanceCommand}" CommandParameter="{Binding Text, Source={x:Reference BasicResistance}, x:DataType=Entry}"/>
-                            <Entry Grid.Column="1" Grid.Row="1" x:Name="BasicResistance" Placeholder="Basic Resistance"/>
+                            <Button Text="Set Target Power" Command="{Binding SetTargetPowerCommand}"/>
+                            <editors:SfNumericUpDown Grid.Column="1"
+                                                     Placeholder="Target Power"
+                                                     Value="{Binding TargetPowerWatts}"
+                                                     ShowClearButton="False"
+                                                     Minimum="0"
+                                                     Maximum="4000"
+                                                     SmallChange="0.25"
+                                                     LargeChange="10.0"/>
+
+                            <Button Grid.Row="1" Text="Set Basic Resistance" Command="{Binding SetBasicResistanceCommand}"/>
+                            <editors:SfNumericUpDown Grid.Column="1" Grid.Row="1"
+                                                     Placeholder="Basic Resistance"
+                                                     Value="{Binding BasicResistancePercent}"
+                                                     ShowClearButton="False"
+                                                     Minimum="0"
+                                                     Maximum="100"
+                                                     SmallChange="0.5"
+                                                     LargeChange="1.0"/>
+
                             <Button Grid.Row="2" Text="Set Track Resistance" Command="{Binding SetTrackResistanceCommand}"/>
                             <StackLayout Grid.Column="1" Grid.Row="2">
-                                <Entry Placeholder="Grade"/>
-                                <Entry Placeholder="Coeff. of Rolling Resistance"/>
+                                <editors:SfNumericUpDown Placeholder="Grade"
+                                                         Value="{Binding Grade}"
+                                                         ShowClearButton="False"
+                                                         Minimum="-200"
+                                                         Maximum="200"
+                                                         SmallChange="0.01"
+                                                         LargeChange="1.0"/>
+                                <editors:SfNumericUpDown Placeholder="Coeff. of Rolling Resistance"
+                                                         Value="{Binding CoefficientOfRollingResistance}"
+                                                         ShowClearButton="False"
+                                                         Minimum="0"
+                                                         Maximum="0.0127"
+                                                         SmallChange="0.00005"
+                                                         LargeChange="0.0005"
+                                                         MaximumNumberDecimalDigits="5"/>
                             </StackLayout>
-                            <Button Grid.Row="3" Text="Set Wind Resistance" Command="{Binding SetWindResistanceCommand}" CommandParameter="{Binding Text, Source={x:Reference WindResistance}, x:DataType=Entry}"/>
-                            <Entry Grid.Column="1" Grid.Row="3" Placeholder="Wind Resistance" x:Name="WindResistance"/>
+
+                            <Button Grid.Row="3" Text="Set Wind Resistance" Command="{Binding SetWindResistanceCommand}"/>
+                            <StackLayout Grid.Column="1" Grid.Row="3">
+                                <editors:SfNumericUpDown Placeholder="Wind Resistance"
+                                                         Value="{Binding WindResistanceCoefficient}"
+                                                         ShowClearButton="False"
+                                                         Minimum="0"
+                                                         Maximum="1.86"
+                                                         SmallChange="0.01"
+                                                         LargeChange="0.10"/>
+                                <editors:SfNumericUpDown Placeholder="Wind Speed"
+                                                         Value="{Binding WindSpeed}"
+                                                         ShowClearButton="False"
+                                                         Minimum="-127"
+                                                         Maximum="127"
+                                                         SmallChange="1"
+                                                         LargeChange="10"/>
+                                <editors:SfNumericUpDown Placeholder="Drafting Factor"
+                                                         Value="{Binding DraftingFactor}"
+                                                         ShowClearButton="False"
+                                                         Minimum="0"
+                                                         Maximum="1"
+                                                         SmallChange="0.01"
+                                                         LargeChange="0.10"/>
+                            </StackLayout>
                         </Grid>
                     </StackLayout>
                 </Border>

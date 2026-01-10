@@ -52,6 +52,23 @@ namespace AntPlusMauiClient.ViewModels
         [ObservableProperty]
         public partial string[]? Capabilities { get; set; }
 
+        // Resistance and power settings properties
+        [ObservableProperty]
+        public partial double BasicResistancePercent { get; set; }
+        [ObservableProperty]
+        public partial double TargetPowerWatts { get; set; }
+        [ObservableProperty]
+        public partial double Grade { get; set; }
+        [ObservableProperty]
+        public partial double CoefficientOfRollingResistance { get; set; } = 0.004;
+        [ObservableProperty]
+        public partial double WindResistanceCoefficient { get; set; }
+        [ObservableProperty]
+        public partial double WindSpeed { get; set; }
+        [ObservableProperty]
+        public partial double DraftingFactor { get; set; }
+
+
         public FitnessEquipmentViewModel(FitnessEquipment fitnessEquipment, IServiceProvider serviceProvider, ILogger<FitnessEquipmentViewModel> logger)
         {
             FitnessEquipment = fitnessEquipment;
@@ -93,19 +110,19 @@ namespace AntPlusMauiClient.ViewModels
         private async Task SetUserConfig() => _ = await FitnessEquipment!.SetUserConfiguration(UserWeight, WheelDiameterOffset, BikeWeight, WheelDiameter, GearRatio);
 
         [RelayCommand(CanExecute = nameof(CanSetBasicResistance))]
-        private async Task SetBasicResistance(string percent) => _ = await FitnessEquipment!.SetBasicResistance(double.Parse(percent));
+        private async Task SetBasicResistance() => _ = await FitnessEquipment!.SetBasicResistance(BasicResistancePercent);
         private bool CanSetBasicResistance() => FitnessEquipment != null && FitnessEquipment.TrainingModes.HasFlag(SupportedTrainingModes.BasicResistance);
 
         [RelayCommand(CanExecute = nameof(CanSetTargetPower))]
-        private async Task SetTargetPower(string power) => _ = await FitnessEquipment!.SetTargetPower(double.Parse(power));
+        private async Task SetTargetPower() => _ = await FitnessEquipment!.SetTargetPower(TargetPowerWatts);
         private bool CanSetTargetPower() => FitnessEquipment != null && FitnessEquipment.TrainingModes.HasFlag(SupportedTrainingModes.TargetPower);
 
         [RelayCommand(CanExecute = nameof(CanSetWindResistance))]
-        private async Task SetWindResistance() => _ = await FitnessEquipment!.SetWindResistance(0.51, -30, 0.9);
+        private async Task SetWindResistance() => _ = await FitnessEquipment!.SetWindResistance(WindResistanceCoefficient, (sbyte)WindSpeed, DraftingFactor);
         private bool CanSetWindResistance() => FitnessEquipment != null && FitnessEquipment.TrainingModes.HasFlag(SupportedTrainingModes.Simulation);
 
         [RelayCommand(CanExecute = nameof(CanSetTrackResistance))]
-        private async Task SetTrackResistance(string grade) => _ = await FitnessEquipment!.SetTrackResistance(double.Parse(grade));
+        private async Task SetTrackResistance() => _ = await FitnessEquipment!.SetTrackResistance(Grade, CoefficientOfRollingResistance);
         private bool CanSetTrackResistance() => FitnessEquipment != null && FitnessEquipment.TrainingModes.HasFlag(SupportedTrainingModes.Simulation);
     }
 }
