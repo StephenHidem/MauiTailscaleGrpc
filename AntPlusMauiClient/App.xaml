@@ -2,6 +2,8 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AntPlusMauiClient"
+             xmlns:exp="clr-namespace:Syncfusion.Maui.Toolkit.Expander;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
              x:Class="AntPlusMauiClient.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -26,10 +28,14 @@
                 <Setter Property="StrokeShape" Value="RoundRectangle 8"/>
             </Style>
 
-            <Style x:Key="HeaderLabelStyle" TargetType="Label">
+            <Style TargetType="Label" x:Key="HeaderLabelStyle">
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="FontSize" Value="Medium" />
-                <Setter Property="Margin" Value="0, 8, 0, 8" />
+                <Setter Property="FontSize" Value="Title" />
+            </Style>
+
+            <Style TargetType="tabview:SfTabItem">
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource Secondary}, Light={StaticResource SecondaryDarkText}}"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

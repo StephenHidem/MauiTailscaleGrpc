@@ -8,7 +8,7 @@
              x:DataType="vm:FitnessEquipmentViewModel"
              x:Class="AntPlusMauiClient.Views.FitnessEquipmentView">
     <tabview:SfTabView>
-        <tabview:SfTabItem Header="Fitness Equipment" FontAttributes="Bold">
+        <tabview:SfTabItem Header="Fitness Equipment">
             <tabview:SfTabItem.Content>
                 <StackLayout>
                     <Border>
@@ -20,7 +20,7 @@
                     <Border>
                         <exp:SfExpander>
                             <exp:SfExpander.Header>
-                                <Label Text="General Data" FontAttributes="Bold" FontSize="Medium" Margin="0, 8, 0, 8"/>
+                                <Label Text="General Data" Style="{StaticResource HeaderLabelStyle}"/>
                             </exp:SfExpander.Header>
                             <exp:SfExpander.Content>
                                 <StackLayout Margin="8, 0, 0, 0">
@@ -37,7 +37,7 @@
                     <Border>
                         <exp:SfExpander>
                             <exp:SfExpander.Header>
-                                <Label Text="General Settings" FontAttributes="Bold" FontSize="Medium" Margin="0, 8, 0, 8"/>
+                                <Label Text="General Settings" Style="{StaticResource HeaderLabelStyle}"/>
                             </exp:SfExpander.Header>
                             <exp:SfExpander.Content>
                                 <StackLayout Margin="8, 0, 0, 0">
@@ -51,7 +51,7 @@
                     <Border>
                         <exp:SfExpander>
                             <exp:SfExpander.Header>
-                                <Label Text="General Metabolic" FontAttributes="Bold" FontSize="Medium" Margin="0, 8, 0, 8"/>
+                                <Label Text="General Metabolic" Style="{StaticResource HeaderLabelStyle}"/>
                             </exp:SfExpander.Header>
                             <exp:SfExpander.Content>
                                 <StackLayout Margin="8, 0, 0, 0">
@@ -65,7 +65,7 @@
                 </StackLayout>
             </tabview:SfTabItem.Content>
         </tabview:SfTabItem>
-        <tabview:SfTabItem Header="Capabilities and Settings" FontAttributes="Bold">
+        <tabview:SfTabItem Header="Capabilities and Settings">
             <StackLayout>
                 <Border>
                     <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8">
