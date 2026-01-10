@@ -29,7 +29,8 @@ namespace AntPlusMauiClient.PageModels
             { typeof(Climber), (typeof(FitnessEquipmentViewModel), typeof(FitnessEquipmentView)) },
             { typeof(NordicSkier), (typeof(FitnessEquipmentViewModel), typeof(FitnessEquipmentView)) },
             { typeof(TrainerStationaryBike), (typeof(FitnessEquipmentViewModel), typeof(FitnessEquipmentView)) },
-            { typeof(Geocache), (typeof(GeocacheViewModel), typeof(GeocacheView)) },            { typeof(HeartRate), (typeof(HeartRateViewModel), typeof(HeartRateView)) },
+            { typeof(Geocache), (typeof(GeocacheViewModel), typeof(GeocacheView)) },
+            { typeof(HeartRate), (typeof(HeartRateViewModel), typeof(HeartRateView)) },
             { typeof(MuscleOxygen), (typeof(MuscleOxygenViewModel), typeof(MuscleOxygenView)) },
             { typeof(StrideBasedSpeedAndDistance), (typeof(SDMViewModel), typeof(SDMView)) }
         };

@@ -74,6 +74,7 @@
                             <Label Text="{Binding FitnessEquipment.TrainingModes, StringFormat='Capabilities: {0}'}"/>
                             <Label Text="{Binding FitnessEquipment.MaxTrainerResistance, StringFormat='Max. Resistance (Newtons): {0}'}"/>
                         </StackLayout>
+                        <Button Text="Request Capabilities" Command="{Binding RequestCapabilitiesCommand}" Grid.Column="1" Margin="16"/>
                     </Grid>
                 </Border>
                 <Border>

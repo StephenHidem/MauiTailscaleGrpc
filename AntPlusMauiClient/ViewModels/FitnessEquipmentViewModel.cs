@@ -107,6 +107,9 @@ namespace AntPlusMauiClient.ViewModels
         }
 
         [RelayCommand]
+        private async Task RequestCapabilities() => _ = await FitnessEquipment!.RequestFECapabilities();
+
+        [RelayCommand]
         private async Task SetUserConfig() => _ = await FitnessEquipment!.SetUserConfiguration(UserWeight, WheelDiameterOffset, BikeWeight, WheelDiameter, GearRatio);
 
         [RelayCommand(CanExecute = nameof(CanSetBasicResistance))]
