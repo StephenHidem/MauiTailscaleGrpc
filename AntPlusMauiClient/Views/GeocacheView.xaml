@@ -13,7 +13,7 @@
                     <StackLayout>
                         <Border>
                             <StackLayout>
-                                <Label Text="Data Pages" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="Data Pages" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding Geocache.TrackableId, StringFormat='Trackable ID: {0}'}"/>
                                 <Label Text="{Binding Geocache.ProgrammingPIN, StringFormat='Programming PIN: {0}'}"/>
                                 <Label Text="{Binding Geocache.TotalPagesProgrammed, StringFormat='Total Pages Programmed: {0}'}"/>
@@ -28,7 +28,7 @@
                         </Border>
                         <Border>
                             <StackLayout>
-                                <Label Text="Authentication" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="Authentication" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding AuthToken, StringFormat='Authentication Token: {0}'}"/>
                                 <Button Text="Request Authentication" Command="{Binding RequestAuthenticationCommand}"/>
                             </StackLayout>

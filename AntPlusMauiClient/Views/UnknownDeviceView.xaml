@@ -7,7 +7,7 @@
     <VerticalStackLayout>
         <CollectionView ItemsSource="{Binding DataPages}">
             <CollectionView.Header>
-                <Label Text="Data Pages" FontAttributes="Bold" TextDecorations="Underline"/>
+                <Label Text="Data Pages" Style="{StaticResource HeaderLabelStyle}"/>
             </CollectionView.Header>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="x:String">

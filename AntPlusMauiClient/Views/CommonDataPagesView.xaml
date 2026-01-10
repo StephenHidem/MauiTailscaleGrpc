@@ -5,10 +5,10 @@
              x:Name="this"
              x:DataType="views:CommonDataPagesView"
              x:Class="AntPlusMauiClient.Views.CommonDataPagesView">
-    <VerticalStackLayout BindingContext="{x:Reference this}" Spacing="8">
+    <VerticalStackLayout BindingContext="{x:Reference this}">
         <Border>
             <StackLayout>
-                <Label Text="Manufacturer" FontAttributes="Bold" TextDecorations="Underline"/>
+                <Label Text="Manufacturer" Style="{StaticResource HeaderLabelStyle}"/>
                 <Label Text="{Binding CommonDataPages.ManufacturerInfo.ManufacturerId, StringFormat='Manufacter ID: {0}'}"/>
                 <Label Text="{Binding CommonDataPages.ManufacturerInfo.ModelNumber, StringFormat='Model Number: {0}'}"/>
                 <Label Text="{Binding CommonDataPages.ManufacturerInfo.HardwareRevision, StringFormat='Hardware Revision: {0}'}"/>
@@ -17,7 +17,7 @@
 
         <Border>
             <StackLayout>
-                <Label Text="Product Info" FontAttributes="Bold" TextDecorations="Underline"/>
+                <Label Text="Product Info" Style="{StaticResource HeaderLabelStyle}"/>
                 <Label Text="{Binding CommonDataPages.ProductInfo.SoftwareRevision, StringFormat='Software Revision: {0}'}"/>
                 <Label Text="{Binding CommonDataPages.ProductInfo.SerialNumber, StringFormat='Serial Number: {0}'}"/>
             </StackLayout>
@@ -25,7 +25,7 @@
 
         <Border>
             <StackLayout>
-                <Label Text="Battery Status" FontAttributes="Bold" TextDecorations="Underline"/>
+                <Label Text="Battery Status" Style="{StaticResource HeaderLabelStyle}"/>
                 <Label Text="{Binding CommonDataPages.BatteryStatus.NumberOfBatteries, StringFormat='Number of Batteries: {0}'}"/>
                 <Label Text="{Binding CommonDataPages.BatteryStatus.Identifier, StringFormat='Battery ID: {0}'}"/>
                 <Label Text="{Binding CommonDataPages.BatteryStatus.Status, StringFormat='Battery Status: {0}'}"/>

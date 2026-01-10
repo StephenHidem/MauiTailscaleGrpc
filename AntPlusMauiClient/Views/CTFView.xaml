@@ -7,7 +7,7 @@
     <VerticalStackLayout>
         <Border>
             <StackLayout>
-                <Label Text="Crank Torque Frequency" FontAttributes="Bold" TextDecorations="Underline"/>
+                <Label Text="Crank Torque Frequency" Style="{StaticResource HeaderLabelStyle}"/>
                 <Label Text="{Binding Sensor.Slope, StringFormat='Slope (Nm/Hz): {0:F1}'}"/>
                 <Label Text="{Binding Sensor.Cadence, StringFormat='Cadence (RPM): {0:F3}'}"/>
                 <Label Text="{Binding Sensor.Torque, StringFormat='Torque (Nm): {0:F3}'}"/>
@@ -16,7 +16,7 @@
         </Border>
         <Border>
             <StackLayout>
-                <Label Text="Calibration" FontAttributes="Bold" TextDecorations="Underline"/>
+                <Label Text="Calibration" Style="{StaticResource HeaderLabelStyle}"/>
                 <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto, Auto, Auto" ColumnSpacing="16" RowSpacing="8" Margin="8">
                     <Button Text="Calibration Request" Command="{Binding ManualCalRequestCommand}"/>
                     <Label Text="{Binding Sensor.Offset, StringFormat='Calibration Offset (Hz): {0}'}" Grid.Column="1" VerticalOptions="Center"/>

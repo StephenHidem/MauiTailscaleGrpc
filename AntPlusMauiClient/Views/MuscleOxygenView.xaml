@@ -13,7 +13,7 @@
                     <StackLayout>
                         <Border>
                             <StackLayout>
-                                <Label Text="Main Data Page" FontAttributes="Bold" TextDecorations="Underline"/>
+                                <Label Text="Main Data Page" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding MuscleOxygen.SupportsAntFs, StringFormat='Supports ANT-FS: {0}'}"/>
                                 <Label Text="{Binding MuscleOxygen.UtcTimeRequired, StringFormat='UTC time required: {0}'}"/>
                                 <Label Text="{Binding MuscleOxygen.Interval, StringFormat='Measurement Interval: {0}'}"/>
@@ -27,7 +27,7 @@
                         </Border>
                         <Border>
                             <Grid ColumnSpacing="16" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, Auto, Auto">
-                                <Label Text="Local Time Offset" FontAttributes="Bold" TextDecorations="Underline" Grid.ColumnSpan="3"/>
+                                <Label Text="Local Time Offset" Style="{StaticResource HeaderLabelStyle}" Grid.ColumnSpan="3"/>
                                 <HorizontalStackLayout Grid.Row="1">
                                     <Label Text="Hours:" VerticalOptions="Center"/>
                                     <Picker ItemsSource="{Binding Source={x:Static vm:MuscleOxygenViewModel.HoursSource}}" SelectedItem="{Binding Hours}"/>
@@ -41,7 +41,7 @@
                         </Border>
                         <Border>
                             <Grid ColumnSpacing="16" RowSpacing="8" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, Auto, Auto">
-                                <Label Text="Session Control" FontAttributes="Bold" TextDecorations="Underline" Grid.ColumnSpan="3"/>
+                                <Label Text="Session Control" Style="{StaticResource HeaderLabelStyle}" Grid.ColumnSpan="3"/>
                                 <Button Grid.Column="0" Grid.Row="1" Text="Start" Command="{Binding StartSessionCommand}"/>
                                 <Button Grid.Column="1" Grid.Row="1" Text="Stop" Command="{Binding StopSessionCommand}"/>
                                 <Button Grid.Column="2" Grid.Row="1" Text="Lap" Command="{Binding LogLapCommand}"/>

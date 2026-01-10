@@ -34,7 +34,7 @@
                             <Grid ColumnSpacing="8" ColumnDefinitions="Auto, *">
                                 <Button Text="Request Capabilities" Command="{Binding RequestCapabilitiesCommand}"/>
                                 <StackLayout Grid.Column="1">
-                                    <Label Text="Capabilities" FontAttributes="Bold" TextDecorations="Underline"/>
+                                    <Label Text="Capabilities" Style="{StaticResource HeaderLabelStyle}"/>
                                     <Label Text="{Binding StrideSpeedDistanceMonitor.Capabilities}"/>
                                 </StackLayout>
                             </Grid>
@@ -44,7 +44,7 @@
                             <Grid ColumnDefinitions="Auto, *">
                                 <Button Text="Request Summaries" Command="{Binding RequestSummaryCommand}"/>
                                 <StackLayout Grid.Column="1" Margin="8">
-                                    <Label Text="Summaries" FontAttributes="Bold" TextDecorations="Underline"/>
+                                    <Label Text="Summaries" Style="{StaticResource HeaderLabelStyle}"/>
                                     <Label Text="{Binding StrideSpeedDistanceMonitor.StrideCountSummary, StringFormat='Stride Count: {0}'}"/>
                                     <Label Text="{Binding StrideSpeedDistanceMonitor.DistanceSummary, StringFormat='Distance: {0}'}"/>
                                 </StackLayout>
