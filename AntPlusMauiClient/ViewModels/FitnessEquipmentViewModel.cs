@@ -121,7 +121,7 @@ namespace AntPlusMauiClient.ViewModels
         private bool CanSetTargetPower() => FitnessEquipment != null && FitnessEquipment.TrainingModes.HasFlag(SupportedTrainingModes.TargetPower);
 
         [RelayCommand(CanExecute = nameof(CanSetWindResistance))]
-        private async Task SetWindResistance() => _ = await FitnessEquipment!.SetWindResistance(WindResistanceCoefficient, (sbyte)WindSpeed, DraftingFactor);
+        private async Task SetWindResistance() => _ = await FitnessEquipment!.SetWindResistance(WindResistanceCoefficient, (sbyte)Math.Round(WindSpeed), DraftingFactor);
         private bool CanSetWindResistance() => FitnessEquipment != null && FitnessEquipment.TrainingModes.HasFlag(SupportedTrainingModes.Simulation);
 
         [RelayCommand(CanExecute = nameof(CanSetTrackResistance))]
