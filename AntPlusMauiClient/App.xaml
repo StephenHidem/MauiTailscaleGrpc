@@ -28,7 +28,8 @@
 
             <Style x:Key="HeaderLabelStyle" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="TextDecorations" Value="Underline" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="Margin" Value="0, 8, 0, 8" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

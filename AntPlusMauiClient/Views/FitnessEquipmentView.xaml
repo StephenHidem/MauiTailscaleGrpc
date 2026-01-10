@@ -2,11 +2,152 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
+             xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:exp="clr-namespace:Syncfusion.Maui.Toolkit.Expander;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Toolkit.NumericUpDown;assembly=Syncfusion.Maui.Toolkit"
+             x:DataType="vm:FitnessEquipmentViewModel"
              x:Class="AntPlusMauiClient.Views.FitnessEquipmentView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <tabview:SfTabView>
+        <tabview:SfTabItem Header="Fitness Equipment" FontAttributes="Bold">
+            <tabview:SfTabItem.Content>
+                <StackLayout>
+                    <Border>
+                        <StackLayout>
+                            <ContentView Content="{Binding SpecificEquipmentView}"/>
+                            <Label Text="{Binding FitnessEquipment.State, StringFormat='Equipment State: {0}'}" Margin="8, 0"/>
+                        </StackLayout>
+                    </Border>
+                    <Border>
+                        <exp:SfExpander>
+                            <exp:SfExpander.Header>
+                                <Label Text="General Data" FontAttributes="Bold" FontSize="Medium" Margin="0, 8, 0, 8"/>
+                            </exp:SfExpander.Header>
+                            <exp:SfExpander.Content>
+                                <StackLayout Margin="8, 0, 0, 0">
+                                    <Label Text="{Binding FitnessEquipment.GeneralData.EquipmentType, StringFormat='Equipment Type: {0}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralData.ElapsedTime, StringFormat='Elapsed Time: {0:hh\\:mm\\:ss}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralData.DistanceTraveled, StringFormat='Distance Traveled: {0}'}" IsVisible="{Binding FitnessEquipment.GeneralData.DistanceTraveledEnabled}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralData.InstantaneousSpeed, StringFormat='Speed: {0}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralData.InstantaneousHeartRate, StringFormat='Heart Rate: {0}'}"/>
+                                    <Label Text="{Binding LapSplitTime, StringFormat='Lap Split Time: {0:hh\\:mm\\:ss\\.ff}'}"/>
+                                </StackLayout>
+                            </exp:SfExpander.Content>
+                        </exp:SfExpander>
+                    </Border>
+                    <Border>
+                        <exp:SfExpander>
+                            <exp:SfExpander.Header>
+                                <Label Text="General Settings" FontAttributes="Bold" FontSize="Medium" Margin="0, 8, 0, 8"/>
+                            </exp:SfExpander.Header>
+                            <exp:SfExpander.Content>
+                                <StackLayout Margin="8, 0, 0, 0">
+                                    <Label Text="{Binding FitnessEquipment.GeneralSettings.CycleLength, StringFormat='Cycle Length: {0}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralSettings.Incline, StringFormat='Incline: {0}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralSettings.ResistanceLevel, StringFormat='Resistance Level: {0}'}"/>
+                                </StackLayout>
+                            </exp:SfExpander.Content>
+                        </exp:SfExpander>
+                    </Border>
+                    <Border>
+                        <exp:SfExpander>
+                            <exp:SfExpander.Header>
+                                <Label Text="General Metabolic" FontAttributes="Bold" FontSize="Medium" Margin="0, 8, 0, 8"/>
+                            </exp:SfExpander.Header>
+                            <exp:SfExpander.Content>
+                                <StackLayout Margin="8, 0, 0, 0">
+                                    <Label Text="{Binding FitnessEquipment.GeneralMetabolic.AccumulatedCalories, StringFormat='Accumulated Calories: {0}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralMetabolic.CaloricBurnRate, StringFormat='Caloric Burn Rate: {0:F1}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.GeneralMetabolic.InstantaneousMET, StringFormat='Instantaneous MET: {0:F2}'}"/>
+                                </StackLayout>
+                            </exp:SfExpander.Content>
+                        </exp:SfExpander>
+                    </Border>
+                </StackLayout>
+            </tabview:SfTabItem.Content>
+        </tabview:SfTabItem>
+        <tabview:SfTabItem Header="Capabilities and Settings" FontAttributes="Bold">
+            <StackLayout>
+                <Border>
+                    <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8">
+                        <StackLayout>
+                            <Label Text="Supported Training Modes" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Label Text="{Binding FitnessEquipment.TrainingModes, StringFormat='Capabilities: {0}'}"/>
+                            <Label Text="{Binding FitnessEquipment.MaxTrainerResistance, StringFormat='Max. Resistance (Newtons): {0}'}"/>
+                        </StackLayout>
+                        <Button Text="Request Capabilities" Command="{Binding RequestCapabilitiesCommand}" Grid.Column="1" Margin="16"/>
+                    </Grid>
+                </Border>
+                <Border>
+                    <StackLayout>
+                        <Label Text="Resistance Settings" Style="{StaticResource HeaderLabelStyle}"/>
+                        <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8">
+                            <Button Text="Set Target Power" Command="{Binding SetTargetPowerCommand}"/>
+                            <editors:SfNumericUpDown Grid.Column="1"
+                                                     Placeholder="Target Power"
+                                                     Value="{Binding TargetPowerWatts}"
+                                                     ShowClearButton="False"
+                                                     Minimum="0"
+                                                     Maximum="4000"
+                                                     SmallChange="0.25"
+                                                     LargeChange="10.0"/>
+
+                            <Button Grid.Row="1" Text="Set Basic Resistance" Command="{Binding SetBasicResistanceCommand}"/>
+                            <editors:SfNumericUpDown Grid.Column="1" Grid.Row="1"
+                                                     Placeholder="Basic Resistance"
+                                                     Value="{Binding BasicResistancePercent}"
+                                                     ShowClearButton="False"
+                                                     Minimum="0"
+                                                     Maximum="100"
+                                                     SmallChange="0.5"
+                                                     LargeChange="1.0"/>
+
+                            <Button Grid.Row="2" Text="Set Track Resistance" Command="{Binding SetTrackResistanceCommand}"/>
+                            <StackLayout Grid.Column="1" Grid.Row="2">
+                                <editors:SfNumericUpDown Placeholder="Grade"
+                                                         Value="{Binding Grade}"
+                                                         ShowClearButton="False"
+                                                         Minimum="-200"
+                                                         Maximum="200"
+                                                         SmallChange="0.01"
+                                                         LargeChange="1.0"/>
+                                <editors:SfNumericUpDown Placeholder="Coeff. of Rolling Resistance"
+                                                         Value="{Binding CoefficientOfRollingResistance}"
+                                                         ShowClearButton="False"
+                                                         Minimum="0"
+                                                         Maximum="0.0127"
+                                                         SmallChange="0.00005"
+                                                         LargeChange="0.0005"
+                                                         MaximumNumberDecimalDigits="5"/>
+                            </StackLayout>
+
+                            <Button Grid.Row="3" Text="Set Wind Resistance" Command="{Binding SetWindResistanceCommand}"/>
+                            <StackLayout Grid.Column="1" Grid.Row="3">
+                                <editors:SfNumericUpDown Placeholder="Wind Resistance"
+                                                         Value="{Binding WindResistanceCoefficient}"
+                                                         ShowClearButton="False"
+                                                         Minimum="0"
+                                                         Maximum="1.86"
+                                                         SmallChange="0.01"
+                                                         LargeChange="0.10"/>
+                                <editors:SfNumericUpDown Placeholder="Wind Speed"
+                                                         Value="{Binding WindSpeed}"
+                                                         ShowClearButton="False"
+                                                         Minimum="-127"
+                                                         Maximum="127"
+                                                         SmallChange="1"
+                                                         LargeChange="10"/>
+                                <editors:SfNumericUpDown Placeholder="Drafting Factor"
+                                                         Value="{Binding DraftingFactor}"
+                                                         ShowClearButton="False"
+                                                         Minimum="0"
+                                                         Maximum="1"
+                                                         SmallChange="0.01"
+                                                         LargeChange="0.10"/>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+                </Border>
+            </StackLayout>
+        </tabview:SfTabItem>
+    </tabview:SfTabView>
 </ContentView>
