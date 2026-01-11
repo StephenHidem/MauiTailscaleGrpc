@@ -6,7 +6,7 @@
              x:DataType="bp:StandardWheelTorqueSensor"
              x:Class="AntPlusMauiClient.Views.BicycleWheelTorqueView">
     <Border>
-        <StackLayout>
+        <VerticalStackLayout>
             <Label Text="Wheel Torque" Style="{StaticResource HeaderLabelStyle}"/>
             <Label Text="{Binding AverageAngularVelocity, StringFormat='Average Angular Velocity (rad/s): {0:F3}'}"/>
             <Label Text="{Binding AveragePower, StringFormat='Average Power (Watts): {0:F3}'}"/>
@@ -14,6 +14,6 @@
             <Label Text="{Binding InstantaneousCadence, StringFormat='Instantaneous Cadence (RPM): {0}'}"/>
             <Label Text="{Binding AverageSpeed, StringFormat='Average Speed (km/h): {0:F3}'}"/>
             <Label Text="{Binding AccumulatedDistance, StringFormat='Accumulated Distance (m): {0:F3}'}"/>
-        </StackLayout>
+        </VerticalStackLayout>
     </Border>
 </ContentView>

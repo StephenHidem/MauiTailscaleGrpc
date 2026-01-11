@@ -6,16 +6,16 @@
              x:Class="AntPlusMauiClient.Views.CTFView">
     <VerticalStackLayout>
         <Border>
-            <StackLayout>
+            <VerticalStackLayout>
                 <Label Text="Crank Torque Frequency" Style="{StaticResource HeaderLabelStyle}"/>
                 <Label Text="{Binding Sensor.Slope, StringFormat='Slope (Nm/Hz): {0:F1}'}"/>
                 <Label Text="{Binding Sensor.Cadence, StringFormat='Cadence (RPM): {0:F3}'}"/>
                 <Label Text="{Binding Sensor.Torque, StringFormat='Torque (Nm): {0:F3}'}"/>
                 <Label Text="{Binding Sensor.Power, StringFormat='Power (Watts): {0:F3}'}"/>
-            </StackLayout>
+            </VerticalStackLayout>
         </Border>
         <Border>
-            <StackLayout>
+            <VerticalStackLayout>
                 <Label Text="Calibration" Style="{StaticResource HeaderLabelStyle}"/>
                 <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto, Auto, Auto" ColumnSpacing="16" RowSpacing="8" Margin="8">
                     <Button Text="Calibration Request" Command="{Binding ManualCalRequestCommand}"/>
@@ -26,7 +26,7 @@
                     <Button Grid.Column="0" Grid.Row="2" Text="Save Serial Number to Flash" Command="{Binding SaveSerialNumberCommand}" CommandParameter="{Binding Text, Source={x:Reference SerialNumber}, x:DataType=Entry}"/>
                     <Label Grid.ColumnSpan="2" Grid.Row="3" VerticalOptions="Center" Text="{Binding Sensor.CalibrationStatus, StringFormat='Operation Status: {0}'}"/>
                 </Grid>
-            </StackLayout>
+            </VerticalStackLayout>
         </Border>
     </VerticalStackLayout>
 </ContentView>

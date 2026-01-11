@@ -10,9 +10,9 @@
         <tabview:SfTabView.Items>
             <tabview:SfTabItem Header="Muscle Oxygen">
                 <tabview:SfTabItem.Content>
-                    <StackLayout>
+                    <VerticalStackLayout>
                         <Border>
-                            <StackLayout>
+                            <VerticalStackLayout>
                                 <Label Text="Main Data Page" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding MuscleOxygen.SupportsAntFs, StringFormat='Supports ANT-FS: {0}'}"/>
                                 <Label Text="{Binding MuscleOxygen.UtcTimeRequired, StringFormat='UTC time required: {0}'}"/>
@@ -23,7 +23,7 @@
                                 <Label Text="{Binding MuscleOxygen.PreviousSaturatedHemoglobin.Status, StringFormat='Previous saturated Hq status: {0}'}"/>
                                 <Label Text="{Binding MuscleOxygen.CurrentSaturatedHemoglobin.PercentSaturated, StringFormat='Current saturated Hg: {0}'}"/>
                                 <Label Text="{Binding MuscleOxygen.CurrentSaturatedHemoglobin.Status, StringFormat='Current saturated Hq status: {0}'}"/>
-                            </StackLayout>
+                            </VerticalStackLayout>
                         </Border>
                         <Border>
                             <Grid ColumnSpacing="16" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, Auto, Auto">
@@ -47,7 +47,7 @@
                                 <Button Grid.Column="2" Grid.Row="1" Text="Lap" Command="{Binding LogLapCommand}"/>
                             </Grid>
                         </Border>
-                    </StackLayout>
+                    </VerticalStackLayout>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Common Data Pages">

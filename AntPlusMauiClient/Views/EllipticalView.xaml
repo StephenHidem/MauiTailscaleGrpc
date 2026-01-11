@@ -6,12 +6,12 @@
              x:Class="AntPlusMauiClient.Views.EllipticalView">
     <VerticalStackLayout>
         <Label Text="Elliptical" Style="{StaticResource HeaderLabelStyle}"/>
-        <StackLayout Margin="8, 0, 0, 0">
+        <VerticalStackLayout Margin="8, 0, 0, 0">
             <Label Text="{Binding Cadence, StringFormat='Cadence: {0}'}"/>
             <Label Text="{Binding InstantaneousPower, StringFormat='Instantaneous Power: {0}'}"/>
             <Label Text="{Binding StrideCount, StringFormat='Stride Count: {0}'}"/>
             <Label Text="{Binding PosVerticalDistance, StringFormat='PosVerticalDistance: {0}'}"/>
             <Label Text="{Binding Capabilities, StringFormat='Capabilities: {0}'}"/>
-        </StackLayout>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentView>

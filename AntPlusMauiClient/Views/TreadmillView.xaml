@@ -6,11 +6,11 @@
              x:Class="AntPlusMauiClient.Views.TreadmillView">
     <VerticalStackLayout>
         <Label Text="Treadmill" Style="{StaticResource HeaderLabelStyle}"/>
-        <StackLayout Margin="8, 0, 0, 0">
+        <VerticalStackLayout Margin="8, 0, 0, 0">
             <Label Text="{Binding Cadence, StringFormat='Cadence: {0}'}"/>
             <Label Text="{Binding NegVerticalDistance, StringFormat='NegVertical Distance: {0}'}"/>
             <Label Text="{Binding PosVerticalDistance, StringFormat='PosVertical Distance: {0}'}"/>
             <Label Text="{Binding Capabilities, StringFormat='Capabilities: {0}'}"/>
-        </StackLayout>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentView>

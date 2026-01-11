@@ -11,7 +11,7 @@
             <tabview:SfTabItem Header="Speed">
                 <tabview:SfTabItem.Content>
                     <Border>
-                        <StackLayout>
+                        <VerticalStackLayout>
                             <Label Text="{Binding StrideSpeedDistanceMonitor.InstantaneousCadence, StringFormat='Cadence: {0}'}"/>
                             <Label Text="{Binding StrideSpeedDistanceMonitor.InstantaneousSpeed, StringFormat='Speed: {0}'}"/>
                             <Label Text="{Binding StrideSpeedDistanceMonitor.AccumulatedDistance, StringFormat='Accumulated Distance: {0}'}"/>
@@ -23,34 +23,34 @@
                             <Label Text="{Binding StrideSpeedDistanceMonitor.Status.Health, StringFormat='Health: {0}'}"/>
                             <Label Text="{Binding StrideSpeedDistanceMonitor.Status.Battery, StringFormat='Battery: {0}'}"/>
                             <Label Text="{Binding StrideSpeedDistanceMonitor.Status.State, StringFormat='State: {0}'}"/>
-                        </StackLayout>
+                        </VerticalStackLayout>
                     </Border>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Capabilities and Summary">
                 <tabview:SfTabItem.Content>
-                    <StackLayout>
+                    <VerticalStackLayout>
                         <Border>
                             <Grid ColumnSpacing="8" ColumnDefinitions="Auto, *">
                                 <Button Text="Request Capabilities" Command="{Binding RequestCapabilitiesCommand}"/>
-                                <StackLayout Grid.Column="1">
+                                <VerticalStackLayout Grid.Column="1">
                                     <Label Text="Capabilities" Style="{StaticResource HeaderLabelStyle}"/>
                                     <Label Text="{Binding StrideSpeedDistanceMonitor.Capabilities}"/>
-                                </StackLayout>
+                                </VerticalStackLayout>
                             </Grid>
                         </Border>
 
                         <Border>
                             <Grid ColumnDefinitions="Auto, *">
                                 <Button Text="Request Summaries" Command="{Binding RequestSummaryCommand}"/>
-                                <StackLayout Grid.Column="1" Margin="8">
+                                <VerticalStackLayout Grid.Column="1" Margin="8">
                                     <Label Text="Summaries" Style="{StaticResource HeaderLabelStyle}"/>
                                     <Label Text="{Binding StrideSpeedDistanceMonitor.StrideCountSummary, StringFormat='Stride Count: {0}'}"/>
                                     <Label Text="{Binding StrideSpeedDistanceMonitor.DistanceSummary, StringFormat='Distance: {0}'}"/>
-                                </StackLayout>
+                                </VerticalStackLayout>
                             </Grid>
                         </Border>
-                    </StackLayout>
+                    </VerticalStackLayout>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Common Data Pages">

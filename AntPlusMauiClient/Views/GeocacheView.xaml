@@ -10,9 +10,9 @@
         <tabview:SfTabView.Items>
             <tabview:SfTabItem Header="Geocache">
                 <tabview:SfTabItem.Content>
-                    <StackLayout>
+                    <VerticalStackLayout>
                         <Border>
-                            <StackLayout>
+                            <VerticalStackLayout>
                                 <Label Text="Data Pages" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding Geocache.TrackableId, StringFormat='Trackable ID: {0}'}"/>
                                 <Label Text="{Binding Geocache.ProgrammingPIN, StringFormat='Programming PIN: {0}'}"/>
@@ -24,21 +24,21 @@
                                 <Label Text="{Binding Geocache.LastVisitTimestamp, StringFormat='Last visit: {0}'}"/>
                                 <Button Text="Request PIN" Command="{Binding RequestPINCommand}" Margin="0, 8, 0, 8"/>
                                 <Button Text="Log Visit" Command="{Binding LogVisitCommand}"/>
-                            </StackLayout>
+                            </VerticalStackLayout>
                         </Border>
                         <Border>
-                            <StackLayout>
+                            <VerticalStackLayout>
                                 <Label Text="Authentication" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding AuthToken, StringFormat='Authentication Token: {0}'}"/>
                                 <Button Text="Request Authentication" Command="{Binding RequestAuthenticationCommand}"/>
-                            </StackLayout>
+                            </VerticalStackLayout>
                         </Border>
-                    </StackLayout>
+                    </VerticalStackLayout>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Programming">
                 <tabview:SfTabItem.Content>
-                    <StackLayout>
+                    <VerticalStackLayout>
                         <Grid RowDefinitions="*, *, *, *" ColumnDefinitions="Auto, *">
                             <Label Text="Trackable ID:" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
                             <Entry Text="{Binding TrackableId}" MaxLength="9" Grid.Row="0" Grid.Column="1"/>
@@ -53,7 +53,7 @@
                         <Editor Text="{Binding Hint}" MaxLength="168" AutoSize="TextChanges"/>
                         <Button Text="Program Geocache" Command="{Binding ProgramGeocacheCommand}"/>
                         <Button Text="Erase Geocache" Command="{Binding EraseGeocacheCommand}" Margin="0, 8, 0, 8"/>
-                    </StackLayout>
+                    </VerticalStackLayout>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Common Data Pages">

@@ -11,12 +11,12 @@
         <tabview:SfTabView>
             <tabview:SfTabItem Header="Fitness Equipment">
                 <tabview:SfTabItem.Content>
-                    <StackLayout>
+                    <VerticalStackLayout>
                         <Border>
-                            <StackLayout>
+                            <VerticalStackLayout>
                                 <ContentView Content="{Binding SpecificEquipmentView}"/>
                                 <Label Text="{Binding FitnessEquipment.State, StringFormat='Equipment State: {0}'}" Margin="8, 0"/>
-                            </StackLayout>
+                            </VerticalStackLayout>
                         </Border>
                         <Border>
                             <exp:SfExpander>
@@ -24,14 +24,14 @@
                                     <Label Text="General Data" Style="{StaticResource HeaderLabelStyle}"/>
                                 </exp:SfExpander.Header>
                                 <exp:SfExpander.Content>
-                                    <StackLayout Margin="8, 0, 0, 0">
+                                    <VerticalStackLayout Margin="8, 0, 0, 0">
                                         <Label Text="{Binding FitnessEquipment.GeneralData.EquipmentType, StringFormat='Equipment Type: {0}'}"/>
                                         <Label Text="{Binding FitnessEquipment.GeneralData.ElapsedTime, StringFormat='Elapsed Time: {0:hh\\:mm\\:ss}'}"/>
                                         <Label Text="{Binding FitnessEquipment.GeneralData.DistanceTraveled, StringFormat='Distance Traveled: {0}'}" IsVisible="{Binding FitnessEquipment.GeneralData.DistanceTraveledEnabled}"/>
                                         <Label Text="{Binding FitnessEquipment.GeneralData.InstantaneousSpeed, StringFormat='Speed: {0}'}"/>
                                         <Label Text="{Binding FitnessEquipment.GeneralData.InstantaneousHeartRate, StringFormat='Heart Rate: {0}'}"/>
                                         <Label Text="{Binding LapSplitTime, StringFormat='Lap Split Time: {0:hh\\:mm\\:ss\\.ff}'}"/>
-                                    </StackLayout>
+                                    </VerticalStackLayout>
                                 </exp:SfExpander.Content>
                             </exp:SfExpander>
                         </Border>
@@ -41,11 +41,11 @@
                                     <Label Text="General Settings" Style="{StaticResource HeaderLabelStyle}"/>
                                 </exp:SfExpander.Header>
                                 <exp:SfExpander.Content>
-                                    <StackLayout Margin="8, 0, 0, 0">
+                                    <VerticalStackLayout Margin="8, 0, 0, 0">
                                         <Label Text="{Binding FitnessEquipment.GeneralSettings.CycleLength, StringFormat='Cycle Length: {0}'}"/>
                                         <Label Text="{Binding FitnessEquipment.GeneralSettings.Incline, StringFormat='Incline: {0}'}"/>
                                         <Label Text="{Binding FitnessEquipment.GeneralSettings.ResistanceLevel, StringFormat='Resistance Level: {0}'}"/>
-                                    </StackLayout>
+                                    </VerticalStackLayout>
                                 </exp:SfExpander.Content>
                             </exp:SfExpander>
                         </Border>
@@ -55,31 +55,31 @@
                                     <Label Text="General Metabolic" Style="{StaticResource HeaderLabelStyle}"/>
                                 </exp:SfExpander.Header>
                                 <exp:SfExpander.Content>
-                                    <StackLayout Margin="8, 0, 0, 0">
+                                    <VerticalStackLayout Margin="8, 0, 0, 0">
                                         <Label Text="{Binding FitnessEquipment.GeneralMetabolic.AccumulatedCalories, StringFormat='Accumulated Calories: {0}'}"/>
                                         <Label Text="{Binding FitnessEquipment.GeneralMetabolic.CaloricBurnRate, StringFormat='Caloric Burn Rate: {0:F1}'}"/>
                                         <Label Text="{Binding FitnessEquipment.GeneralMetabolic.InstantaneousMET, StringFormat='Instantaneous MET: {0:F2}'}"/>
-                                    </StackLayout>
+                                    </VerticalStackLayout>
                                 </exp:SfExpander.Content>
                             </exp:SfExpander>
                         </Border>
-                    </StackLayout>
+                    </VerticalStackLayout>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Capabilities and Settings">
-                <StackLayout>
+                <VerticalStackLayout>
                     <Border>
                         <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8">
-                            <StackLayout>
+                            <VerticalStackLayout>
                                 <Label Text="Supported Training Modes" Style="{StaticResource HeaderLabelStyle}"/>
                                 <Label Text="{Binding FitnessEquipment.TrainingModes, StringFormat='Capabilities: {0}'}"/>
                                 <Label Text="{Binding FitnessEquipment.MaxTrainerResistance, StringFormat='Max. Resistance (Newtons): {0}'}"/>
-                            </StackLayout>
+                            </VerticalStackLayout>
                             <Button Text="Request Capabilities" Command="{Binding RequestCapabilitiesCommand}" Grid.Column="1" Margin="16"/>
                         </Grid>
                     </Border>
                     <Border>
-                        <StackLayout>
+                        <VerticalStackLayout>
                             <Label Text="Resistance Settings" Style="{StaticResource HeaderLabelStyle}"/>
                             <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8">
                                 <Button Text="Set Target Power" Command="{Binding SetTargetPowerCommand}"/>
@@ -103,7 +103,7 @@
                                                      LargeChange="1.0"/>
 
                                 <Button Grid.Row="2" Text="Set Track Resistance" Command="{Binding SetTrackResistanceCommand}"/>
-                                <StackLayout Grid.Column="1" Grid.Row="2">
+                                <VerticalStackLayout Grid.Column="1" Grid.Row="2">
                                     <editors:SfNumericUpDown Placeholder="Grade"
                                                          Value="{Binding Grade}"
                                                          ShowClearButton="False"
@@ -119,10 +119,10 @@
                                                          SmallChange="0.00005"
                                                          LargeChange="0.0005"
                                                          MaximumNumberDecimalDigits="5"/>
-                                </StackLayout>
+                                </VerticalStackLayout>
 
                                 <Button Grid.Row="3" Text="Set Wind Resistance" Command="{Binding SetWindResistanceCommand}"/>
-                                <StackLayout Grid.Column="1" Grid.Row="3">
+                                <VerticalStackLayout Grid.Column="1" Grid.Row="3">
                                     <editors:SfNumericUpDown Placeholder="Wind Resistance"
                                                          Value="{Binding WindResistanceCoefficient}"
                                                          ShowClearButton="False"
@@ -144,11 +144,11 @@
                                                          Maximum="1"
                                                          SmallChange="0.01"
                                                          LargeChange="0.10"/>
-                                </StackLayout>
+                                </VerticalStackLayout>
                             </Grid>
-                        </StackLayout>
+                        </VerticalStackLayout>
                     </Border>
-                </StackLayout>
+                </VerticalStackLayout>
             </tabview:SfTabItem>
         </tabview:SfTabView>
     </ScrollView>

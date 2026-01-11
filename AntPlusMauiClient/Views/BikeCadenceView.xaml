@@ -4,36 +4,36 @@
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
              x:DataType="vm:BikeCadenceViewModel"
              x:Class="AntPlusMauiClient.Views.BikeCadenceView">
-    <StackLayout>
+    <VerticalStackLayout>
         <Border>
-            <StackLayout>
+            <VerticalStackLayout>
                 <Label Text="Cadence Sensor" Style="{StaticResource HeaderLabelStyle}"/>
                 <Label Text="{Binding BikeCadenceSensor.InstantaneousCadence, StringFormat='Instantaneous Cadence: {0:F3}'}"/>
                 <Label Text="{Binding BikeCadenceSensor.CumulativeOperatingTime, StringFormat='Operating Time: {0}'}"/>
                 <Label Text="{Binding BikeCadenceSensor.Stopped, StringFormat='Stopped: {0}'}"/>
-            </StackLayout>
+            </VerticalStackLayout>
         </Border>
         <Border>
-            <StackLayout>
+            <VerticalStackLayout>
                 <Label Text="Manufacturer Info" Style="{StaticResource HeaderLabelStyle}"/>
                 <Label Text="{Binding BikeCadenceSensor.ManufacturerInfo.ManufacturingId, StringFormat='Manufacturer Id: {0}'}"/>
                 <Label Text="{Binding BikeCadenceSensor.ManufacturerInfo.SerialNumber, StringFormat='Serial Number: {0}'}"/>
-            </StackLayout>
+            </VerticalStackLayout>
         </Border>
         <Border>
-            <StackLayout>
+            <VerticalStackLayout>
                 <Label Text="Product Info" Style="{StaticResource HeaderLabelStyle}"/>
                 <Label Text="{Binding BikeCadenceSensor.ProductInfo.HardwareVersion, StringFormat='Hardware Version: {0}'}"/>
                 <Label Text="{Binding BikeCadenceSensor.ProductInfo.ModelNumber, StringFormat='Model #: {0}'}"/>
                 <Label Text="{Binding BikeCadenceSensor.ProductInfo.SoftwareVersion, StringFormat='Software Version: {0}'}"/>
-            </StackLayout>
+            </VerticalStackLayout>
         </Border>
         <Border>
-            <StackLayout>
+            <VerticalStackLayout>
                 <Label Text="Battery Status" Style="{StaticResource HeaderLabelStyle}"/>
                 <Label Text="{Binding BikeCadenceSensor.BatteryStatus.BatteryStatus, StringFormat='Status: {0}'}"/>
                 <Label Text="{Binding BikeCadenceSensor.BatteryStatus.BatteryVoltage, StringFormat='Voltage: {0}'}"/>
-            </StackLayout>
+            </VerticalStackLayout>
         </Border>
-    </StackLayout>
+    </VerticalStackLayout>
 </ContentView>

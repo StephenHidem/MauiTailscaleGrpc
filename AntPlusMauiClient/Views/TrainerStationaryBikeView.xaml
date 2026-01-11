@@ -6,11 +6,11 @@
              x:Class="AntPlusMauiClient.Views.TrainerStationaryBikeView">
     <VerticalStackLayout>
         <Label Text="Trainer Stationary Bike" Style="{StaticResource HeaderLabelStyle}"/>
-        <StackLayout Margin="8, 0, 0, 0">
+        <VerticalStackLayout Margin="8, 0, 0, 0">
             <Label Text="{Binding InstantaneousPower, StringFormat='Instantaneous Power: {0}'}"/>
             <Label Text="{Binding InstantaneousCadence, StringFormat='Instantaneous Cadence: {0}'}"/>
             <Label Text="{Binding TargetPower, StringFormat='Target Power: {0}'}"/>
             <Label Text="{Binding TrainerStatus, StringFormat='Trainer Status: {0}'}"/>
-        </StackLayout>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentView>

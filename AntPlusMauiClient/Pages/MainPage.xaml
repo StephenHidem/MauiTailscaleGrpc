@@ -52,7 +52,7 @@
                             </VerticalStackLayout>
                         </Border>
                         <Border Grid.Row="1">
-                            <StackLayout>
+                            <VerticalStackLayout>
                                 <Label Text="Flags" Style="{StaticResource HeaderLabelStyle}"/>
                                 <CollectionView ItemsSource="{Binding Flags}">
                                     <CollectionView.ItemTemplate>
@@ -61,7 +61,7 @@
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
-                            </StackLayout>
+                            </VerticalStackLayout>
                         </Border>
                     </Grid>
                 </exp:SfExpander.Content>
