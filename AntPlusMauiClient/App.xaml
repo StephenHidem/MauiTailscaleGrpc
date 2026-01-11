@@ -37,6 +37,10 @@
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource Secondary}, Light={StaticResource SecondaryDarkText}}"/>
             </Style>
+
+            <Style TargetType="exp:SfExpander">
+                <Setter Property="HeaderIconColor" Value="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
