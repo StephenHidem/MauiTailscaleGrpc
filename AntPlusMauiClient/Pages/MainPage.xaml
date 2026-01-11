@@ -21,7 +21,7 @@
             <exp:SfExpander HeaderIconColor="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}">
                 <exp:SfExpander.Header>
                     <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *" ColumnSpacing="16" RowSpacing="8">
-                        <Image Grid.RowSpan="4" Source="antplus.png" HeightRequest="164" Aspect="AspectFit" SemanticProperties.Description="ant plus server" />
+                        <Image Grid.RowSpan="4" Source="antplus.png" HeightRequest="84" Aspect="AspectFit" SemanticProperties.Description="ant plus server" />
 
                         <VerticalStackLayout Grid.Column="1">
                             <Label Text="ANT+ Server" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
