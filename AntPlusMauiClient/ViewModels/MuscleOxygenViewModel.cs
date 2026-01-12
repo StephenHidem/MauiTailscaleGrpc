@@ -12,10 +12,20 @@ namespace AntPlusMauiClient.ViewModels
         public partial MuscleOxygen? MuscleOxygen { get; private set; }
 
         [ObservableProperty]
-        public partial int Hours { get; set; }
+        [NotifyPropertyChangedFor(nameof(LocalTimeOffset))]
+        public partial int HoursIndex { get; set; } = 15;
 
         [ObservableProperty]
-        public partial int Minutes { get; set; }
+        [NotifyPropertyChangedFor(nameof(LocalTimeOffset))]
+        public partial int MinutesIndex { get; set; } = 0;
+
+        public string LocalTimeOffset
+        {
+            get
+            {
+                return $"{HoursSource[HoursIndex]:00}:{MinutesSource[MinutesIndex]:00}";
+            }
+        }
 
         public static int[] HoursSource => [.. Enumerable.Range(-15, 31)];
         public static int[] MinutesSource => [0, 15, 30, 45];
@@ -28,7 +38,7 @@ namespace AntPlusMauiClient.ViewModels
         [RelayCommand]
         private async Task SetTime()
         {
-            TimeSpan ts = new(Hours, Minutes, 0);
+            TimeSpan ts = new(HoursSource[HoursIndex], MinutesSource[MinutesIndex], 0);
             _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.SetTime, ts, DateTime.UtcNow);
         }
 
@@ -37,7 +47,7 @@ namespace AntPlusMauiClient.ViewModels
         {
             started = true;
             CheckCanExecutes();
-            TimeSpan ts = new(Hours, Minutes, 0);
+            TimeSpan ts = new(HoursSource[HoursIndex], MinutesSource[MinutesIndex], 0);
             _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.StartSession, ts, DateTime.UtcNow);
         }
         private bool CanStartSession() => !started;
@@ -47,7 +57,7 @@ namespace AntPlusMauiClient.ViewModels
         {
             started = false;
             CheckCanExecutes();
-            TimeSpan ts = new(Hours, Minutes, 0);
+            TimeSpan ts = new(HoursSource[HoursIndex], MinutesSource[MinutesIndex], 0);
             _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.StopSession, ts, DateTime.UtcNow);
         }
         private bool CanStopSession() => started;
@@ -55,7 +65,7 @@ namespace AntPlusMauiClient.ViewModels
         [RelayCommand(CanExecute = nameof(CanLogLap))]
         private async Task LogLap()
         {
-            TimeSpan ts = new(Hours, Minutes, 0);
+            TimeSpan ts = new(HoursSource[HoursIndex], MinutesSource[MinutesIndex], 0);
             _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.Lap, ts, DateTime.UtcNow);
         }
         private bool CanLogLap() => started;
