@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using SmallEarthTech.AntPlus.DeviceProfiles;
 
 namespace AntPlusMauiClient.ViewModels
@@ -9,27 +10,50 @@ namespace AntPlusMauiClient.ViewModels
         private bool started = false;
 
         [ObservableProperty]
-        public partial MuscleOxygen? MuscleOxygen { get; private set; }
+        public partial MuscleOxygen MuscleOxygen { get; private set; }
+
+        private readonly ILogger<MuscleOxygenViewModel> _logger;
 
         [ObservableProperty]
-        public partial int Hours { get; set; }
+        [NotifyPropertyChangedFor(nameof(LocalTimeOffset))]
+        public partial int HoursIndex { get; set; } = 15;
 
         [ObservableProperty]
-        public partial int Minutes { get; set; }
+        [NotifyPropertyChangedFor(nameof(LocalTimeOffset))]
+        public partial int MinutesIndex { get; set; } = 0;
+
+        [ObservableProperty]
+        public partial bool IsPickerOpen { get; set; } = false;
+
+        public string LocalTimeOffset
+        {
+            get
+            {
+                return $"{HoursSource[HoursIndex]:00}:{MinutesSource[MinutesIndex]:00}";
+            }
+        }
+
+        private TimeSpan SelectedTimeOffset => new(HoursSource[HoursIndex], MinutesSource[MinutesIndex], 0);
 
         public static int[] HoursSource => [.. Enumerable.Range(-15, 31)];
         public static int[] MinutesSource => [0, 15, 30, 45];
 
-        public MuscleOxygenViewModel(MuscleOxygen muscleOxygen)
+        public MuscleOxygenViewModel(MuscleOxygen muscleOxygen, ILogger<MuscleOxygenViewModel> logger)
         {
             MuscleOxygen = muscleOxygen;
+            _logger = logger;
+        }
+
+        [RelayCommand]
+        private void GetLocalTimeOffset()
+        {
+            IsPickerOpen = true;
         }
 
         [RelayCommand]
         private async Task SetTime()
         {
-            TimeSpan ts = new(Hours, Minutes, 0);
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.SetTime, ts, DateTime.UtcNow);
+            await SendTimeCommand(MuscleOxygen.CommandId.SetTime);
         }
 
         [RelayCommand(CanExecute = nameof(CanStartSession))]
@@ -37,8 +61,7 @@ namespace AntPlusMauiClient.ViewModels
         {
             started = true;
             CheckCanExecutes();
-            TimeSpan ts = new(Hours, Minutes, 0);
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.StartSession, ts, DateTime.UtcNow);
+            await SendTimeCommand(MuscleOxygen.CommandId.StartSession);
         }
         private bool CanStartSession() => !started;
 
@@ -47,16 +70,14 @@ namespace AntPlusMauiClient.ViewModels
         {
             started = false;
             CheckCanExecutes();
-            TimeSpan ts = new(Hours, Minutes, 0);
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.StopSession, ts, DateTime.UtcNow);
+            await SendTimeCommand(MuscleOxygen.CommandId.StopSession);
         }
         private bool CanStopSession() => started;
 
         [RelayCommand(CanExecute = nameof(CanLogLap))]
         private async Task LogLap()
         {
-            TimeSpan ts = new(Hours, Minutes, 0);
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.Lap, ts, DateTime.UtcNow);
+            await SendTimeCommand(MuscleOxygen.CommandId.Lap);
         }
         private bool CanLogLap() => started;
 
@@ -65,6 +86,20 @@ namespace AntPlusMauiClient.ViewModels
             StartSessionCommand.NotifyCanExecuteChanged();
             StopSessionCommand.NotifyCanExecuteChanged();
             LogLapCommand.NotifyCanExecuteChanged();
+        }
+
+        private async Task SendTimeCommand(MuscleOxygen.CommandId commandId)
+        {
+            try
+            {
+                await MuscleOxygen.SendCommand(commandId, SelectedTimeOffset, DateTime.UtcNow);
+            }
+            catch (Exception ex)
+            {
+                // log the exception and inform the user
+                _logger.LogError(ex, "Error sending {CommandId} command to MuscleOxygen device.", commandId);
+                throw;
+            }
         }
     }
 }

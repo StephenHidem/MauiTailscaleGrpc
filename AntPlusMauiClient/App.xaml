@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:AntPlusMauiClient"
              xmlns:exp="clr-namespace:Syncfusion.Maui.Toolkit.Expander;assembly=Syncfusion.Maui.Toolkit"
              xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AntPlusMauiClient.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -31,6 +32,7 @@
             <Style TargetType="Label" x:Key="HeaderLabelStyle">
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="FontSize" Value="Title" />
+                <Setter Property="Margin" Value="0" />
             </Style>
 
             <Style TargetType="tabview:SfTabItem">
