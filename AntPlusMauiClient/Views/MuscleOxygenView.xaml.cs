@@ -9,9 +9,4 @@ public partial class MuscleOxygenView : ContentView
         InitializeComponent();
 		BindingContext = viewModel;
 	}
-
-    private void Button_Clicked(object sender, EventArgs e)
-    {
-        Picker.IsOpen = true;
-    }
 }

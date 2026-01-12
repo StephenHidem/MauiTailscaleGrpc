@@ -19,6 +19,9 @@ namespace AntPlusMauiClient.ViewModels
         [NotifyPropertyChangedFor(nameof(LocalTimeOffset))]
         public partial int MinutesIndex { get; set; } = 0;
 
+        [ObservableProperty]
+        public partial bool IsPickerOpen { get; set; } = false;
+
         public string LocalTimeOffset
         {
             get
@@ -26,6 +29,8 @@ namespace AntPlusMauiClient.ViewModels
                 return $"{HoursSource[HoursIndex]:00}:{MinutesSource[MinutesIndex]:00}";
             }
         }
+
+        private TimeSpan SelectedTimeOffset => new(HoursSource[HoursIndex], MinutesSource[MinutesIndex], 0);
 
         public static int[] HoursSource => [.. Enumerable.Range(-15, 31)];
         public static int[] MinutesSource => [0, 15, 30, 45];
@@ -36,10 +41,15 @@ namespace AntPlusMauiClient.ViewModels
         }
 
         [RelayCommand]
+        private void GetLocalTimeOffset()
+        {
+            IsPickerOpen = true;
+        }
+
+        [RelayCommand]
         private async Task SetTime()
         {
-            TimeSpan ts = new(HoursSource[HoursIndex], MinutesSource[MinutesIndex], 0);
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.SetTime, ts, DateTime.UtcNow);
+            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.SetTime, SelectedTimeOffset, DateTime.UtcNow);
         }
 
         [RelayCommand(CanExecute = nameof(CanStartSession))]
@@ -47,8 +57,7 @@ namespace AntPlusMauiClient.ViewModels
         {
             started = true;
             CheckCanExecutes();
-            TimeSpan ts = new(HoursSource[HoursIndex], MinutesSource[MinutesIndex], 0);
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.StartSession, ts, DateTime.UtcNow);
+            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.StartSession, SelectedTimeOffset, DateTime.UtcNow);
         }
         private bool CanStartSession() => !started;
 
@@ -57,16 +66,14 @@ namespace AntPlusMauiClient.ViewModels
         {
             started = false;
             CheckCanExecutes();
-            TimeSpan ts = new(HoursSource[HoursIndex], MinutesSource[MinutesIndex], 0);
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.StopSession, ts, DateTime.UtcNow);
+            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.StopSession, SelectedTimeOffset, DateTime.UtcNow);
         }
         private bool CanStopSession() => started;
 
         [RelayCommand(CanExecute = nameof(CanLogLap))]
         private async Task LogLap()
         {
-            TimeSpan ts = new(HoursSource[HoursIndex], MinutesSource[MinutesIndex], 0);
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.Lap, ts, DateTime.UtcNow);
+            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.Lap, SelectedTimeOffset, DateTime.UtcNow);
         }
         private bool CanLogLap() => started;
 

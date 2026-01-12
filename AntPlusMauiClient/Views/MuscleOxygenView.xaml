@@ -7,6 +7,7 @@
              xmlns:picker="clr-namespace:Syncfusion.Maui.Toolkit.Picker;assembly=Syncfusion.Maui.Toolkit"
              x:DataType="vm:MuscleOxygenViewModel"
              x:Class="AntPlusMauiClient.Views.MuscleOxygenView">
+
     <ScrollView>
         <tabview:SfTabView>
             <tabview:SfTabView.Items>
@@ -31,7 +32,7 @@
                                 <VerticalStackLayout>
                                     <Label Text="Local Time Offset" Style="{StaticResource HeaderLabelStyle}"/>
                                     <HorizontalStackLayout>
-                                        <picker:SfPicker x:Name="Picker" Mode="Dialog">
+                                        <picker:SfPicker x:Name="Picker" Mode="Dialog" IsOpen="{Binding IsPickerOpen, Mode=TwoWay}">
                                             <picker:SfPicker.HeaderView>
                                                 <picker:PickerHeaderView Text="Local Time Offset" Height="40"
                                                                  Background="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"/>
@@ -48,8 +49,11 @@
                                                 <picker:PickerColumnHeaderView Height="40"/>
                                             </picker:SfPicker.ColumnHeaderView>
                                         </picker:SfPicker>
-                                        <Button Margin="4" Text="{Binding LocalTimeOffset}" Clicked="Button_Clicked" WidthRequest="84"/>
-                                        <Button Margin="4" Text="Set Time" Command="{Binding SetTimeCommand}"/>
+                                        <Button Margin="4" Text="{Binding LocalTimeOffset}"
+                                                WidthRequest="84"
+                                                Command="{Binding GetLocalTimeOffsetCommand}"/>
+                                        <Button Margin="4" Text="Set Time"
+                                                Command="{Binding SetTimeCommand}"/>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
                             </Border>
