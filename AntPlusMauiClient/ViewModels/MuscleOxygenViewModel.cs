@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using SmallEarthTech.AntPlus.DeviceProfiles;
 
 namespace AntPlusMauiClient.ViewModels
@@ -10,6 +11,8 @@ namespace AntPlusMauiClient.ViewModels
 
         [ObservableProperty]
         public partial MuscleOxygen? MuscleOxygen { get; private set; }
+
+        private readonly ILogger<MuscleOxygenViewModel> _logger;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(LocalTimeOffset))]
@@ -35,9 +38,10 @@ namespace AntPlusMauiClient.ViewModels
         public static int[] HoursSource => [.. Enumerable.Range(-15, 31)];
         public static int[] MinutesSource => [0, 15, 30, 45];
 
-        public MuscleOxygenViewModel(MuscleOxygen muscleOxygen)
+        public MuscleOxygenViewModel(MuscleOxygen muscleOxygen, ILogger<MuscleOxygenViewModel> logger)
         {
             MuscleOxygen = muscleOxygen;
+            _logger = logger;
         }
 
         [RelayCommand]
@@ -49,7 +53,7 @@ namespace AntPlusMauiClient.ViewModels
         [RelayCommand]
         private async Task SetTime()
         {
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.SetTime, SelectedTimeOffset, DateTime.UtcNow);
+            await SendTimeCommand(MuscleOxygen.CommandId.SetTime);
         }
 
         [RelayCommand(CanExecute = nameof(CanStartSession))]
@@ -57,7 +61,7 @@ namespace AntPlusMauiClient.ViewModels
         {
             started = true;
             CheckCanExecutes();
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.StartSession, SelectedTimeOffset, DateTime.UtcNow);
+            await SendTimeCommand(MuscleOxygen.CommandId.StartSession);
         }
         private bool CanStartSession() => !started;
 
@@ -66,14 +70,14 @@ namespace AntPlusMauiClient.ViewModels
         {
             started = false;
             CheckCanExecutes();
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.StopSession, SelectedTimeOffset, DateTime.UtcNow);
+            await SendTimeCommand(MuscleOxygen.CommandId.StopSession);
         }
         private bool CanStopSession() => started;
 
         [RelayCommand(CanExecute = nameof(CanLogLap))]
         private async Task LogLap()
         {
-            _ = await MuscleOxygen!.SendCommand(MuscleOxygen.CommandId.Lap, SelectedTimeOffset, DateTime.UtcNow);
+            await SendTimeCommand(MuscleOxygen.CommandId.Lap);
         }
         private bool CanLogLap() => started;
 
@@ -82,6 +86,20 @@ namespace AntPlusMauiClient.ViewModels
             StartSessionCommand.NotifyCanExecuteChanged();
             StopSessionCommand.NotifyCanExecuteChanged();
             LogLapCommand.NotifyCanExecuteChanged();
+        }
+
+        private async Task SendTimeCommand(MuscleOxygen.CommandId commandId)
+        {
+            try
+            {
+                await MuscleOxygen!.SendCommand(commandId, SelectedTimeOffset, DateTime.UtcNow);
+            }
+            catch (Exception ex)
+            {
+                // log the exception and inform the user
+                _logger.LogError(ex, "Error sending {CommandId} command to MuscleOxygen device.", commandId);
+                throw;
+            }
         }
     }
 }
