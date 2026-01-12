@@ -35,8 +35,8 @@ namespace AntPlusMauiClient.ViewModels
 
         private TimeSpan SelectedTimeOffset => new(HoursSource[HoursIndex], MinutesSource[MinutesIndex], 0);
 
-        public static int[] HoursSource => [.. Enumerable.Range(-15, 31)];
-        public static int[] MinutesSource => [0, 15, 30, 45];
+        public static int[] HoursSource { get; } = [.. Enumerable.Range(-15, 31)];
+        public static int[] MinutesSource { get; } = [0, 15, 30, 45];
 
         public MuscleOxygenViewModel(MuscleOxygen muscleOxygen, ILogger<MuscleOxygenViewModel> logger)
         {
