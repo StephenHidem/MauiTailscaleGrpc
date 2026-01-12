@@ -20,7 +20,7 @@
             Spacing="12">
             <exp:SfExpander>
                 <exp:SfExpander.Header>
-                    <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, 2*" ColumnSpacing="16" RowSpacing="8">
+                    <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, 2.5*" ColumnSpacing="16" RowSpacing="8">
                         <Image Grid.RowSpan="4" Source="antplus.png" Aspect="AspectFit" HeightRequest="96" SemanticProperties.Description="ant plus server" />
 
                         <VerticalStackLayout Grid.Column="1">
