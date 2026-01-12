@@ -10,7 +10,7 @@ namespace AntPlusMauiClient.ViewModels
         private bool started = false;
 
         [ObservableProperty]
-        public partial MuscleOxygen? MuscleOxygen { get; private set; }
+        public partial MuscleOxygen MuscleOxygen { get; private set; }
 
         private readonly ILogger<MuscleOxygenViewModel> _logger;
 
@@ -92,7 +92,7 @@ namespace AntPlusMauiClient.ViewModels
         {
             try
             {
-                await MuscleOxygen!.SendCommand(commandId, SelectedTimeOffset, DateTime.UtcNow);
+                await MuscleOxygen.SendCommand(commandId, SelectedTimeOffset, DateTime.UtcNow);
             }
             catch (Exception ex)
             {
