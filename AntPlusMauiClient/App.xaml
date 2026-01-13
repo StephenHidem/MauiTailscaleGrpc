@@ -42,6 +42,17 @@
             <Style TargetType="exp:SfExpander">
                 <Setter Property="HeaderIconColor" Value="{AppThemeBinding Dark={StaticResource PrimaryDark}, Light={StaticResource Primary}}"/>
             </Style>
+
+            <LinearGradientBrush x:Key="BackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="{AppThemeBinding Light=#4A6FA5, Dark=#4A6FA5}" Offset="0.0" />
+                <GradientStop Color="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" Offset="0.5" />
+                <GradientStop Color="{AppThemeBinding Light=#4A6FA5, Dark=#4A6FA5}" Offset="1.0" />
+            </LinearGradientBrush>
+
+            <Style TargetType="Button" x:Key="DefaultButtonStyle"/>
+            <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+                <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

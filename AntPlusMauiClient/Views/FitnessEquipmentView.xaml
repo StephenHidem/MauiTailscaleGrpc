@@ -82,7 +82,7 @@
                 <Border>
                     <VerticalStackLayout>
                         <Label Text="Resistance Settings" Style="{StaticResource HeaderLabelStyle}"/>
-                        <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8">
+                        <Grid ColumnDefinitions="Auto, Auto, *" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8">
                             <Button Text="Set Target Power" Command="{Binding SetTargetPowerCommand}"/>
                             <editors:SfNumericUpDown Grid.Column="1"
                                                      Placeholder="Target Power"
@@ -92,6 +92,7 @@
                                                      Maximum="4000"
                                                      SmallChange="0.25"
                                                      LargeChange="10.0"/>
+                            <Label Text="0 - 4000 Watts" VerticalOptions="Center" Grid.Column="2"/>
 
                             <Button Grid.Row="1" Text="Set Basic Resistance" Command="{Binding SetBasicResistanceCommand}"/>
                             <editors:SfNumericUpDown Grid.Column="1" Grid.Row="1"
@@ -102,6 +103,7 @@
                                                      Maximum="100"
                                                      SmallChange="0.5"
                                                      LargeChange="1.0"/>
+                            <Label Text="0 - 100 Percent" VerticalOptions="Center" Grid.Row="1" Grid.Column="2"/>
 
                             <Button Grid.Row="2" Text="Set Track Resistance" Command="{Binding SetTrackResistanceCommand}"/>
                             <VerticalStackLayout Grid.Column="1" Grid.Row="2">
@@ -121,6 +123,10 @@
                                                          LargeChange="0.0005"
                                                          MaximumNumberDecimalDigits="5"/>
                             </VerticalStackLayout>
+                            <Grid Grid.Column="2" Grid.Row="2" RowDefinitions="*, *">
+                                <Label Text="-200 - +200 Grade" VerticalOptions="Center"/>
+                                <Label Text="0 - 0.0127 CRR" VerticalOptions="Center" Grid.Row="1"/>
+                            </Grid>
 
                             <Button Grid.Row="3" Text="Set Wind Resistance" Command="{Binding SetWindResistanceCommand}"/>
                             <VerticalStackLayout Grid.Column="1" Grid.Row="3">
@@ -146,6 +152,11 @@
                                                          SmallChange="0.01"
                                                          LargeChange="0.10"/>
                             </VerticalStackLayout>
+                            <Grid Grid.Column="2" Grid.Row="3" RowDefinitions="*, *, *">
+                                <Label Text="0 - 1.86 Wind Resistance" VerticalOptions="Center"/>
+                                <Label Text="-127 - +127 Wind Speed" VerticalOptions="Center" Grid.Row="1"/>
+                                <Label Text="0 - 1.00 Drafting Factor" VerticalOptions="Center" Grid.Row="2"/>
+                            </Grid>
                         </Grid>
                     </VerticalStackLayout>
                 </Border>
