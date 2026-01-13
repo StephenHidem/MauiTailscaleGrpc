@@ -8,11 +8,11 @@
              x:DataType="vm:MuscleOxygenViewModel"
              x:Class="AntPlusMauiClient.Views.MuscleOxygenView">
 
-    <ScrollView>
-        <tabview:SfTabView>
-            <tabview:SfTabView.Items>
-                <tabview:SfTabItem Header="Muscle Oxygen">
-                    <tabview:SfTabItem.Content>
+    <tabview:SfTabView>
+        <tabview:SfTabView.Items>
+            <tabview:SfTabItem Header="Muscle Oxygen">
+                <tabview:SfTabItem.Content>
+                    <ScrollView>
                         <VerticalStackLayout>
                             <Border>
                                 <VerticalStackLayout>
@@ -66,14 +66,14 @@
                                 </Grid>
                             </Border>
                         </VerticalStackLayout>
-                    </tabview:SfTabItem.Content>
-                </tabview:SfTabItem>
-                <tabview:SfTabItem Header="Common Data Pages">
-                    <tabview:SfTabItem.Content>
-                        <views:CommonDataPagesView CommonDataPages="{Binding MuscleOxygen.CommonDataPages}"/>
-                    </tabview:SfTabItem.Content>
-                </tabview:SfTabItem>
-            </tabview:SfTabView.Items>
-        </tabview:SfTabView>
-    </ScrollView>
+                    </ScrollView>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Common Data Pages">
+                <tabview:SfTabItem.Content>
+                    <views:CommonDataPagesView CommonDataPages="{Binding MuscleOxygen.CommonDataPages}"/>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+        </tabview:SfTabView.Items>
+    </tabview:SfTabView>
 </ContentView>
