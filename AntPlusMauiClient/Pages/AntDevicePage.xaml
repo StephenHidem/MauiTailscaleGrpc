@@ -12,9 +12,6 @@
         <ResourceDictionary>
             <conv:StreamToImageSourceConverter x:Key="StreamToImage"/>
         </ResourceDictionary>
-        <Style TargetType="Label">
-            <Setter Property="Margin" Value="16, 0"/>
-        </Style>
     </ContentPage.Resources>
 
     <Grid Margin="10" RowDefinitions="Auto, *">

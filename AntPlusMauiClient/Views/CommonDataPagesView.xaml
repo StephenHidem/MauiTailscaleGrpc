@@ -5,33 +5,35 @@
              x:Name="this"
              x:DataType="views:CommonDataPagesView"
              x:Class="AntPlusMauiClient.Views.CommonDataPagesView">
-    <VerticalStackLayout BindingContext="{x:Reference this}">
-        <Border>
-            <VerticalStackLayout>
-                <Label Text="Manufacturer" Style="{StaticResource HeaderLabelStyle}"/>
-                <Label Text="{Binding CommonDataPages.ManufacturerInfo.ManufacturerId, StringFormat='Manufacter ID: {0}'}"/>
-                <Label Text="{Binding CommonDataPages.ManufacturerInfo.ModelNumber, StringFormat='Model Number: {0}'}"/>
-                <Label Text="{Binding CommonDataPages.ManufacturerInfo.HardwareRevision, StringFormat='Hardware Revision: {0}'}"/>
-            </VerticalStackLayout>
-        </Border>
+    <ScrollView>
+        <VerticalStackLayout BindingContext="{x:Reference this}">
+            <Border>
+                <VerticalStackLayout>
+                    <Label Text="Manufacturer" Style="{StaticResource HeaderLabelStyle}"/>
+                    <Label Text="{Binding CommonDataPages.ManufacturerInfo.ManufacturerId, StringFormat='Manufacter ID: {0}'}"/>
+                    <Label Text="{Binding CommonDataPages.ManufacturerInfo.ModelNumber, StringFormat='Model Number: {0}'}"/>
+                    <Label Text="{Binding CommonDataPages.ManufacturerInfo.HardwareRevision, StringFormat='Hardware Revision: {0}'}"/>
+                </VerticalStackLayout>
+            </Border>
 
-        <Border>
-            <VerticalStackLayout>
-                <Label Text="Product Info" Style="{StaticResource HeaderLabelStyle}"/>
-                <Label Text="{Binding CommonDataPages.ProductInfo.SoftwareRevision, StringFormat='Software Revision: {0}'}"/>
-                <Label Text="{Binding CommonDataPages.ProductInfo.SerialNumber, StringFormat='Serial Number: {0}'}"/>
-            </VerticalStackLayout>
-        </Border>
+            <Border>
+                <VerticalStackLayout>
+                    <Label Text="Product Info" Style="{StaticResource HeaderLabelStyle}"/>
+                    <Label Text="{Binding CommonDataPages.ProductInfo.SoftwareRevision, StringFormat='Software Revision: {0}'}"/>
+                    <Label Text="{Binding CommonDataPages.ProductInfo.SerialNumber, StringFormat='Serial Number: {0}'}"/>
+                </VerticalStackLayout>
+            </Border>
 
-        <Border>
-            <VerticalStackLayout>
-                <Label Text="Battery Status" Style="{StaticResource HeaderLabelStyle}"/>
-                <Label Text="{Binding CommonDataPages.BatteryStatus.NumberOfBatteries, StringFormat='Number of Batteries: {0}'}"/>
-                <Label Text="{Binding CommonDataPages.BatteryStatus.Identifier, StringFormat='Battery ID: {0}'}"/>
-                <Label Text="{Binding CommonDataPages.BatteryStatus.Status, StringFormat='Battery Status: {0}'}"/>
-                <Label Text="{Binding CommonDataPages.BatteryStatus.BatteryVoltage, StringFormat='Voltage: {0:F3}'}"/>
-                <Label Text="{Binding CommonDataPages.BatteryStatus.CumulativeOperatingTime, StringFormat='Operating Time: {0}'}"/>
-            </VerticalStackLayout>
-        </Border>
-    </VerticalStackLayout>
+            <Border>
+                <VerticalStackLayout>
+                    <Label Text="Battery Status" Style="{StaticResource HeaderLabelStyle}"/>
+                    <Label Text="{Binding CommonDataPages.BatteryStatus.NumberOfBatteries, StringFormat='Number of Batteries: {0}'}"/>
+                    <Label Text="{Binding CommonDataPages.BatteryStatus.Identifier, StringFormat='Battery ID: {0}'}"/>
+                    <Label Text="{Binding CommonDataPages.BatteryStatus.Status, StringFormat='Battery Status: {0}'}"/>
+                    <Label Text="{Binding CommonDataPages.BatteryStatus.BatteryVoltage, StringFormat='Voltage: {0:F3}'}"/>
+                    <Label Text="{Binding CommonDataPages.BatteryStatus.CumulativeOperatingTime, StringFormat='Operating Time: {0}'}"/>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentView>
