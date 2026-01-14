@@ -52,7 +52,7 @@
                         <Label Text="Hint:"/>
                         <Editor Text="{Binding Hint}" MaxLength="168" AutoSize="TextChanges"/>
                         <Button Text="Program Geocache" Command="{Binding ProgramGeocacheCommand}"/>
-                        <Button Text="Erase Geocache" Command="{Binding EraseGeocacheCommand}" Margin="0, 8, 0, 8"/>
+                        <Button Text="Erase Geocache" Command="{Binding EraseGeocacheCommand}"/>
                     </VerticalStackLayout>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
