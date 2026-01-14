@@ -33,9 +33,6 @@ namespace AntPlusMauiClient.ViewModels
         [ObservableProperty]
         public partial string Hint { get; set; } = string.Empty;
 
-        [ObservableProperty]
-        public partial string AuthToken { get; set; } = string.Empty;
-
         public GeocacheViewModel(Geocache geocache)
         {
             Geocache = geocache;
@@ -47,10 +44,6 @@ namespace AntPlusMauiClient.ViewModels
             if (e.PropertyName == "NumberOfVisits")
             {
                 MainThread.BeginInvokeOnMainThread(() => { LogVisitCommand.NotifyCanExecuteChanged(); });
-            }
-            if (e.PropertyName == "AuthenticationToken")
-            {
-                MainThread.BeginInvokeOnMainThread(() => { AuthToken = BitConverter.ToString(Geocache!.AuthenticationToken!); });
             }
         }
 

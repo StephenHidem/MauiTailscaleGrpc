@@ -5,7 +5,7 @@ namespace AntPlusMauiClient.ViewModels
 {
     public class UnknownDeviceViewModel
     {
-        public ObservableCollection<byte[]> DataPages { get; private set; }
+        public ObservableCollection<byte[]> DataPages { get; private set; } = [];
 
         public UnknownDeviceViewModel(UnknownDevice unknownDevice)
         {
