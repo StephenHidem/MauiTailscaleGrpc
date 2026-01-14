@@ -8,12 +8,6 @@
              x:Class="AntPlusMauiClient.Pages.AntDevicePage"
              Title="ANT+ Device">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <conv:StreamToImageSourceConverter x:Key="StreamToImage"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <Grid Margin="10" RowDefinitions="Auto, *">
         <Grid ColumnSpacing="16" Padding="16, 0" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *">
             <Image Source="{Binding Device, Converter={StaticResource StreamToImage}}"

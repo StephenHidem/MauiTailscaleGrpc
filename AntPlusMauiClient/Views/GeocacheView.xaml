@@ -29,7 +29,7 @@
                         <Border>
                             <VerticalStackLayout>
                                 <Label Text="Authentication" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding AuthToken, StringFormat='Authentication Token: {0}'}"/>
+                                <Label Text="{Binding Geocache.AuthenticationToken, StringFormat='Authentication Token: {0}', Converter={StaticResource ByteArrayToString}}"/>
                                 <Button Text="Request Authentication" Command="{Binding RequestAuthenticationCommand}"/>
                             </VerticalStackLayout>
                         </Border>

@@ -5,6 +5,7 @@
              xmlns:exp="clr-namespace:Syncfusion.Maui.Toolkit.Expander;assembly=Syncfusion.Maui.Toolkit"
              xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:conv="clr-namespace:AntPlusMauiClient.Converters"
              x:Class="AntPlusMauiClient.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -12,6 +13,9 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <conv:ByteArrayToStringConverter x:Key="ByteArrayToString"/>
+            <conv:StreamToImageSourceConverter x:Key="StreamToImage"/>
 
             <Style TargetType="Label" x:Key="OfflineStyle">
                 <Setter Property="VerticalOptions" Value="Center"/>
