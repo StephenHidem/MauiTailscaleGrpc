@@ -8,12 +8,6 @@
              x:Class="AntPlusMauiClient.Pages.MainPage"
              x:DataType="pm:MainPageModel">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <conv:StreamToImageSourceConverter x:Key="StreamToImage"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-    
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
