@@ -23,7 +23,7 @@ namespace AntPlusMauiClient.GrpcServices
     {
         private readonly ILoggerFactory _loggerFactory;
         private readonly ILogger<AntRadioService> _logger;
-        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationToken _cancellationToken;
         private readonly GrpcChannelOptions _grpcChannelOptions;
         private gRPCAntRadio.gRPCAntRadioClient? _client;
         private GrpcChannel? _grpcChannel;
@@ -65,7 +65,7 @@ namespace AntPlusMauiClient.GrpcServices
         {
             _loggerFactory = loggerFactory;
             _logger = _loggerFactory.CreateLogger<AntRadioService>();
-            _cancellationTokenSource = cancellationTokenSource;
+            _cancellationToken = cancellationTokenSource.Token;
             _grpcChannelOptions = grpcChannelOptions ?? new GrpcChannelOptions();
         }
 
@@ -88,7 +88,7 @@ namespace AntPlusMauiClient.GrpcServices
                 _client = new gRPCAntRadio.gRPCAntRadioClient(_grpcChannel);
 
                 // get properties from server
-                PropertiesReply reply = await _client.GetPropertiesAsync(new Empty());
+                PropertiesReply reply = await _client.GetPropertiesAsync(new Empty(), cancellationToken: _cancellationToken);
                 ProductDescription = reply.ProductDescription;
                 SerialNumber = reply.SerialNumber;
                 Version = reply.Version;
@@ -99,7 +99,7 @@ namespace AntPlusMauiClient.GrpcServices
                 _crypto = new gRPCAntCrypto.gRPCAntCryptoClient(_grpcChannel);
 
                 // subscribe to radio response updates
-                HandleRadioResponseUpdates(_cancellationTokenSource.Token);
+                HandleRadioResponseUpdates(_cancellationToken);
 
                 return true;
             }
@@ -177,7 +177,7 @@ namespace AntPlusMauiClient.GrpcServices
             {
                 channels[i] = new AntChannelService(_loggerFactory.CreateLogger<AntChannelService>(), i, _grpcChannel);
             }
-            channels[0].HandleChannelResponseUpdates(_cancellationTokenSource.Token);
+            channels[0].HandleChannelResponseUpdates(_cancellationToken);
             return channels;
         }
 

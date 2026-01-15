@@ -19,7 +19,7 @@ namespace AntPlusMauiClient.PageModels
         private readonly AntCollection _antCollection;
         private readonly AntRadioService _antRadioService;
         private readonly ILogger<MainPageModel> _logger;
-        private readonly CancellationTokenSource _cts;
+        private readonly CancellationToken _cancellationToken;
 
         public string ServerUrl => $"https://{AntRadioService.TailnetFqdn}";
 
@@ -52,22 +52,21 @@ namespace AntPlusMauiClient.PageModels
             _antCollection = antDevices;
             _antRadioService = (AntRadioService)antRadioService;
             _logger = logger;
-            _cts = cancellationTokenSource;
+            _cancellationToken = cancellationTokenSource.Token;
             _ = Task.Run(InitializeAsync);
         }
 
-        private async void InitializeAsync()
+        private async Task InitializeAsync()
         {
             bool success = false;
-            IsBusy = true;
-
-            while (!success && !_cts.IsCancellationRequested)
+            MainThread.BeginInvokeOnMainThread(() => IsBusy = true);
+            while (!success && !_cancellationToken.IsCancellationRequested)
             {
                 success = await _antRadioService.FindAntRadioServerAsync();
                 if (!success)
                 {
                     _logger.LogWarning("Unable to find ANT radio server. Retrying in 5 seconds...");
-                    await Task.Delay(5000);
+                    await Task.Delay(5000, _cancellationToken);
                 }
             }
 
@@ -89,7 +88,7 @@ namespace AntPlusMauiClient.PageModels
             _antRadioService.RadioResponse += HandleRadioResponse;
             _antRadioService.RpcExceptionReceived += HandleRpcException;
 
-            IsBusy = false;
+            MainThread.BeginInvokeOnMainThread(() => IsBusy = false);
 
             await AntDevices.StartScanning();
         }
