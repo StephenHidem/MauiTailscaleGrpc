@@ -70,18 +70,12 @@ namespace AntPlusMauiClient.GrpcServices
         }
 
         /// <summary>
-        /// Searches for an ANT radio server. A receive task creates a UdpClient and then sends a
-        /// message to the multicast endpoint every 2 seconds until a server responds. The server
-        /// IP address in the response is then used to connect to the server via gRPC.
-        /// 
-        /// Note: this method is cancellable and can throw an OperationCanceledException.
+        /// Creates a gRPC channel to the ANT radio server and retrieves its properties.
         /// </summary>
-        /// <returns>A void Task.</returns>
-        /// <exception cref="OperationCanceledException">Thrown when the CancellationTokenSource is canceled.</exception>
+        /// <returns>A bool indicating success (true), or failure (false).</returns>
         public async Task<bool> FindAntRadioServerAsync()
         {
             // use Tailnet fully qualified domain name to connect to server
-            
             UriBuilder uriBuilder = new("https", AntRadioService.TailnetFqdn);
             try {
                 _grpcChannel = GrpcChannel.ForAddress(uriBuilder.Uri, _grpcChannelOptions);
