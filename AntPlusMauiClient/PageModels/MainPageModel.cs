@@ -19,11 +19,12 @@ namespace AntPlusMauiClient.PageModels
         private readonly AntCollection _antCollection;
         private readonly AntRadioService _antRadioService;
         private readonly ILogger<MainPageModel> _logger;
+        private readonly CancellationToken _cancellationToken;
 
         public string ServerUrl => $"https://{AntRadioService.TailnetFqdn}";
 
         [ObservableProperty]
-        public partial bool IsConnected { get; set; }
+        public partial bool IsBusy { get; set; }
 
         [ObservableProperty]
         public partial object? SelectedAntDevice { get; set; }
@@ -46,19 +47,28 @@ namespace AntPlusMauiClient.PageModels
         [ObservableProperty]
         public partial AntCollection? AntDevices { get; set; }
 
-        public MainPageModel(IAntRadio antRadioService, AntCollection antDevices, ILogger<MainPageModel> logger)
+        public MainPageModel(IAntRadio antRadioService, AntCollection antDevices, ILogger<MainPageModel> logger, CancellationTokenSource cancellationTokenSource)
         {
             _antCollection = antDevices;
             _antRadioService = (AntRadioService)antRadioService;
             _logger = logger;
+            _cancellationToken = cancellationTokenSource.Token;
             _ = Task.Run(InitializeAsync);
         }
 
-        private async void InitializeAsync()
+        private async Task InitializeAsync()
         {
-            MainThread.BeginInvokeOnMainThread(() => IsConnected = true);
-            await _antRadioService.FindAntRadioServerAsync();
-            MainThread.BeginInvokeOnMainThread(() => IsConnected = false);
+            bool success = false;
+            MainThread.BeginInvokeOnMainThread(() => IsBusy = true);
+            while (!success && !_cancellationToken.IsCancellationRequested)
+            {
+                success = await _antRadioService.FindAntRadioServerAsync();
+                if (!success)
+                {
+                    _logger.LogWarning("Unable to find ANT radio server. Retrying in 5 seconds...");
+                    await Task.Delay(5000, _cancellationToken);
+                }
+            }
 
             // get properties from server
             ProductDescription = _antRadioService.ProductDescription;
@@ -76,8 +86,9 @@ namespace AntPlusMauiClient.PageModels
 
             // handle radio response updates
             _antRadioService.RadioResponse += HandleRadioResponse;
-
             _antRadioService.RpcExceptionReceived += HandleRpcException;
+
+            MainThread.BeginInvokeOnMainThread(() => IsBusy = false);
 
             await AntDevices.StartScanning();
         }

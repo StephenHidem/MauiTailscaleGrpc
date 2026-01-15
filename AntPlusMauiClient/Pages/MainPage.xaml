@@ -5,88 +5,100 @@
              xmlns:pm="clr-namespace:AntPlusMauiClient.PageModels"
              xmlns:conv="clr-namespace:AntPlusMauiClient.Converters"
              xmlns:exp="clr-namespace:Syncfusion.Maui.Toolkit.Expander;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="AntPlusMauiClient.Pages.MainPage"
              x:DataType="pm:MainPageModel">
 
-    <ScrollView>
-        <VerticalStackLayout
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout
             Padding="30,0"
             Spacing="12">
-            <exp:SfExpander>
-                <exp:SfExpander.Header>
-                    <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, 2.5*" ColumnSpacing="16" RowSpacing="8">
-                        <Image Grid.RowSpan="4" Source="antplus.png" Aspect="AspectFit" HeightRequest="96" SemanticProperties.Description="ant plus server" />
+                <exp:SfExpander IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+                    <exp:SfExpander.Header>
+                        <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, 2.5*" ColumnSpacing="16" RowSpacing="8">
+                            <Image Grid.RowSpan="4" Source="antplus.png" Aspect="AspectFit" HeightRequest="96" SemanticProperties.Description="ant plus server" />
 
-                        <VerticalStackLayout Grid.Column="1">
-                            <Label Text="ANT+ Server" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{Binding ServerUrl}" FontSize="Default" Margin="24, 0"/>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Column="1" Grid.Row="1">
-                            <Label Text="Product Description" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{Binding ProductDescription}" FontSize="Default" Margin="24, 0"/>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Column="1" Grid.Row="2">
-                            <Label Text="Serial Number" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{Binding SerialNumber}" FontSize="Default" Margin="24, 0"/>
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Column="1" Grid.Row="3">
-                            <Label Text="Host Version" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{Binding HostVersion}" FontSize="Default" Margin="24, 0"/>
-                        </VerticalStackLayout>
-                    </Grid>
-                </exp:SfExpander.Header>
-                <exp:SfExpander.Content>
-                    <Grid Margin="10" RowDefinitions="Auto, *">
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Capabilities" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding Capabilities.MaxANTChannels, StringFormat='Max. ANT channel - {0}'}" />
-                                <Label Text="{Binding Capabilities.MaxNetworks, StringFormat='Max. Networks - {0}'}"/>
-                                <Label Text="{Binding Capabilities.MaxDataChannels, StringFormat='Max. Data Channels - {0}'}" />
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="ANT+ Server" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
+                                <Label Text="{Binding ServerUrl}" FontSize="Default" Margin="24, 0"/>
                             </VerticalStackLayout>
-                        </Border>
-                        <Border Grid.Row="1">
-                            <VerticalStackLayout>
-                                <Label Text="Flags" Style="{StaticResource HeaderLabelStyle}"/>
-                                <CollectionView ItemsSource="{Binding Flags}">
-                                    <CollectionView.ItemTemplate>
-                                        <DataTemplate x:DataType="x:String">
-                                            <Label Text="{Binding ., StringFormat='- {0}'}" LineBreakMode="NoWrap"/>
-                                        </DataTemplate>
-                                    </CollectionView.ItemTemplate>
-                                </CollectionView>
+                            <VerticalStackLayout Grid.Column="1" Grid.Row="1">
+                                <Label Text="Product Description" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
+                                <Label Text="{Binding ProductDescription}" FontSize="Default" Margin="24, 0"/>
                             </VerticalStackLayout>
-                        </Border>
-                    </Grid>
-                </exp:SfExpander.Content>
-            </exp:SfExpander>
+                            <VerticalStackLayout Grid.Column="1" Grid.Row="2">
+                                <Label Text="Serial Number" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
+                                <Label Text="{Binding SerialNumber}" FontSize="Default" Margin="24, 0"/>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Grid.Row="3">
+                                <Label Text="Host Version" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
+                                <Label Text="{Binding HostVersion}" FontSize="Default" Margin="24, 0"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </exp:SfExpander.Header>
+                    <exp:SfExpander.Content>
+                        <Grid Margin="10" RowDefinitions="Auto, *">
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Capabilities" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <Label Text="{Binding Capabilities.MaxANTChannels, StringFormat='Max. ANT channel - {0}'}" />
+                                    <Label Text="{Binding Capabilities.MaxNetworks, StringFormat='Max. Networks - {0}'}"/>
+                                    <Label Text="{Binding Capabilities.MaxDataChannels, StringFormat='Max. Data Channels - {0}'}" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Row="1">
+                                <VerticalStackLayout>
+                                    <Label Text="Flags" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <CollectionView ItemsSource="{Binding Flags}">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <Label Text="{Binding ., StringFormat='- {0}'}" LineBreakMode="NoWrap"/>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </exp:SfExpander.Content>
+                </exp:SfExpander>
 
-            <Label Text="ANT+ Devices" FontSize="Title"/>
-            <BoxView HeightRequest="2" HorizontalOptions="Fill"/>
+                <Label Text="ANT+ Devices" FontSize="Title"/>
+                <BoxView HeightRequest="2" HorizontalOptions="Fill"/>
 
-            <CollectionView x:Name="antDevices" ItemsSource="{Binding AntDevices}"
+                <CollectionView x:Name="antDevices" ItemsSource="{Binding AntDevices}"
                             SelectionMode="Single"
                             SelectedItem="{Binding SelectedAntDevice, Mode=TwoWay}"
                             SelectionChangedCommand="{Binding AntDeviceSelectedCommand}"
                             SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference antDevices}}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="4"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="ant:AntDevice">
-                        <Border>
-                            <Grid Padding="8" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto">
-                                <Image Margin="0,0,10,0" Grid.RowSpan="2" Source="{Binding ., Converter={StaticResource StreamToImage}}" Aspect="AspectFit" HeightRequest="40"/>
-                                <Label Grid.Column="1" Text="{Binding .}"/>
-                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}"/>
-                                <Image Source="more_arrow.png" Aspect="AspectFill" Background="Transparent"
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="4"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="ant:AntDevice">
+                            <Border>
+                                <Grid Padding="8" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *, Auto">
+                                    <Image Margin="0,0,10,0" Grid.RowSpan="2" Source="{Binding ., Converter={StaticResource StreamToImage}}" Aspect="AspectFit" HeightRequest="40"/>
+                                    <Label Grid.Column="1" Text="{Binding .}"/>
+                                    <Label Grid.Column="1" Grid.Row="1" Text="{Binding ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}"/>
+                                    <Image Source="more_arrow.png" Aspect="AspectFill" Background="Transparent"
                                        Grid.Column="2" Grid.RowSpan="2" HeightRequest="32" WidthRequest="32"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Display an activity indicator in a frame -->
+        <Border IsVisible="{Binding IsBusy}" BackgroundColor="PaleTurquoise" Padding="20"
+               HorizontalOptions="Center" VerticalOptions="Center">
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" Color="SteelBlue" WidthRequest="50" HeightRequest="50"/>
+                <Label Text="Connecting..." TextColor="Black" FontSize="Medium" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
 
 </ContentPage>
