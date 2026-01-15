@@ -78,13 +78,22 @@ namespace AntPlusMauiClient.GrpcServices
         /// </summary>
         /// <returns>A void Task.</returns>
         /// <exception cref="OperationCanceledException">Thrown when the CancellationTokenSource is canceled.</exception>
-        public async Task FindAntRadioServerAsync()
+        public async Task<bool> FindAntRadioServerAsync()
         {
             // use Tailnet fully qualified domain name to connect to server
+            
             UriBuilder uriBuilder = new("https", AntRadioService.TailnetFqdn);
             try {
                 _grpcChannel = GrpcChannel.ForAddress(uriBuilder.Uri, _grpcChannelOptions);
                 _client = new gRPCAntRadio.gRPCAntRadioClient(_grpcChannel);
+
+                // get properties from server
+                PropertiesReply reply = await _client.GetPropertiesAsync(new Empty());
+                ProductDescription = reply.ProductDescription;
+                SerialNumber = reply.SerialNumber;
+                Version = reply.Version;
+
+                // create other service clients
                 _control = new gRPCAntControl.gRPCAntControlClient(_grpcChannel);
                 _config = new gRPCAntConfiguration.gRPCAntConfigurationClient(_grpcChannel);
                 _crypto = new gRPCAntCrypto.gRPCAntCryptoClient(_grpcChannel);
@@ -92,16 +101,12 @@ namespace AntPlusMauiClient.GrpcServices
                 // subscribe to radio response updates
                 HandleRadioResponseUpdates(_cancellationTokenSource.Token);
 
-                // get properties from server
-                PropertiesReply reply = await _client.GetPropertiesAsync(new Empty());
-                ProductDescription = reply.ProductDescription;
-                SerialNumber = reply.SerialNumber;
-                Version = reply.Version;
+                return true;
             }
             catch (RpcException ex)
             {
                 _logger.LogError("FindAntRadioServerAsync: RpcException {Status}, {Message}", ex.Status, ex.Message);
-                //throw;
+                return false;
             }
         }
 
