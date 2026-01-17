@@ -14,22 +14,24 @@
                         <Border>
                             <VerticalStackLayout>
                                 <Label Text="Data Pages" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding Geocache.TrackableId, StringFormat='Trackable ID: {0}'}"/>
-                                <Label Text="{Binding Geocache.ProgrammingPIN, StringFormat='Programming PIN: {0}'}"/>
-                                <Label Text="{Binding Geocache.TotalPagesProgrammed, StringFormat='Total Pages Programmed: {0}'}"/>
-                                <Label Text="{Binding Geocache.NextStageLatitude, StringFormat='Next Stage Latitude: {0:F6}'}"/>
-                                <Label Text="{Binding Geocache.NextStageLongitude, StringFormat='Next Stage Longitude: {0:F6}'}"/>
-                                <Label Text="{Binding Geocache.Hint, StringFormat='Hint: {0}'}"/>
-                                <Label Text="{Binding Geocache.NumberOfVisits, StringFormat='Number of visits: {0}'}"/>
-                                <Label Text="{Binding Geocache.LastVisitTimestamp, StringFormat='Last visit: {0}'}"/>
-                                <Button Text="Request PIN" Command="{Binding RequestPINCommand}" Margin="0, 8, 0, 8"/>
+                                <VerticalStackLayout Margin="24, 0, 0, 0">
+                                    <Label Text="{Binding Geocache.TrackableId, StringFormat='Trackable ID: {0}'}"/>
+                                    <Label Text="{Binding Geocache.ProgrammingPIN, StringFormat='Programming PIN: {0}'}"/>
+                                    <Label Text="{Binding Geocache.TotalPagesProgrammed, StringFormat='Total Pages Programmed: {0}'}"/>
+                                    <Label Text="{Binding Geocache.NextStageLatitude, StringFormat='Next Stage Latitude: {0:F6}'}"/>
+                                    <Label Text="{Binding Geocache.NextStageLongitude, StringFormat='Next Stage Longitude: {0:F6}'}"/>
+                                    <Label Text="{Binding Geocache.Hint, StringFormat='Hint: {0}'}"/>
+                                    <Label Text="{Binding Geocache.NumberOfVisits, StringFormat='Number of visits: {0}'}"/>
+                                    <Label Text="{Binding Geocache.LastVisitTimestamp, StringFormat='Last visit: {0}'}"/>
+                                </VerticalStackLayout>
+                                <Button Text="Request PIN" Command="{Binding RequestPINCommand}"/>
                                 <Button Text="Log Visit" Command="{Binding LogVisitCommand}"/>
                             </VerticalStackLayout>
                         </Border>
                         <Border>
                             <VerticalStackLayout>
                                 <Label Text="Authentication" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding Geocache.AuthenticationToken, StringFormat='Authentication Token: {0}', Converter={StaticResource ByteArrayToString}}"/>
+                                <Label Text="{Binding Geocache.AuthenticationToken, StringFormat='Authentication Token: {0}', Converter={StaticResource ByteArrayToString}}" Margin="24, 0, 0, 0"/>
                                 <Button Text="Request Authentication" Command="{Binding RequestAuthenticationCommand}"/>
                             </VerticalStackLayout>
                         </Border>

@@ -15,11 +15,9 @@
                    Grid.Column="0"
                    Grid.RowSpan="2"/>
             <Label Text="{Binding Device}" FontSize="Title" VerticalOptions="Center"
-                   Margin="0"
                    Grid.Column="1"
                    Grid.Row="0"/>
             <Label Text="{Binding Device.ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}" FontSize="Subtitle" VerticalOptions="Center"
-                   Margin="0"
                    Grid.Column="1"
                    Grid.Row="1"/>
         </Grid>
