@@ -17,7 +17,7 @@
                             <Border>
                                 <VerticalStackLayout>
                                     <Label Text="Main Data Page" Style="{StaticResource HeaderLabelStyle}"/>
-                                    <VerticalStackLayout Margin="24, 0, 0, 0">
+                                    <VerticalStackLayout Style="{StaticResource IndentedContentStyle}">
                                         <Label Text="{Binding MuscleOxygen.SupportsAntFs, StringFormat='Supports ANT-FS: {0}'}"/>
                                         <Label Text="{Binding MuscleOxygen.UtcTimeRequired, StringFormat='UTC time required: {0}'}"/>
                                         <Label Text="{Binding MuscleOxygen.Interval, StringFormat='Measurement Interval: {0}'}"/>

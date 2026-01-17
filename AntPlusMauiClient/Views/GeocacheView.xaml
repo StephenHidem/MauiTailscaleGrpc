@@ -14,7 +14,7 @@
                         <Border>
                             <VerticalStackLayout>
                                 <Label Text="Data Pages" Style="{StaticResource HeaderLabelStyle}"/>
-                                <VerticalStackLayout Margin="24, 0, 0, 0">
+                                <VerticalStackLayout Style="{StaticResource IndentedContentStyle}">
                                     <Label Text="{Binding Geocache.TrackableId, StringFormat='Trackable ID: {0}'}"/>
                                     <Label Text="{Binding Geocache.ProgrammingPIN, StringFormat='Programming PIN: {0}'}"/>
                                     <Label Text="{Binding Geocache.TotalPagesProgrammed, StringFormat='Total Pages Programmed: {0}'}"/>

@@ -84,7 +84,7 @@
                 <Border>
                     <VerticalStackLayout>
                         <Label Text="Resistance Settings" Style="{StaticResource HeaderLabelStyle}"/>
-                        <Grid ColumnDefinitions="Auto, Auto, *" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8" Margin="24, 0 ,0, 0">
+                        <Grid ColumnDefinitions="Auto, Auto, *" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8" Margin="24, 0, 0, 0">
                             <Button Text="Set Target Power" Command="{Binding SetTargetPowerCommand}"/>
                             <editors:SfNumericUpDown Grid.Column="1"
                                                      Placeholder="Target Power"

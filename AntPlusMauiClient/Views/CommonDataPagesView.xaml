@@ -6,12 +6,6 @@
              x:DataType="views:CommonDataPagesView"
              x:Class="AntPlusMauiClient.Views.CommonDataPagesView">
 
-    <ContentView.Resources>
-        <Style x:Key="IndentedContentStyle" TargetType="VerticalStackLayout">
-            <Setter Property="Margin" Value="24, 0, 0, 0" />
-        </Style>
-    </ContentView.Resources>
-
     <ScrollView>
         <VerticalStackLayout BindingContext="{x:Reference this}">
             <Border>
