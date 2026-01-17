@@ -5,13 +5,20 @@
              x:Name="this"
              x:DataType="views:CommonDataPagesView"
              x:Class="AntPlusMauiClient.Views.CommonDataPagesView">
+
+    <ContentView.Resources>
+        <Style x:Key="IndentedContentStyle" TargetType="VerticalStackLayout">
+            <Setter Property="Margin" Value="24, 0, 0, 0" />
+        </Style>
+    </ContentView.Resources>
+
     <ScrollView>
         <VerticalStackLayout BindingContext="{x:Reference this}">
             <Border>
                 <VerticalStackLayout>
                     <Label Text="Manufacturer" Style="{StaticResource HeaderLabelStyle}"/>
-                    <VerticalStackLayout Margin="24, 0, 0, 0">
-                        <Label Text="{Binding CommonDataPages.ManufacturerInfo.ManufacturerId, StringFormat='Manufacter ID: {0}'}"/>
+                    <VerticalStackLayout Style="{StaticResource IndentedContentStyle}">
+                        <Label Text="{Binding CommonDataPages.ManufacturerInfo.ManufacturerId, StringFormat='Manufacturer ID: {0}'}"/>
                         <Label Text="{Binding CommonDataPages.ManufacturerInfo.ModelNumber, StringFormat='Model Number: {0}'}"/>
                         <Label Text="{Binding CommonDataPages.ManufacturerInfo.HardwareRevision, StringFormat='Hardware Revision: {0}'}"/>
                     </VerticalStackLayout>
@@ -21,7 +28,7 @@
             <Border>
                 <VerticalStackLayout>
                     <Label Text="Product Info" Style="{StaticResource HeaderLabelStyle}"/>
-                    <VerticalStackLayout Margin="24, 0, 0, 0">
+                    <VerticalStackLayout Style="{StaticResource IndentedContentStyle}">
                         <Label Text="{Binding CommonDataPages.ProductInfo.SoftwareRevision, StringFormat='Software Revision: {0}'}"/>
                         <Label Text="{Binding CommonDataPages.ProductInfo.SerialNumber, StringFormat='Serial Number: {0}'}"/>
                     </VerticalStackLayout>
@@ -31,7 +38,7 @@
             <Border>
                 <VerticalStackLayout>
                     <Label Text="Battery Status" Style="{StaticResource HeaderLabelStyle}"/>
-                    <VerticalStackLayout Margin="24, 0, 0, 0">
+                    <VerticalStackLayout Style="{StaticResource IndentedContentStyle}">
                         <Label Text="{Binding CommonDataPages.BatteryStatus.NumberOfBatteries, StringFormat='Number of Batteries: {0}'}"/>
                         <Label Text="{Binding CommonDataPages.BatteryStatus.Identifier, StringFormat='Battery ID: {0}'}"/>
                         <Label Text="{Binding CommonDataPages.BatteryStatus.Status, StringFormat='Battery Status: {0}'}"/>

@@ -61,7 +61,7 @@
                             </Border>
                             <Border>
                                 <VerticalStackLayout>
-                                    <Label Text="Session Control" Style="{StaticResource HeaderLabelStyle}" Grid.ColumnSpan="3"/>
+                                    <Label Text="Session Control" Style="{StaticResource HeaderLabelStyle}"/>
                                     <Grid ColumnSpacing="8" RowSpacing="8" RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, Auto, Auto" Margin="24, 0, 0, 0">
                                         <Button Grid.Column="0" Grid.Row="1" Text="Start" Command="{Binding StartSessionCommand}"/>
                                         <Button Grid.Column="1" Grid.Row="1" Text="Stop" Command="{Binding StopSessionCommand}"/>
