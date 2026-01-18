@@ -2,9 +2,9 @@
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
   </Folder>
+  <Project Path="AntGrpc.Shared/AntGrpc.Shared.csproj" />
   <Project Path="AntPlusMauiClient/AntPlusMauiClient.csproj">
     <Deploy Solution="Debug|*" />
   </Project>
   <Project Path="AntPlusServer/AntPlusServer.csproj" />
-  <Project Path="TailscaleGrpc.Shared/AntGrpc.Shared.csproj" />
 </Solution>

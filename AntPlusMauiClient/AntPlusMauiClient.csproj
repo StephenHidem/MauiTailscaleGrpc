@@ -76,7 +76,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\TailscaleGrpc.Shared\AntGrpc.Shared.csproj" />
+	  <ProjectReference Include="..\AntGrpc.Shared\AntGrpc.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
