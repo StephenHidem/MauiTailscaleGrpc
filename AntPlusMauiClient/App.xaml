@@ -61,7 +61,7 @@
                 <Setter Property="Padding" Value="16"/>
             </Style>
 
-            <Style x:Key="IndentedContentStyle" TargetType="VerticalStackLayout">
+            <Style TargetType="Layout" ApplyToDerivedTypes="True" x:Key="IndentedContentStyle">
                 <Setter Property="Margin" Value="24, 0, 0, 0" />
             </Style>
         </ResourceDictionary>

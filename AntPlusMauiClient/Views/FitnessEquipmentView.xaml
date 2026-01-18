@@ -72,7 +72,7 @@
                 <Border>
                     <VerticalStackLayout>
                         <Label Text="Supported Training Modes" Style="{StaticResource HeaderLabelStyle}"/>
-                        <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8" Margin="24, 0, 0, 0">
+                        <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8" Style="{StaticResource IndentedContentStyle}">
                             <VerticalStackLayout VerticalOptions="Center">
                                 <Label Text="{Binding FitnessEquipment.TrainingModes, StringFormat='Capabilities: {0}'}"/>
                                 <Label Text="{Binding FitnessEquipment.MaxTrainerResistance, StringFormat='Max. Resistance (Newtons): {0}'}"/>
@@ -84,7 +84,7 @@
                 <Border>
                     <VerticalStackLayout>
                         <Label Text="Resistance Settings" Style="{StaticResource HeaderLabelStyle}"/>
-                        <Grid ColumnDefinitions="Auto, Auto, *" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8" Margin="24, 0, 0, 0">
+                        <Grid ColumnDefinitions="Auto, Auto, *" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8" Style="{StaticResource IndentedContentStyle}">
                             <Button Text="Set Target Power" Command="{Binding SetTargetPowerCommand}"/>
                             <editors:SfNumericUpDown Grid.Column="1"
                                                      Placeholder="Target Power"
