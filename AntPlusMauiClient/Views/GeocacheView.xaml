@@ -31,8 +31,10 @@
                         <Border>
                             <VerticalStackLayout>
                                 <Label Text="Authentication" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding Geocache.AuthenticationToken, StringFormat='Authentication Token: {0}', Converter={StaticResource ByteArrayToString}}" Margin="24, 0, 0, 0"/>
-                                <Button Text="Request Authentication" Command="{Binding RequestAuthenticationCommand}"/>
+                                <HorizontalStackLayout Style="{StaticResource IndentedContentStyle}">
+                                    <Button Text="Request Authentication" Command="{Binding RequestAuthenticationCommand}"/>
+                                    <Label Text="{Binding Geocache.AuthenticationToken, StringFormat='Authentication Token: {0}', Converter={StaticResource ByteArrayToString}}" VerticalOptions="Center" Margin="16"/>
+                                </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Border>
                     </VerticalStackLayout>

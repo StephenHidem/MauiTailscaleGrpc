@@ -46,7 +46,7 @@
                                 <Label Text="{Binding Sensor.AutoZeroSupported, StringFormat='Auto Zero Supported: {0}'}"/>
                                 <Label Text="{Binding Sensor.AutoZeroStatus, StringFormat='Auto Zero Status: {0}'}"/>
                                 <Label Text="{Binding Sensor.CalibrationData, StringFormat='Calibration Data: {0}'}"/>
-                                <Button Text="Manual Calibration Request" HorizontalOptions="Start" Command="{Binding ManualCalRequestCommand}" Margin="0, 8, 0, 8"/>
+                                <Button Text="Manual Calibration Request" HorizontalOptions="Start" Command="{Binding ManualCalRequestCommand}" Margin="0, 8"/>
                                 <Button Text="Toggle Auto Zero Configuration" HorizontalOptions="Start" Command="{Binding SetAutoZeroConfigCommand}" />
                             </VerticalStackLayout>
                         </Border>
