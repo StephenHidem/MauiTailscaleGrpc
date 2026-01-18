@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace AntPlusMauiClient
+﻿namespace AntPlusMauiClient
 {
     public partial class App : Application
     {

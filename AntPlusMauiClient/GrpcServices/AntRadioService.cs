@@ -7,12 +7,6 @@ using Grpc.Core;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
 using SmallEarthTech.AntRadioInterface;
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AntPlusMauiClient.GrpcServices
 {

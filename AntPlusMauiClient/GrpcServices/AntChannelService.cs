@@ -4,15 +4,11 @@ using Grpc.Core;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
 using SmallEarthTech.AntRadioInterface;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using BasicChannelStatusCode = SmallEarthTech.AntRadioInterface.BasicChannelStatusCode;
 using ChannelType = SmallEarthTech.AntRadioInterface.ChannelType;
 using ChannelTypeExtended = SmallEarthTech.AntRadioInterface.ChannelTypeExtended;
 using MessagingReturnCode = SmallEarthTech.AntRadioInterface.MessagingReturnCode;
 using TransmitPower = SmallEarthTech.AntRadioInterface.TransmitPower;
-using Microsoft.Maui.ApplicationModel;
 
 namespace AntPlusMauiClient.GrpcServices
 {

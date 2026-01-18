@@ -1,5 +1,4 @@
-﻿using AntPlusMauiClient.PageModels;
-using AntPlusMauiClient.Views;
+﻿using AntPlusMauiClient.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
