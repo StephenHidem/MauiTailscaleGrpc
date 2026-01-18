@@ -70,19 +70,21 @@
         <tabview:SfTabItem Header="Capabilities and Settings">
             <VerticalStackLayout>
                 <Border>
-                    <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8">
-                        <VerticalStackLayout>
-                            <Label Text="Supported Training Modes" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{Binding FitnessEquipment.TrainingModes, StringFormat='Capabilities: {0}'}"/>
-                            <Label Text="{Binding FitnessEquipment.MaxTrainerResistance, StringFormat='Max. Resistance (Newtons): {0}'}"/>
-                        </VerticalStackLayout>
-                        <Button Text="Request Capabilities" Command="{Binding RequestCapabilitiesCommand}" Grid.Column="1" Margin="16"/>
-                    </Grid>
+                    <VerticalStackLayout>
+                        <Label Text="Supported Training Modes" Style="{StaticResource HeaderLabelStyle}"/>
+                        <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8" Style="{StaticResource IndentedContentStyle}">
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label Text="{Binding FitnessEquipment.TrainingModes, StringFormat='Capabilities: {0}'}"/>
+                                <Label Text="{Binding FitnessEquipment.MaxTrainerResistance, StringFormat='Max. Resistance (Newtons): {0}'}"/>
+                            </VerticalStackLayout>
+                            <Button Text="Request Capabilities" Command="{Binding RequestCapabilitiesCommand}" Grid.Column="1"/>
+                        </Grid>
+                    </VerticalStackLayout>
                 </Border>
                 <Border>
                     <VerticalStackLayout>
                         <Label Text="Resistance Settings" Style="{StaticResource HeaderLabelStyle}"/>
-                        <Grid ColumnDefinitions="Auto, Auto, *" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8">
+                        <Grid ColumnDefinitions="Auto, Auto, *" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8" Style="{StaticResource IndentedContentStyle}">
                             <Button Text="Set Target Power" Command="{Binding SetTargetPowerCommand}"/>
                             <editors:SfNumericUpDown Grid.Column="1"
                                                      Placeholder="Target Power"

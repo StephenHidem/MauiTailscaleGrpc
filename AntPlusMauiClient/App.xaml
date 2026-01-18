@@ -29,7 +29,7 @@
 
             <Style TargetType="Border">
                 <Setter Property="Margin" Value="8"/>
-                <Setter Property="Padding" Value="8, 4, 8, 4"/>
+                <Setter Property="Padding" Value="8"/>
                 <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource BlackBrush}, Dark={StaticResource WhiteBrush}}"/>
                 <Setter Property="StrokeShape" Value="RoundRectangle 8"/>
             </Style>
@@ -59,6 +59,10 @@
                 <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
                 <Setter Property="Margin" Value="4"/>
                 <Setter Property="Padding" Value="16"/>
+            </Style>
+
+            <Style TargetType="Layout" ApplyToDerivedTypes="True" x:Key="IndentedContentStyle">
+                <Setter Property="Margin" Value="24, 0, 0, 0" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

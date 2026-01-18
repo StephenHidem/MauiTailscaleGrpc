@@ -8,16 +8,18 @@
         <Border>
             <VerticalStackLayout>
                 <Label Text="Crank Torque Frequency" Style="{StaticResource HeaderLabelStyle}"/>
-                <Label Text="{Binding Sensor.Slope, StringFormat='Slope (Nm/Hz): {0:F1}'}"/>
-                <Label Text="{Binding Sensor.Cadence, StringFormat='Cadence (RPM): {0:F3}'}"/>
-                <Label Text="{Binding Sensor.Torque, StringFormat='Torque (Nm): {0:F3}'}"/>
-                <Label Text="{Binding Sensor.Power, StringFormat='Power (Watts): {0:F3}'}"/>
+                <VerticalStackLayout Style="{StaticResource IndentedContentStyle}">
+                    <Label Text="{Binding Sensor.Slope, StringFormat='Slope (Nm/Hz): {0:F1}'}"/>
+                    <Label Text="{Binding Sensor.Cadence, StringFormat='Cadence (RPM): {0:F3}'}"/>
+                    <Label Text="{Binding Sensor.Torque, StringFormat='Torque (Nm): {0:F3}'}"/>
+                    <Label Text="{Binding Sensor.Power, StringFormat='Power (Watts): {0:F3}'}"/>
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </Border>
         <Border>
             <VerticalStackLayout>
                 <Label Text="Calibration" Style="{StaticResource HeaderLabelStyle}"/>
-                <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto, Auto, Auto" ColumnSpacing="16" RowSpacing="8" Margin="8">
+                <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto, Auto, Auto" ColumnSpacing="16" RowSpacing="8" Style="{StaticResource IndentedContentStyle}">
                     <Button Text="Calibration Request" Command="{Binding ManualCalRequestCommand}"/>
                     <Label Text="{Binding Sensor.Offset, StringFormat='Calibration Offset (Hz): {0}'}" Grid.Column="1" VerticalOptions="Center"/>
                     <Entry Grid.Column="1" Grid.Row="1" x:Name="Slope" Keyboard="Numeric" Placeholder="Enter a value from 10.0 to 50.0"/>
