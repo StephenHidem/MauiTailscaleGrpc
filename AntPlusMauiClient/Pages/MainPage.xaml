@@ -61,7 +61,7 @@
             </exp:SfExpander.Content>
         </exp:SfExpander>
 
-        <Label Text="ANT+ Devices" FontSize="Title" Grid.Row="1"/>
+        <Label Text="ANT+ Devices" FontSize="Title" HorizontalOptions="Center" Grid.Row="1"/>
         <BoxView HeightRequest="2" HorizontalOptions="Fill" Grid.Row="2"/>
 
         <CollectionView x:Name="antDevices" Grid.Row="3" ItemsSource="{Binding AntDevices}"

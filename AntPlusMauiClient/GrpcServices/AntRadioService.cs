@@ -26,7 +26,9 @@ namespace AntPlusMauiClient.GrpcServices
         /// Gets the fully qualified domain name (FQDN) of the tailnet associated with this application.
         /// </summary>
         public static string TailnetFqdn => "hidem-laptop.tail7aec11.ts.net";
-        
+
+        public UriBuilder UriBuilder => new("http", "localhost", 5073);
+
         /// <inheritdoc/>
         public int NumChannels => throw new NotImplementedException();
 
@@ -70,9 +72,9 @@ namespace AntPlusMauiClient.GrpcServices
         public async Task<bool> FindAntRadioServerAsync()
         {
             // use Tailnet fully qualified domain name to connect to server
-            UriBuilder uriBuilder = new("https", AntRadioService.TailnetFqdn);
+            //UriBuilder uriBuilder = new("http", AntRadioService.TailnetFqdn, 5073);
             try {
-                _grpcChannel = GrpcChannel.ForAddress(uriBuilder.Uri, _grpcChannelOptions);
+                _grpcChannel = GrpcChannel.ForAddress(UriBuilder.Uri, _grpcChannelOptions);
                 _client = new gRPCAntRadio.gRPCAntRadioClient(_grpcChannel);
 
                 // get properties from server
