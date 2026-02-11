@@ -72,9 +72,9 @@ namespace AntPlusMauiClient.GrpcServices
         public async Task<bool> FindAntRadioServerAsync()
         {
             // use Tailnet fully qualified domain name to connect to server
-            //UriBuilder uriBuilder = new("http", AntRadioService.TailnetFqdn, 5073);
+            UriBuilder uriBuilder = new("http", AntRadioService.TailnetFqdn, 5073);
             try {
-                _grpcChannel = GrpcChannel.ForAddress(UriBuilder.Uri, _grpcChannelOptions);
+                _grpcChannel = GrpcChannel.ForAddress(uriBuilder.Uri, _grpcChannelOptions);
                 _client = new gRPCAntRadio.gRPCAntRadioClient(_grpcChannel);
 
                 // get properties from server

@@ -74,8 +74,8 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="ant:AntDevice">
-                    <Border>
-                        <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *">
+                    <Border Background="{Binding ., Converter={StaticResource AntDeviceTypeToColor}}">
+                        <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *" ColumnSpacing="8">
                             <Image Grid.RowSpan="2" Source="{Binding ., Converter={StaticResource StreamToImage}}" Aspect="AspectFit" HeightRequest="40"/>
                             <Label Grid.Column="1" Text="{Binding .}"/>
                             <Label Grid.Column="1" Grid.Row="1" Text="{Binding ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}"/>
