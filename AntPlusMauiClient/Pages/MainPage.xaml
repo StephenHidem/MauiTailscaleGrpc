@@ -10,12 +10,12 @@
              x:DataType="pm:MainPageModel">
 
     <Grid Padding="30, 0" RowDefinitions="Auto, Auto, Auto, *">
-        <exp:SfExpander IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+        <exp:SfExpander IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" BackgroundColor="{AppThemeBinding Light=#E64A19, Dark=#FF7043}">
             <exp:SfExpander.Header>
                 <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, 2.5*" ColumnSpacing="16" RowSpacing="8">
-                    <Image Grid.RowSpan="4" Source="antplus.png" Aspect="AspectFit" HeightRequest="96" SemanticProperties.Description="ant plus server" />
+                    <Image Grid.RowSpan="4" Source="antplus.png" Aspect="AspectFit" HeightRequest="96" Margin="16" SemanticProperties.Description="ant plus server" />
 
-                    <VerticalStackLayout Grid.Column="1">
+                    <VerticalStackLayout Grid.Column="1" Margin="0,16,0,0">
                         <Label Text="ANT+ Server" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
                         <Label Text="{Binding ServerUrl}" FontSize="Default" Margin="24, 0"/>
                     </VerticalStackLayout>
@@ -27,7 +27,7 @@
                         <Label Text="Serial Number" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
                         <Label Text="{Binding SerialNumber}" FontSize="Default" Margin="24, 0"/>
                     </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="1" Grid.Row="3">
+                    <VerticalStackLayout Grid.Column="1" Grid.Row="3" Margin="0,0,0,16">
                         <Label Text="Host Version" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
                         <Label Text="{Binding HostVersion}" FontSize="Default" Margin="24, 0"/>
                     </VerticalStackLayout>
@@ -61,8 +61,8 @@
             </exp:SfExpander.Content>
         </exp:SfExpander>
 
-        <Label Text="ANT+ Devices" FontSize="Title" HorizontalOptions="Center" Grid.Row="1"/>
-        <BoxView HeightRequest="2" HorizontalOptions="Fill" Grid.Row="2"/>
+        <Label Text="ANT+ Devices" FontSize="Title" HorizontalOptions="Center" Grid.Row="1" Margin="0, 8, 0, 0"/>
+        <BoxView HeightRequest="2" HorizontalOptions="Fill" Grid.Row="2" Margin="0,0,0,8"/>
 
         <CollectionView x:Name="antDevices" Grid.Row="3" ItemsSource="{Binding AntDevices}"
                             SelectionMode="Single"
@@ -70,11 +70,11 @@
                             SelectionChangedCommand="{Binding AntDeviceSelectedCommand}"
                             SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference antDevices}}">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="4"/>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="8"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="ant:AntDevice">
-                    <Border Background="{Binding ., Converter={StaticResource AntDeviceTypeToColor}}">
+                    <Border Background="{Binding ., Converter={StaticResource AntDeviceTypeToColor}}" Margin="0">
                         <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="Auto, *" ColumnSpacing="8">
                             <Image Grid.RowSpan="2" Source="{Binding ., Converter={StaticResource StreamToImage}}" Aspect="AspectFit" HeightRequest="40"/>
                             <Label Grid.Column="1" Text="{Binding .}"/>

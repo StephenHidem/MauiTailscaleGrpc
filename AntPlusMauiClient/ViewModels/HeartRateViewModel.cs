@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SmallEarthTech.AntPlus;
 using SmallEarthTech.AntPlus.DeviceProfiles;
 using SmallEarthTech.AntRadioInterface;
+using System.Collections.ObjectModel;
 
 namespace AntPlusMauiClient.ViewModels
 {
@@ -36,6 +37,10 @@ namespace AntPlusMauiClient.ViewModels
         [NotifyCanExecuteChangedFor("SetSportModeCommand")]
         public partial bool IsSwimmingSupported { get; set; }
 
+        // Observable collection of heart rate data
+        public ObservableCollection<HeartRate.CommonHeartRateData> HeartRateDataSeries { get; } = [];
+        private readonly int MaxDataPoints = 400;
+
         public HeartRateViewModel(HeartRate heartRate)
         {
             HeartRate = heartRate;
@@ -58,6 +63,14 @@ namespace AntPlusMauiClient.ViewModels
                     SetGymModeCommand.NotifyCanExecuteChanged();
                     SetSportModeCommand.NotifyCanExecuteChanged();
                 });
+            }
+            else if (e.PropertyName == "HeartRateData")
+            {
+                if (HeartRateDataSeries.Count > MaxDataPoints)
+                {
+                    HeartRateDataSeries.RemoveAt(0);
+                }
+                HeartRateDataSeries.Add(HeartRate!.HeartRateData);
             }
         }
 

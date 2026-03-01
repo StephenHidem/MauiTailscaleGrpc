@@ -25,7 +25,7 @@ namespace AntPlusMauiClient.Converters
             { FitnessEquipment.DeviceClass, GetLinearGradientBrush(Colors.Silver) },                    // Fitness equipment Sensor
             { MuscleOxygen.DeviceClass, GetLinearGradientBrush(Colors.DarkOrange) },                    // Muscle Oxygen
             { Geocache.DeviceClass, GetLinearGradientBrush(Colors.Green) },                             // Geocache
-            { Tracker.DeviceClass, GetLinearGradientBrush(Colors.ForestGreen) },                        // Asset Tracker
+            { Tracker.DeviceClass, GetLinearGradientBrush(Colors.LightGreen) },                         // Asset Tracker
             { StrideBasedSpeedAndDistance.DeviceClass, GetLinearGradientBrush(Colors.Orange) }          // Stride Based Speed and Distance
         };
 
@@ -55,8 +55,8 @@ namespace AntPlusMauiClient.Converters
                 GradientStops =
                 [
                     new GradientStop { Color = color, Offset = 0 },
-                    new GradientStop {Color = appThemeColor, Offset = 0.25F},
-                    new GradientStop {Color = appThemeColor, Offset = 0.75F},
+                    new GradientStop {Color = appThemeColor, Offset = 0.30F},
+                    new GradientStop {Color = appThemeColor, Offset = 0.70F},
                     new GradientStop { Color = color, Offset = 1 }
                 ]
             };

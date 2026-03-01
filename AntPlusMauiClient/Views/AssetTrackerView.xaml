@@ -3,11 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
              xmlns:views="clr-namespace:AntPlusMauiClient.Views"
+             xmlns:conv="clr-namespace:AntPlusMauiClient.Converters"
              xmlns:tracker="clr-namespace:SmallEarthTech.AntPlus.DeviceProfiles.AssetTracker;assembly=SmallEarthTech.AntPlus"
              xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
              xmlns:exp="clr-namespace:Syncfusion.Maui.Toolkit.Expander;assembly=Syncfusion.Maui.Toolkit"
              x:DataType="vm:AssetTrackerViewModel"
              x:Class="AntPlusMauiClient.Views.AssetTrackerView">
+
+    <ContentView.Resources>
+        <conv:RGB332ColorConverter x:Key="RGB332ColorConverter"/>
+    </ContentView.Resources>
+    
     <tabview:SfTabView>
         <tabview:SfTabView.Items>
             <tabview:SfTabItem Header="Assets">
@@ -27,7 +33,10 @@
                                             <VerticalStackLayout Padding="10">
                                                 <Label Text="{Binding Name, StringFormat='Name: {0}'}" FontAttributes="Bold" FontSize="Medium"/>
                                                 <Label Text="{Binding Bearing, StringFormat='Bearing: {0}'}"/>
-                                                <Label Text="{Binding Color, StringFormat='Color: {0}'}"/>
+                                                <HorizontalStackLayout Spacing="16">
+                                                    <Label Text="{Binding Color, StringFormat='Color: {0}'}"/>
+                                                    <Border BackgroundColor="{Binding Color, Converter={StaticResource RGB332ColorConverter}}" WidthRequest="20" HeightRequest="20" Margin="0" Padding="0" StrokeShape="Rectangle"/>
+                                                </HorizontalStackLayout>
                                                 <Label Text="{Binding Distance, StringFormat='Distance: {0}'}"/>
                                                 <Label Text="{Binding Latitude, StringFormat='Latitude: {0}'}"/>
                                                 <Label Text="{Binding Longitude, StringFormat='Longitude: {0}'}"/>

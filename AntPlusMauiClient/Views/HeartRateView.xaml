@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:AntPlusMauiClient.ViewModels"
              xmlns:views="clr-namespace:AntPlusMauiClient.Views"
              xmlns:tabview="clr-namespace:Syncfusion.Maui.Toolkit.TabView;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Toolkit.Charts;assembly=Syncfusion.Maui.Toolkit"
              xmlns:ant="clr-namespace:SmallEarthTech.AntPlus;assembly=SmallEarthTech.AntPlus"
              x:DataType="vm:HeartRateViewModel"
              x:Class="AntPlusMauiClient.Views.HeartRateView">
@@ -22,6 +23,27 @@
                                 <Label Text="{Binding HeartRate.EventType, StringFormat='Heartbeat Event Type: {0}'}"/>
                             </VerticalStackLayout>
                         </Border>
+                        <Border>
+                            <chart:SfCartesianChart>
+                                <chart:SfCartesianChart.XAxes>
+                                    <chart:NumericalAxis AutoScrollingDelta="120000" ShowMajorGridLines="False"/>
+                                </chart:SfCartesianChart.XAxes>
+                                <chart:SfCartesianChart.YAxes>
+                                    <chart:NumericalAxis Minimum="0" Maximum="255"/>
+                                </chart:SfCartesianChart.YAxes>
+                                <chart:LineSeries ItemsSource="{Binding HeartRateDataSeries}"
+                                                      XBindingPath="AccumulatedHeartBeatEventTime"
+                                                      YBindingPath="ComputedHeartRate"
+                                                      StrokeWidth="2"
+                                                      Fill="Red"/>
+                            </chart:SfCartesianChart>
+                        </Border>
+                    </VerticalStackLayout>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem Header="Info">
+                <tabview:SfTabItem.Content>
+                    <VerticalStackLayout>
                         <Border>
                             <VerticalStackLayout>
                                 <Label Text="Manufacturer Info" Style="{StaticResource HeaderLabelStyle}"/>
