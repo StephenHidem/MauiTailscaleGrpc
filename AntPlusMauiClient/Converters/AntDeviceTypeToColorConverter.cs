@@ -1,14 +1,10 @@
-﻿using CommunityToolkit.Maui;
-using SmallEarthTech.AntPlus;
+﻿using SmallEarthTech.AntPlus;
 using SmallEarthTech.AntPlus.DeviceProfiles;
 using SmallEarthTech.AntPlus.DeviceProfiles.AssetTracker;
 using SmallEarthTech.AntPlus.DeviceProfiles.BicyclePower;
 using SmallEarthTech.AntPlus.DeviceProfiles.BikeSpeedAndCadence;
 using SmallEarthTech.AntPlus.DeviceProfiles.FitnessEquipment;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace AntPlusMauiClient.Converters
 {

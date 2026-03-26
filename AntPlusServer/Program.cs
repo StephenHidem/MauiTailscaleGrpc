@@ -1,6 +1,15 @@
 using AntPlusServer.Services;
+using Serilog;
 using SmallEarthTech.AntRadioInterface;
 using SmallEarthTech.AntUsbStick;
+
+// Initialize Serilog early, without access to configuration or services
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Debug(outputTemplate:
+        "[{Timestamp:HH:mm:ss} {Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}"
+    )
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +18,8 @@ builder.Services.AddGrpc();
 builder.Services.AddSingleton<IAntRadio, AntRadio>();
 builder.Services.AddSingleton<IAntRadioSubscriberFactory, AntRadioSubscriberFactory>();
 builder.Services.AddSingleton<IAntChannelSubscriberFactory, AntChannelSubscriberFactory>();
+
+builder.Logging.AddSerilog();
 
 var app = builder.Build();
 try
@@ -20,7 +31,7 @@ catch (Exception ex)
 {
     // get the logger, log the exception, and exit with a non-zero code
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
-    logger.LogCritical(ex.Message);
+    logger.LogCritical(ex, "Failed to initialize ANT radio.");
     Environment.Exit(ex.HResult);
 }
 
