@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Solution Items/">
     <File Path="README.md" />
+    <File Path="SmallEarthTech.png" />
   </Folder>
   <Project Path="AntGrpc.Shared/AntGrpc.Shared.csproj" />
   <Project Path="AntPlusMauiClient/AntPlusMauiClient.csproj">

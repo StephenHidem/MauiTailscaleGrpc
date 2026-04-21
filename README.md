@@ -1,3 +1,9 @@
+<p align="center">
+    <img src="SmallEarthTech.png" alt="Small Earth Technology" width="200" height="200">
+    <br>
+    <em>Whitespace is the programmers punctuation mark</em>
+</p>
+
 # Welcome to the MauiTailscaleGrpc Solution
 
 This solution is an evolution of my ANT+ Class Libraries project. Whimsically, it grew out of my

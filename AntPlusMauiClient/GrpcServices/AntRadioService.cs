@@ -25,10 +25,13 @@ namespace AntPlusMauiClient.GrpcServices
         /// <summary>
         /// Gets the fully qualified domain name (FQDN) to use with this application.
         /// </summary>
+        /// <remarks>
+        /// Update this to your computer's FQDN or IP address if not using localhost.
+        /// </remarks>
 #if USE_LOCALHOST
         private readonly string domainName = "localhost";
 #else
-        private readonly string domainName = "hidem-laptop.tail7aec11.ts.net";
+        private readonly string domainName = "hidem-laptop.tail7aec11.ts.net";  // TODO: Update this to your computer's FQDN or IP address
 #endif
 
         public UriBuilder UriBuilder => new("http", domainName, 5073);
