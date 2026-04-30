@@ -4,6 +4,8 @@ using AntPlusMauiClient.Pages;
 using AntPlusMauiClient.ViewModels;
 using AntPlusMauiClient.Views;
 using CommunityToolkit.Maui;
+using Grpc.Net.Client;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using SmallEarthTech.AntPlus.Extensions.Hosting;
 using SmallEarthTech.AntRadioInterface;
@@ -46,7 +48,7 @@ namespace AntPlusMauiClient
         }
 
         private static MauiAppBuilder RegisterAppServices(this MauiAppBuilder mauiAppBuilder)
-        {   // Register your services here
+        {
             mauiAppBuilder.Services
                 .AddSingleton<IAntRadio, AntRadioService>()
                 .AddSingleton<CancellationTokenSource>()

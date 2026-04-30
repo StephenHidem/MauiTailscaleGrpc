@@ -34,7 +34,7 @@ namespace AntPlusMauiClient.GrpcServices
         private readonly string domainName = "hidem-laptop.tail7aec11.ts.net";  // TODO: Update this to your computer's FQDN or IP address
 #endif
 
-        public UriBuilder UriBuilder => new("http", domainName, 5073);
+        public UriBuilder UriBuilder => new("https", domainName, 7222);
 
         /// <inheritdoc/>
         public int NumChannels => throw new NotImplementedException();
@@ -78,7 +78,8 @@ namespace AntPlusMauiClient.GrpcServices
         /// <returns>A bool indicating success (true), or failure (false).</returns>
         public async Task<bool> FindAntRadioServerAsync()
         {
-            try {
+            try
+            {
                 _grpcChannel = GrpcChannel.ForAddress(UriBuilder.Uri, _grpcChannelOptions);
                 _client = new gRPCAntRadio.gRPCAntRadioClient(_grpcChannel);
 
