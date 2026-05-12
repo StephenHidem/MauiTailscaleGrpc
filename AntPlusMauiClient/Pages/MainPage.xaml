@@ -10,56 +10,58 @@
              x:DataType="pm:MainPageModel">
 
     <Grid Padding="30, 0" RowDefinitions="Auto, Auto, Auto, *">
-        <exp:SfExpander IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" BackgroundColor="{AppThemeBinding Light=#E64A19, Dark=#FF7043}">
-            <exp:SfExpander.Header>
-                <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, 2.5*" ColumnSpacing="16" RowSpacing="8">
-                    <Image Grid.RowSpan="4" Source="antplus.png" Aspect="AspectFit" HeightRequest="96" Margin="16" SemanticProperties.Description="ant plus server" />
+        <Border>
+            <exp:SfExpander IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" >
+                <exp:SfExpander.Header>
+                    <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, 2.5*" ColumnSpacing="8" RowSpacing="8">
+                        <Image Grid.Row="1" Grid.RowSpan="3" Source="antplus.png" Aspect="AspectFit" HeightRequest="48" Margin="16" VerticalOptions="Start" SemanticProperties.Description="ant plus server" />
 
-                    <VerticalStackLayout Grid.Column="1" Margin="0,16,0,0">
-                        <Label Text="ANT+ Server" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                        <Label Text="{Binding ServerUrl}" FontSize="Default" Margin="24, 0"/>
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="1" Grid.Row="1">
-                        <Label Text="Product Description" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                        <Label Text="{Binding ProductDescription}" FontSize="Default" Margin="24, 0"/>
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="1" Grid.Row="2">
-                        <Label Text="Serial Number" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                        <Label Text="{Binding SerialNumber}" FontSize="Default" Margin="24, 0"/>
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="1" Grid.Row="3" Margin="0,0,0,16">
-                        <Label Text="Host Version" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                        <Label Text="{Binding HostVersion}" FontSize="Default" Margin="24, 0"/>
-                    </VerticalStackLayout>
-                </Grid>
-            </exp:SfExpander.Header>
-            <exp:SfExpander.Content>
-                <ScrollView HeightRequest="300">
-                    <Grid Margin="10" RowDefinitions="Auto, *">
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Capabilities" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding Capabilities.MaxANTChannels, StringFormat='Max. ANT channel - {0}'}" />
-                                <Label Text="{Binding Capabilities.MaxNetworks, StringFormat='Max. Networks - {0}'}"/>
-                                <Label Text="{Binding Capabilities.MaxDataChannels, StringFormat='Max. Data Channels - {0}'}" />
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border Grid.Row="1">
-                            <VerticalStackLayout>
-                                <Label Text="Flags" Style="{StaticResource HeaderLabelStyle}"/>
-                                <CollectionView ItemsSource="{Binding Flags}">
-                                    <CollectionView.ItemTemplate>
-                                        <DataTemplate x:DataType="x:String">
-                                            <Label Text="{Binding ., StringFormat='- {0}'}" LineBreakMode="NoWrap"/>
-                                        </DataTemplate>
-                                    </CollectionView.ItemTemplate>
-                                </CollectionView>
-                            </VerticalStackLayout>
-                        </Border>
+                        <VerticalStackLayout Grid.ColumnSpan="2" Margin="16,16,0,0" >
+                            <Label Text="ANT+ Server" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Label Text="{Binding ServerUrl}" FontSize="Default" Margin="24, 0"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Grid.Row="1">
+                            <Label Text="Product Description" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Label Text="{Binding ProductDescription}" FontSize="Default" Margin="24, 0"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Grid.Row="2">
+                            <Label Text="Serial Number" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Label Text="{Binding SerialNumber}" FontSize="Default" Margin="24, 0"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Grid.Row="3" Margin="0,0,0,16">
+                            <Label Text="Host Version" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Label Text="{Binding HostVersion}" FontSize="Default" Margin="24, 0"/>
+                        </VerticalStackLayout>
                     </Grid>
-                </ScrollView>
-            </exp:SfExpander.Content>
-        </exp:SfExpander>
+                </exp:SfExpander.Header>
+                <exp:SfExpander.Content>
+                    <ScrollView HeightRequest="300">
+                        <Grid Margin="10" RowDefinitions="Auto, *">
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Capabilities" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <Label Text="{Binding Capabilities.MaxANTChannels, StringFormat='Max. ANT channel - {0}'}" />
+                                    <Label Text="{Binding Capabilities.MaxNetworks, StringFormat='Max. Networks - {0}'}"/>
+                                    <Label Text="{Binding Capabilities.MaxDataChannels, StringFormat='Max. Data Channels - {0}'}" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Row="1">
+                                <VerticalStackLayout>
+                                    <Label Text="Flags" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <CollectionView ItemsSource="{Binding Flags}">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <Label Text="{Binding ., StringFormat='- {0}'}" LineBreakMode="NoWrap"/>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </ScrollView>
+                </exp:SfExpander.Content>
+            </exp:SfExpander>
+        </Border>
 
         <Label Text="ANT+ Devices" FontSize="Title" HorizontalOptions="Center" Grid.Row="1" Margin="0, 8, 0, 0"/>
         <BoxView HeightRequest="2" HorizontalOptions="Fill" Grid.Row="2" Margin="0,0,0,8"/>

@@ -31,10 +31,10 @@ namespace AntPlusMauiClient.GrpcServices
 #if USE_LOCALHOST
         private readonly string domainName = "localhost";
 #else
-        private readonly string domainName = "hidem-laptop.tail7aec11.ts.net";  // TODO: Update this to your computer's FQDN or IP address
+        private readonly string domainName = "antplus-service.tail7aec11.ts.net";  // TODO: Update this to your computer's FQDN or IP address
 #endif
 
-        public UriBuilder UriBuilder => new("https", domainName, 7222);
+        public UriBuilder UriBuilder => new("https", domainName);
 
         /// <inheritdoc/>
         public int NumChannels => throw new NotImplementedException();
