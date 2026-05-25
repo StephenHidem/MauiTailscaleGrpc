@@ -1,4 +1,6 @@
-﻿using AntConfigurationGrpcService;
+﻿#define USE_SERVICE     // Define the desired implementation: ANT+ service implementation (USE_SERVICE), machine implementation (USE_MACHINE), or local testing (neither symbol defined)
+
+using AntConfigurationGrpcService;
 using AntControlGrpcService;
 using AntCryptoGrpcService;
 using AntRadioGrpcService;
@@ -23,18 +25,20 @@ namespace AntPlusMauiClient.GrpcServices
         private GrpcChannel? _grpcChannel;
 
         /// <summary>
-        /// Gets the fully qualified domain name (FQDN) to use with this application.
+        /// Gets a UriBuilder configured for the ANT+ service endpoint.
         /// </summary>
         /// <remarks>
-        /// Update this to your computer's FQDN or IP address if not using localhost.
+        /// Configure the UriBuilder to point to your ANT radio server. If using the ANT+ service, ensure the service is running and
+        /// update the host to your computer's FQDN or IP address. If using the machine implementation, update the host and port to
+        /// match your server configuration. For local testing, you can use "localhost" and the default port 5073.
         /// </remarks>
-#if USE_LOCALHOST
-        private readonly string domainName = "localhost";
+#if USE_SERVICE
+        public static UriBuilder UriBuilder => new("https", "antplus-service.tail7aec11.ts.net");  // TODO: Update this to your computer's FQDN or IP address
+#elif USE_MACHINE
+        public static UriBuilder UriBuilder => new("https", "hidem-laptop.tail7aec11.ts.net", 7222);  // TODO: Update this to your computer's FQDN or IP address
 #else
-        private readonly string domainName = "antplus-service.tail7aec11.ts.net";  // TODO: Update this to your computer's FQDN or IP address
+        public static UriBuilder UriBuilder => new("http", "localhost", 5073);
 #endif
-
-        public UriBuilder UriBuilder => new("https", domainName);
 
         /// <inheritdoc/>
         public int NumChannels => throw new NotImplementedException();
@@ -80,7 +84,7 @@ namespace AntPlusMauiClient.GrpcServices
         {
             try
             {
-                _grpcChannel = GrpcChannel.ForAddress(UriBuilder.Uri, _grpcChannelOptions);
+                _grpcChannel = GrpcChannel.ForAddress(AntRadioService.UriBuilder.Uri, _grpcChannelOptions);
                 _client = new gRPCAntRadio.gRPCAntRadioClient(_grpcChannel);
 
                 // get properties from server

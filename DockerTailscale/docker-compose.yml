@@ -1,0 +1,22 @@
+services:
+  tailscale:
+    image: tailscale/tailscale:stable
+    hostname: docker-tailscale
+    environment:
+      - TS_AUTHKEY=/run/secrets/ts_authkey
+      - TS_EXTRA_ARGS=--advertise-tags=tag:container
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+    volumes:
+      - ./tailscale-nginx/state:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+      - net_raw
+    restart: unless-stopped
+    secrets:
+      - ts_authkey
+secrets:
+  ts_authkey:
+    file: ./secrets/ts_authkey.txt

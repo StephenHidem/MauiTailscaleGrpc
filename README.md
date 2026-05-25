@@ -53,7 +53,7 @@ functionality to communicate with ANT+ devices.
 
 - [Small Earth Technology ANT+ Class Libraries](https://stephenhidem.github.io/AntPlus): Small Earth Technology ANT+ Libraries docs.
 - [Software Tools - THIS IS ANT](https://www.thisisant.com/developer/resources/software-tools/): Tools available from Garmin/Dynastream.
-- [Tailscale Documentation](https://tailscale.com/kb/): Official Tailscale documentation and guides.
+- [Tailscale Documentation](https://tailscale.com/docs/): Official Tailscale documentation and guides.
 - [gRPC Documentation](https://grpc.io/docs/): Official gRPC documentation and resources.
 - [.NET MAUI Documentation](https://learn.microsoft.com/en-us/dotnet/maui/): Official .NET MAUI documentation and tutorials.
 - [.NET MAUI Community Toolkit](https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/): Community toolkit for .NET MAUI applications.

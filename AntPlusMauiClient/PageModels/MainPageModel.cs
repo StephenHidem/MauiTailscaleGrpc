@@ -16,7 +16,7 @@ namespace AntPlusMauiClient.PageModels
         private readonly ILogger<MainPageModel> _logger;
         private readonly CancellationToken _cancellationToken;
 
-        public string ServerUrl => _antRadioService.UriBuilder.ToString();
+        public string ServerUrl => AntRadioService.UriBuilder.ToString();
 
         [ObservableProperty]
         public partial bool IsBusy { get; set; }

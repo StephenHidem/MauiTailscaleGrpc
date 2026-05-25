@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path="Docker.md" />
     <File Path="README.md" />
+    <File Path="Service.md" />
     <File Path="SmallEarthTech.png" />
   </Folder>
   <Project Path="AntGrpc.Shared/AntGrpc.Shared.csproj" />
