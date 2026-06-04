@@ -35,7 +35,8 @@ the gRPC server and the MAUI client application.
 The AntPlusServer project is an ASP.NET console application that hosts the gRPC server. It listens for incoming
 connections from clients and handles requests to interact with ANT+ sensors. One of the primary NuGet packages
 used by the server is the Small Earth Technology ANT USB Stick package. It handles the low-level interaction
-with the ANT USB-m stick.
+with the ANT USB-m stick. Note that the server is configured for the Windows platform, x86, as the ANT USB-m
+stick is only supported on Windows.
 
 It runs on my home computer, which is connected to the ANT+ sensors via two ANT USB-m sticks. One stick
 serves as a simulator for various ANT+ sensors, while the other stick is used by the gRPC server to interact
@@ -49,11 +50,32 @@ user-friendly interface to interact with ANT+ sensors remotely. One of the prima
 application is the Small Earth Technology ANT+ Class Libraries hosting extension, which provides the necessary
 functionality to communicate with ANT+ devices.
 
-### Supporting Documents
+### Client App Configuration
+
+The MAUI client application is configured to connect to the gRPC server using the Tailscale service name. This allows the app to
+communicate securely with the server over the Tailscale network, without needing to expose any ports or configure firewalls.
+The application can also be configured to connect to the server using its IP address and port, but using the Tailscale service
+name is more convenient and secure. The localhost configuration is also available for testing purposes when running the server
+and client on the same machine. See the #define directive at the top of AntRadioService.cs for more details.
+
+## Tailscale
+
+I've added my phone and my PC to my tailnet per [Tailscale documentation](https://tailscale.com/docs/features/access-control/device-management).
+I also created a docker container that serves as the host for the Tailscale service I've defined. The reason for this is that
+a tag based identity is required for Tailscale service hosts, and I didn't want to add a tag to my home computer. The container
+is configured to run the Tailscale service and connect to my tailnet using the Tailscale CLI. This allows the gRPC server to
+communicate with the MAUI client application over the Tailscale network. See [Use Docker Compose](https://tailscale.com/docs/features/containers/docker/how-to/connect-docker-container).
+
+## Docker
+
+I create the docker container from a simple docker-compose.yml file. I execute docker `compose up -d` from a terminal command line at
+the same directory level that the compose file is located in.
+## Supporting Documents
 
 - [Small Earth Technology ANT+ Class Libraries](https://stephenhidem.github.io/AntPlus): Small Earth Technology ANT+ Libraries docs.
 - [Software Tools - THIS IS ANT](https://www.thisisant.com/developer/resources/software-tools/): Tools available from Garmin/Dynastream.
 - [Tailscale Documentation](https://tailscale.com/docs/): Official Tailscale documentation and guides.
+- [Docker Documentation](https://docs.docker.com/): Official Docker documentation and resources.
 - [gRPC Documentation](https://grpc.io/docs/): Official gRPC documentation and resources.
 - [.NET MAUI Documentation](https://learn.microsoft.com/en-us/dotnet/maui/): Official .NET MAUI documentation and tutorials.
 - [.NET MAUI Community Toolkit](https://learn.microsoft.com/en-us/dotnet/communitytoolkit/maui/): Community toolkit for .NET MAUI applications.
