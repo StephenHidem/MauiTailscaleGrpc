@@ -5,10 +5,11 @@ using SmallEarthTech.AntUsbStick;
 
 // Initialize Serilog early, without access to configuration or services
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
-    .WriteTo.Debug(outputTemplate:
-        "[{Timestamp:HH:mm:ss} {Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}"
-    )
+    .ReadFrom.Configuration(new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Production"}.json", optional: true)
+        .Build())
+    .WriteTo.Seq("http://docker-tailscale.tail7aec11.ts.net")
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +20,7 @@ builder.Services.AddSingleton<IAntRadio, AntRadio>();
 builder.Services.AddSingleton<IAntRadioSubscriberFactory, AntRadioSubscriberFactory>();
 builder.Services.AddSingleton<IAntChannelSubscriberFactory, AntChannelSubscriberFactory>();
 
-builder.Logging.AddSerilog();
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 try
