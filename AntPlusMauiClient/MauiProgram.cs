@@ -36,7 +36,7 @@ namespace AntPlusMauiClient
 #endif
 
             builder.Services.AddSerilog(new LoggerConfiguration()
-                .MinimumLevel.Debug()
+                .MinimumLevel.Information()
                 .WriteTo.Debug(outputTemplate:
                     "[{Timestamp:HH:mm:ss} {Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}"
                 )
