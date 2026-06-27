@@ -9,7 +9,7 @@ Log.Logger = new LoggerConfiguration()
         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
         .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Production"}.json", optional: true)
         .Build())
-    .WriteTo.Seq("http://docker-tailscale.tail7aec11.ts.net")
+    //.WriteTo.Seq("http://docker-tailscale.tail7aec11.ts.net")
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);

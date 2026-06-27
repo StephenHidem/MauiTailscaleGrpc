@@ -2,21 +2,41 @@ services:
   tailscale:
     image: tailscale/tailscale:stable
     hostname: docker-tailscale
+    container_name: tailscale
     environment:
       - TS_AUTHKEY=/run/secrets/ts_authkey
-      - TS_EXTRA_ARGS=--advertise-tags=tag:container
       - TS_STATE_DIR=/var/lib/tailscale
-      - TS_USERSPACE=false
+      - TS_EXTRA_ARGS=--advertise-tags=tag:container
     volumes:
-      - ./tailscale-nginx/state:/var/lib/tailscale
-    devices:
-      - /dev/net/tun:/dev/net/tun
+      - ./tailscale-state:/var/lib/tailscale
     cap_add:
       - net_admin
       - net_raw
     restart: unless-stopped
     secrets:
       - ts_authkey
+
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_ADMINPASSWORD=/run/secrets/seq_admin_password
+    volumes:
+      - seq-data:/data
+    depends_on:
+      - tailscale
+    restart: unless-stopped
+    network_mode: "service:tailscale"
+    secrets:
+      - seq_admin_password
+
+volumes:
+  seq-data:
+  tailscale-state:
+
 secrets:
   ts_authkey:
     file: ./secrets/ts_authkey.txt
+  seq_admin_password:
+    file: ./secrets/seq_admin_password.txt
