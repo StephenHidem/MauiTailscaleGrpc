@@ -7,6 +7,7 @@ services:
       - TS_AUTHKEY=/run/secrets/ts_authkey
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_EXTRA_ARGS=--advertise-tags=tag:container
+      - TS_ENABLE_HEALTH_CHECK=true
     volumes:
       - ./tailscale-state:/var/lib/tailscale
     cap_add:
@@ -15,7 +16,12 @@ services:
     restart: unless-stopped
     secrets:
       - ts_authkey
-
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:9002/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
   seq:
     image: datalust/seq:latest
     container_name: seq
@@ -25,7 +31,8 @@ services:
     volumes:
       - seq-data:/data
     depends_on:
-      - tailscale
+      tailscale:
+        condition: service_healthy
     restart: unless-stopped
     network_mode: "service:tailscale"
     secrets:
