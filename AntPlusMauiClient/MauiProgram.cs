@@ -40,7 +40,7 @@ namespace AntPlusMauiClient
                 .WriteTo.Debug(outputTemplate:
                     "[{Timestamp:HH:mm:ss} {Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}"
                 )
-                .WriteTo.Seq("http://docker-tailscale.tail7aec11.ts.net")
+                .WriteTo.Seq("http://docker-tailscale.tail7aec11.ts.net")   // TODO: Update this to your Seq server URL
                 .CreateLogger());
 
             return builder.Build();

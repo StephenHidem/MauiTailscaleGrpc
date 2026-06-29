@@ -28,7 +28,7 @@ services:
     container_name: seq
     environment:
       - ACCEPT_EULA=Y
-      - SEQ_FIRSTRUN_ADMINPASSWORD=/run/secrets/seq_admin_password
+      - SEQ_FIRSTRUN_ADMINPASSWORD=${SEQ_ADMIN_PASSWORD}
     volumes:
       - seq-data:/data
     depends_on:
@@ -36,8 +36,6 @@ services:
         condition: service_healthy
     restart: unless-stopped
     network_mode: "service:tailscale"
-    secrets:
-      - seq_admin_password
 
 volumes:
   seq-data:
@@ -46,5 +44,3 @@ volumes:
 secrets:
   ts_authkey:
     file: ./secrets/ts_authkey.txt
-  seq_admin_password:
-    file: ./secrets/seq_admin_password.txt

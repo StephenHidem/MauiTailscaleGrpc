@@ -5,12 +5,8 @@ using SmallEarthTech.AntUsbStick;
 
 // Initialize Serilog early, without access to configuration or services
 Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-        .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Production"}.json", optional: true)
-        .Build())
-    //.WriteTo.Seq("http://docker-tailscale.tail7aec11.ts.net")
-    .CreateLogger();
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +16,11 @@ builder.Services.AddSingleton<IAntRadio, AntRadio>();
 builder.Services.AddSingleton<IAntRadioSubscriberFactory, AntRadioSubscriberFactory>();
 builder.Services.AddSingleton<IAntChannelSubscriberFactory, AntChannelSubscriberFactory>();
 
-builder.Host.UseSerilog();
-
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services));
 var app = builder.Build();
+
 try
 {
     // attempt to get the AntRadio to ensure it initializes correctly
@@ -33,6 +31,7 @@ catch (Exception ex)
     // get the logger, log the exception, and exit with a non-zero code
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     logger.LogCritical(ex, "Failed to initialize ANT radio.");
+    Log.CloseAndFlush();
     Environment.Exit(ex.HResult);
 }
 
