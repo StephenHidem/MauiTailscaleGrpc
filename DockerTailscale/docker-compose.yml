@@ -18,10 +18,11 @@ services:
       - ts_authkey
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:9002/healthz"]
-      interval: 10s
+      interval: 30m
       timeout: 3s
       retries: 3
       start_period: 10s
+
   seq:
     image: datalust/seq:latest
     container_name: seq
