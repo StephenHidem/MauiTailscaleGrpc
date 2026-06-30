@@ -4,7 +4,7 @@ services:
     hostname: docker-tailscale
     container_name: tailscale
     environment:
-      - TS_AUTHKEY=/run/secrets/ts_authkey
+      - TS_AUTHKEY=${TS_AUTHKEY}
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_EXTRA_ARGS=--advertise-tags=tag:container
       - TS_ENABLE_HEALTH_CHECK=true
@@ -14,11 +14,9 @@ services:
       - net_admin
       - net_raw
     restart: unless-stopped
-    secrets:
-      - ts_authkey
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:9002/healthz"]
-      interval: 30m
+      interval: 30s
       timeout: 3s
       retries: 3
       start_period: 10s
@@ -40,7 +38,3 @@ services:
 volumes:
   seq-data:
   tailscale-state:
-
-secrets:
-  ts_authkey:
-    file: ./secrets/ts_authkey.txt
