@@ -31,6 +31,7 @@ catch (Exception ex)
     // get the logger, log the exception, and exit with a non-zero code
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     logger.LogCritical(ex, "Failed to initialize ANT radio.");
+    await app.DisposeAsync();
     Log.CloseAndFlush();
     Environment.Exit(ex.HResult);
 }

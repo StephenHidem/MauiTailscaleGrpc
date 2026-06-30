@@ -31,10 +31,6 @@ namespace AntPlusMauiClient
                     fonts.AddFont("CascadiaCode.ttf", "CascadiaCode");
                 });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
-
             builder.Services.AddSerilog(new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .WriteTo.Debug(outputTemplate:
