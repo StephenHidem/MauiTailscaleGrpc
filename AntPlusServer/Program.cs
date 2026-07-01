@@ -1,3 +1,4 @@
+using ANT_Managed_Library;
 using AntPlusServer.Services;
 using Serilog;
 using SmallEarthTech.AntRadioInterface;
@@ -26,7 +27,7 @@ try
     // attempt to get the AntRadio to ensure it initializes correctly
     var antRadio = app.Services.GetRequiredService<IAntRadio>();
 }
-catch (Exception ex)
+catch (ANT_Exception ex)
 {
     // get the logger, log the exception, and exit with a non-zero code
     var logger = app.Services.GetRequiredService<ILogger<Program>>();

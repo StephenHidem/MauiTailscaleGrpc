@@ -31,7 +31,7 @@ namespace AntPlusMauiClient
                     fonts.AddFont("CascadiaCode.ttf", "CascadiaCode");
                 });
 
-            builder.Services.AddSerilog(new LoggerConfiguration()
+            builder.Logging.AddSerilog(new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .WriteTo.Debug(outputTemplate:
                     "[{Timestamp:HH:mm:ss} {Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}"
