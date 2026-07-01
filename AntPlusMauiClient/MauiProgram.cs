@@ -17,14 +17,6 @@ namespace AntPlusMauiClient
     {
         public static MauiApp CreateMauiApp()
         {
-            // Initialize Serilog early, without access to configuration or services
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.Debug(outputTemplate:
-                    "[{Timestamp:HH:mm:ss} {Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}"
-                )
-                .CreateLogger();
-
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
@@ -39,10 +31,13 @@ namespace AntPlusMauiClient
                     fonts.AddFont("CascadiaCode.ttf", "CascadiaCode");
                 });
 
-#if DEBUG
-    		//builder.Logging.AddDebug();
-            builder.Logging.AddSerilog(dispose: true);
-#endif
+            builder.Logging.AddSerilog(new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.Debug(outputTemplate:
+                    "[{Timestamp:HH:mm:ss} {Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}"
+                )
+                .WriteTo.Seq("http://docker-tailscale.tail7aec11.ts.net")   // TODO: Update this to your Seq server URL
+                .CreateLogger(), dispose: true);
 
             return builder.Build();
         }
