@@ -7,16 +7,13 @@ using System.Text;
 
 namespace AntPlusServer.Services
 {
-    public class AntRadioService(ILogger<AntRadioService> logger, IAntRadio antRadio, IAntRadioSubscriberFactory subscriberFactory) : gRPCAntRadio.gRPCAntRadioBase
+    public partial class AntRadioService(ILogger<AntRadioService> logger, IAntRadio antRadio, IAntRadioSubscriberFactory subscriberFactory) : gRPCAntRadio.gRPCAntRadioBase
     {
         public static IAntChannel[] AntChannels { get; private set; } = [];
 
         public override async Task Subscribe(Empty request, IServerStreamWriter<AntResponseReply> responseStream, ServerCallContext context)
         {
-            if (logger.IsEnabled(LogLevel.Information))
-            {
-                logger.LogInformation("Radio subscriber entered. Peer = {Peer}", context.Peer);
-            }
+            LogSubscriberEntered(context.Peer);
             using IAntRadioSubscriber subscriber = subscriberFactory.CreateAntRadioSubscriber(antRadio);
 
             // create a response handler delegate and add it to subscriber
@@ -27,12 +24,13 @@ namespace AntPlusServer.Services
 
             // remove our response handler from the subscriber
             subscriber.OnAntRadioResponse -= handler;
-
-            if (logger.IsEnabled(LogLevel.Information))
-            {
-                logger.LogInformation("Radio subscriber exited. Peer = {Peer}", context.Peer);
-            }
+            LogSubscriberExited(context.Peer);
         }
+
+        [LoggerMessage(1, LogLevel.Information, "Radio subscriber entered. Peer = {Peer}")]
+        private partial void LogSubscriberEntered(string peer);
+        [LoggerMessage(2, LogLevel.Information, "Radio subscriber exited. Peer = {Peer}")]
+        private partial void LogSubscriberExited(string peer);
 
         /// <summary>
         /// Writes the ANT response update to the stream.
@@ -67,7 +65,6 @@ namespace AntPlusServer.Services
 
         public override Task<PropertiesReply> GetProperties(Empty request, ServerCallContext context)
         {
-            logger.LogDebug(nameof(GetProperties));
             SmallEarthTech.AntUsbStick.AntRadio usbAntRadio = (SmallEarthTech.AntUsbStick.AntRadio)antRadio;
             AntResponse rsp = usbAntRadio.RequestMessageAndResponse(SmallEarthTech.AntRadioInterface.RequestMessageID.Version, 500);
             return Task.FromResult(new PropertiesReply
@@ -80,7 +77,6 @@ namespace AntPlusServer.Services
 
         public override async Task<InitScanModeReply> InitializeContinuousScanMode(Empty request, ServerCallContext context)
         {
-            logger.LogDebug(nameof(InitializeContinuousScanMode));
             AntChannels = await antRadio.InitializeContinuousScanMode();
 
             return new InitScanModeReply
@@ -97,10 +93,6 @@ namespace AntPlusServer.Services
 
         public override Task<GetChannelReply> GetChannel(GetChannelRequest request, ServerCallContext context)
         {
-            if (logger.IsEnabled(LogLevel.Debug))
-            {
-                logger.LogDebug("GetChannel: Channel = {ChannelNumber}", request.ChannelNumber); 
-            }
             _ = antRadio.GetChannel(request.ChannelNumber);
 
             return Task.FromResult(new GetChannelReply());
