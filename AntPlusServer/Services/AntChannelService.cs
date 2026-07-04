@@ -6,14 +6,11 @@ using SmallEarthTech.AntRadioInterface;
 
 namespace AntPlusServer.Services
 {
-    public class AntChannelService(ILogger<AntChannelService> logger, IAntRadio antRadio, IAntChannelSubscriberFactory subscriberFactory) : gRPCAntChannel.gRPCAntChannelBase
+    public partial class AntChannelService(ILogger<AntChannelService> logger, IAntRadio antRadio, IAntChannelSubscriberFactory subscriberFactory) : gRPCAntChannel.gRPCAntChannelBase
     {
         public override async Task Subscribe(SubscribeRequest request, IServerStreamWriter<ChannelResponseUpdate> responseStream, ServerCallContext context)
         {
-            if (logger.IsEnabled(LogLevel.Information))
-            {
-                logger.LogInformation("Channel subscriber entered. Channel number = {ChannelNumber}, Peer = {Peer}", request.ChannelNumber, context.Peer);
-            }
+            LogSubscriberEntered((int)request.ChannelNumber, context.Peer);
             using IAntChannelSubscriber subscriber = subscriberFactory.CreateAntChannelSubscriber(antRadio.GetChannel((int)request.ChannelNumber));
 
             // create a response handler delegate and add it to subscriber
@@ -24,12 +21,13 @@ namespace AntPlusServer.Services
 
             // remove our response handler from the subscriber
             subscriber.OnAntChannelResponse -= handler;
-
-            if (logger.IsEnabled(LogLevel.Information))
-            {
-                logger.LogInformation("Channel subscriber exited. Channel number = {ChannelNumber}, Peer = {Peer}", request.ChannelNumber, context.Peer);
-            }
+            LogSubscriberExited((int)request.ChannelNumber, context.Peer);
         }
+
+        [LoggerMessage(1, LogLevel.Information, "Channel subscriber entered. Channel number = {ChannelNumber}, Peer = {Peer}")]
+        private partial void LogSubscriberEntered(int channelNumber, string peer);
+        [LoggerMessage(2, LogLevel.Information, "Channel subscriber exited. Channel number = {ChannelNumber}, Peer = {Peer}")]
+        private partial void LogSubscriberExited(int channelNumber, string peer);
 
         /// <summary>
         /// Writes the ANT response update to the stream.
