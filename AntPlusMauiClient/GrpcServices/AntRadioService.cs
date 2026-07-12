@@ -84,7 +84,7 @@ namespace AntPlusMauiClient.GrpcServices
         {
             try
             {
-                _grpcChannel = GrpcChannel.ForAddress(AntRadioService.UriBuilder.Uri, _grpcChannelOptions);
+                _grpcChannel = GrpcChannel.ForAddress(UriBuilder.Uri, _grpcChannelOptions);
                 _client = new gRPCAntRadio.gRPCAntRadioClient(_grpcChannel);
 
                 // get properties from server
@@ -103,12 +103,15 @@ namespace AntPlusMauiClient.GrpcServices
 
                 return true;
             }
-            catch (RpcException ex)
+            catch (Exception ex)
             {
-                _logger.LogError("FindAntRadioServerAsync: RpcException {Status}, {Message}", ex.Status, ex.Message);
+                LogAntRadioServiceException(ex);
                 return false;
             }
         }
+
+        [LoggerMessage(1, LogLevel.Debug, "AntRadioService exception occurred")]
+        private partial void LogAntRadioServiceException(Exception e);
 
         /// <summary>
         /// Handles radio response updates.
@@ -121,27 +124,27 @@ namespace AntPlusMauiClient.GrpcServices
             {
                 await foreach (AntResponseReply? update in response.ResponseStream.ReadAllAsync(cancellationToken))
                 {
-                    if (_logger.IsEnabled(LogLevel.Debug))
-                    {
-                        _logger.LogDebug("OnDeviceResponse: {Channel}, {ResponseId}, {Data}", update.ChannelNumber, (MessageId)update.ResponseId, BitConverter.ToString(update.Payload.ToByteArray()));
-                    }
+                    LogRadioResponseUpdateReceived(update.ChannelNumber, (MessageId)update.ResponseId, BitConverter.ToString(update.Payload.ToByteArray()));
                     RadioResponse?.Invoke(this, new GrpcAntResponse(update));
                 }
             }
             catch (RpcException ex) when (ex.StatusCode == StatusCode.Unavailable)
             {
-                _logger.LogInformation("RpcException: unavailable");
+                LogAntRadioServiceException(ex);
                 RpcExceptionReceived?.Invoke(this, ex);
             }
             catch (RpcException ex) when (ex.StatusCode == StatusCode.Cancelled)
             {
-                _logger.LogInformation("RpcException: operation cancelled");
+                LogAntRadioServiceException(ex);
             }
             catch (OperationCanceledException)
             {
                 _logger.LogInformation("OperationCanceledException");
             }
         }
+
+        [LoggerMessage(2, LogLevel.Debug, "Radio response update received: {Channel}, {ResponseId}, {Data}")]
+        private partial void LogRadioResponseUpdateReceived(uint channel, MessageId responseId, string data);
 
         /// <inheritdoc/>
         public void CancelTransfers(int cancelWaitTime)
