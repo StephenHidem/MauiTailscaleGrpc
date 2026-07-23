@@ -1,6 +1,4 @@
-﻿#define USE_SERVICE     // Define the desired implementation: ANT+ service implementation (USE_SERVICE), machine implementation (USE_MACHINE), or local testing (neither symbol defined)
-
-using AntConfigurationGrpcService;
+﻿using AntConfigurationGrpcService;
 using AntControlGrpcService;
 using AntCryptoGrpcService;
 using AntRadioGrpcService;
