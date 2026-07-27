@@ -70,6 +70,7 @@ communicate with the MAUI client application over the Tailscale network. See [Us
 
 I create the docker container from a simple docker-compose.yml file. I execute docker `compose up -d` from a terminal command line at
 the same directory level that the compose file is located in.
+
 ## Supporting Documents
 
 - [Small Earth Technology ANT+ Class Libraries](https://stephenhidem.github.io/AntPlus): Small Earth Technology ANT+ Libraries docs.
