@@ -5,14 +5,12 @@ using SmallEarthTech.AntPlus.DeviceProfiles;
 
 namespace AntPlusMauiClient.ViewModels
 {
-    public partial class MuscleOxygenViewModel : ObservableObject
+    public partial class MuscleOxygenViewModel(MuscleOxygen muscleOxygen, ILogger<MuscleOxygenViewModel> logger) : ObservableObject
     {
         private bool started = false;
 
         [ObservableProperty]
-        public partial MuscleOxygen MuscleOxygen { get; private set; }
-
-        private readonly ILogger<MuscleOxygenViewModel> _logger;
+        public partial MuscleOxygen MuscleOxygen { get; private set; } = muscleOxygen;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(LocalTimeOffset))]
@@ -37,12 +35,6 @@ namespace AntPlusMauiClient.ViewModels
 
         public static int[] HoursSource { get; } = [.. Enumerable.Range(-15, 31)];
         public static int[] MinutesSource { get; } = [0, 15, 30, 45];
-
-        public MuscleOxygenViewModel(MuscleOxygen muscleOxygen, ILogger<MuscleOxygenViewModel> logger)
-        {
-            MuscleOxygen = muscleOxygen;
-            _logger = logger;
-        }
 
         [RelayCommand]
         private void GetLocalTimeOffset()
@@ -97,7 +89,7 @@ namespace AntPlusMauiClient.ViewModels
             catch (Exception ex)
             {
                 // log the exception and inform the user
-                _logger.LogError(ex, "Error sending {CommandId} command to MuscleOxygen device.", commandId);
+                logger.LogError(ex, "Error sending {CommandId} command to MuscleOxygen device.", commandId);
                 throw;
             }
         }

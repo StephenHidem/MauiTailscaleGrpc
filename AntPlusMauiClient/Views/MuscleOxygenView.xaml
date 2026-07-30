@@ -41,10 +41,10 @@
                                             </picker:SfPicker.HeaderView>
                                             <picker:SfPicker.Columns>
                                                 <picker:PickerColumn HeaderText="Hours"
-                                                             ItemsSource="{Binding Source={x:Static vm:MuscleOxygenViewModel.HoursSource}}"
+                                                             ItemsSource="{x:Static vm:MuscleOxygenViewModel.HoursSource}"
                                                              SelectedIndex="{Binding HoursIndex, Mode=TwoWay}"/>
                                                 <picker:PickerColumn HeaderText="Minutes"
-                                                             ItemsSource="{Binding Source={x:Static vm:MuscleOxygenViewModel.MinutesSource}}"
+                                                             ItemsSource="{x:Static vm:MuscleOxygenViewModel.MinutesSource}"
                                                              SelectedIndex="{Binding MinutesIndex, Mode=TwoWay}"/>
                                             </picker:SfPicker.Columns>
                                             <picker:SfPicker.ColumnHeaderView>
