@@ -16,7 +16,7 @@ namespace AntPlusMauiClient.PageModels
         private readonly ILogger<MainPageModel> _logger;
         private readonly CancellationToken _cancellationToken;
 
-        public string ServerUrl => AntRadioService.UriBuilder.ToString();
+        public static string ServerUrl => AntRadioService.UriBuilder.ToString();
 
         [ObservableProperty]
         public partial bool IsBusy { get; set; }
@@ -120,20 +120,18 @@ namespace AntPlusMauiClient.PageModels
 
         // RelayCommand to handle ANT device selection
         [RelayCommand]
-        private void AntDeviceSelected(AntDevice selectedDevice)
+        private async Task AntDeviceSelected()
         {
-            if (selectedDevice != null)
+            if (SelectedAntDevice != null)
             {
                 // Navigate to the device details page with the selected device as a parameter
                 var navigationParams = new Dictionary<string, object>
                 {
-                    { "AntDevice", selectedDevice }
+                    { "AntDevice", SelectedAntDevice }
                 };
-                MainThread.BeginInvokeOnMainThread(async () =>
-                {
-                    await Shell.Current.GoToAsync("AntDevicePage", navigationParams);
-                    SelectedAntDevice = null; // Reset selection
-                });
+
+                SelectedAntDevice = null; // Reset selection
+                await Shell.Current.GoToAsync("AntDevicePage", navigationParams);
             }
         }
     }
