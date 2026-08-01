@@ -24,6 +24,14 @@ public partial class BicyclePowerViewModel : ObservableObject
     [ObservableProperty]
     public partial ContentView? TorqueSensorView { get; private set; }
 
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(SetCustomCalParametersCommand))]
+    public partial string? CustomCalParmsText { get; set; }
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(SetCrankLengthCommand))]
+    public partial double? CrankLength { get; set; }
+
     public BicyclePowerViewModel(StandardPowerSensor sensor, IServiceProvider serviceProvider, ILogger<BicyclePowerViewModel> logger)
     {
         Sensor = sensor;
@@ -63,24 +71,34 @@ public partial class BicyclePowerViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CheckCanExecute))]
     private async Task GetCustomCalParameters() => _ = await Sensor!.RequestCustomParameters();
 
-    [RelayCommand(CanExecute = nameof(CheckCanExecute))]
-    private async Task SetCustomCalParameters(string parameters) => _ = await Sensor!.SetCustomParameters(Convert.FromHexString(parameters));
+    [RelayCommand(CanExecute = nameof(CheckCanExecuteSetCustomCalParameters))]
+    private async Task SetCustomCalParameters()
+    {
+        _ = await Sensor!.SetCustomParameters(Convert.FromHexString(CustomCalParmsText!));
+    }
+
+    private bool CheckCanExecuteSetCustomCalParameters => Sensor?.CalibrationStatus != CalibrationResponse.InProgress &&
+        !string.IsNullOrWhiteSpace(CustomCalParmsText) && CustomCalParmsText.Length == 12;
 
     [RelayCommand(CanExecute = nameof(CheckCanExecute))]
     private async Task GetParameters(SubPage subpage) => _ = await Sensor!.GetParameters(subpage);
 
-    [RelayCommand(CanExecute = nameof(CheckCanExecute))]
-    private async Task SetCrankLength(string length)
+    [RelayCommand(CanExecute = nameof(CheckCanExecuteSetCrankLength))]
+    private async Task SetCrankLength()
     {
         if (AutoCrankLength)
         {
             _ = await Sensor!.SetCrankLength(0xFE);
+            return;
         }
-        else
+
+        if (CrankLength != null)
         {
-            _ = await Sensor!.SetCrankLength(double.Parse(length));
+            _ = await Sensor!.SetCrankLength(CrankLength.Value);
         }
     }
+    private bool CheckCanExecuteSetCrankLength => Sensor?.CalibrationStatus != CalibrationResponse.InProgress &&
+        CrankLength != null && CrankLength >= 110 && CrankLength <= 236.6;
 
     private bool CheckCanExecute => Sensor?.CalibrationStatus != CalibrationResponse.InProgress;
 }
