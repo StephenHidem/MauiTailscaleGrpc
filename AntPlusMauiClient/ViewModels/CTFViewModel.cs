@@ -9,6 +9,12 @@ namespace AntPlusMauiClient.ViewModels
         [ObservableProperty]
         public partial CrankTorqueFrequencySensor? Sensor { get; private set; }
 
+        [ObservableProperty]
+        public partial double? Slope { get; set; }
+
+        [ObservableProperty]
+        public partial ushort? SerialNumber { get; set; }
+
         public CTFViewModel(CrankTorqueFrequencySensor crankTorqueFrequencySensor)
         {
             Sensor = crankTorqueFrequencySensor;
@@ -35,15 +41,21 @@ namespace AntPlusMauiClient.ViewModels
         }
 
         [RelayCommand(CanExecute = nameof(CheckCanExecute))]
-        private async Task SaveSlope(string slope)
+        private async Task SaveSlope()
         {
-            _ = await Sensor!.SaveSlopeToFlash(double.Parse(slope));
+            if (Slope != null)
+            {
+                _ = await Sensor!.SaveSlopeToFlash(Slope.Value);
+            }
         }
 
         [RelayCommand(CanExecute = nameof(CheckCanExecute))]
-        private async Task SaveSerialNumber(string serialNumber)
+        private async Task SaveSerialNumber()
         {
-            _ = await Sensor!.SaveSerialNumberToFlash(ushort.Parse(serialNumber));
+            if (SerialNumber != null)
+            {
+                _ = await Sensor!.SaveSerialNumberToFlash(SerialNumber.Value);
+            }
         }
 
         private bool CheckCanExecute => Sensor?.CalibrationStatus != CalibrationResponse.InProgress;

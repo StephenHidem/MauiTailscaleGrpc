@@ -18,7 +18,7 @@
 
                         <VerticalStackLayout Grid.ColumnSpan="2" Margin="16,16,0,0" >
                             <Label Text="ANT+ Server" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{Binding ServerUrl}" FontSize="Default" Margin="24, 0"/>
+                            <Label Text="{x:Static pm:MainPageModel.ServerUrl}" FontSize="Default" Margin="24, 0"/>
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1" Grid.Row="1">
                             <Label Text="Product Description" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
@@ -68,9 +68,8 @@
 
         <CollectionView x:Name="antDevices" Grid.Row="3" ItemsSource="{Binding AntDevices}"
                             SelectionMode="Single"
-                            SelectedItem="{Binding SelectedAntDevice, Mode=TwoWay}"
-                            SelectionChangedCommand="{Binding AntDeviceSelectedCommand}"
-                            SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference antDevices}}">
+                            SelectedItem="{Binding SelectedAntDevice}"
+                            SelectionChangedCommand="{Binding AntDeviceSelectedCommand}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="8"/>
             </CollectionView.ItemsLayout>
