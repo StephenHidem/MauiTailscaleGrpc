@@ -7,7 +7,7 @@
   </Folder>
   <Project Path="AntGrpc.Shared/AntGrpc.Shared.csproj" />
   <Project Path="AntPlusMauiClient/AntPlusMauiClient.csproj">
-    <BuildType Solution="Release|*" Project="Use Service" />
+    <BuildType Project="Use Service" />
     <Deploy />
   </Project>
   <Project Path="AntPlusServer/AntPlusServer.csproj" />
