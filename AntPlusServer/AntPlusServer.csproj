@@ -18,7 +18,7 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="10.0.1" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="9.1.0" />
-    <PackageReference Include="SmallEarthTech.AntUsbStick" Version="4.1.6" />
+    <PackageReference Include="SmallEarthTech.AntUsbStick" Version="4.1.7" />
   </ItemGroup>
 
   <ItemGroup>
