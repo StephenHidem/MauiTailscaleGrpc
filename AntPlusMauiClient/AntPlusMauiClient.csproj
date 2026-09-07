@@ -73,7 +73,7 @@
 		<PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
 		<PackageReference Include="Serilog.Sinks.Seq" Version="9.1.0" />
 		<PackageReference Include="SmallEarthTech.AntPlus.Extensions.Hosting" Version="2.0.14" />
-		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.10" />
+		<PackageReference Include="Syncfusion.Maui.Toolkit" Version="1.0.11" />
 	</ItemGroup>
 
 	<ItemGroup>
