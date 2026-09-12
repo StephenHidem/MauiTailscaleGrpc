@@ -6,30 +6,28 @@ using SmallEarthTech.AntRadioInterface;
 
 namespace AntPlusServer.Services
 {
-    public class AntChannelService(ILogger<AntChannelService> logger, IAntRadio antRadio, IAntChannelSubscriberFactory subscriberFactory) : gRPCAntChannel.gRPCAntChannelBase
+    public partial class AntChannelService(ILogger<AntChannelService> logger, IAntRadio antRadio, IAntChannelSubscriberFactory subscriberFactory) : gRPCAntChannel.gRPCAntChannelBase
     {
         public override async Task Subscribe(SubscribeRequest request, IServerStreamWriter<ChannelResponseUpdate> responseStream, ServerCallContext context)
         {
-            if (logger.IsEnabled(LogLevel.Information))
-            {
-                logger.LogInformation("Channel subscriber entered. Channel number = {ChannelNumber}, Peer = {Peer}", request.ChannelNumber, context.Peer);
-            }
+            LogSubscriberEntered((int)request.ChannelNumber, context.Peer);
             using IAntChannelSubscriber subscriber = subscriberFactory.CreateAntChannelSubscriber(antRadio.GetChannel((int)request.ChannelNumber));
 
             // create a response handler delegate and add it to subscriber
-            async void handler(object? sender, AntResponse args) => await WriteUpdateAsync(responseStream, args);
+            async void handler(object? sender, AntResponse args) => await WriteUpdateAsync(responseStream, context, args);
             subscriber.OnAntChannelResponse += handler;
 
             await AwaitCancellation(context.CancellationToken);
 
             // remove our response handler from the subscriber
             subscriber.OnAntChannelResponse -= handler;
-
-            if (logger.IsEnabled(LogLevel.Information))
-            {
-                logger.LogInformation("Channel subscriber exited. Channel number = {ChannelNumber}, Peer = {Peer}", request.ChannelNumber, context.Peer);
-            }
+            LogSubscriberExited((int)request.ChannelNumber, context.Peer);
         }
+
+        [LoggerMessage(1, LogLevel.Information, "Channel subscriber entered. Channel number = {ChannelNumber}, Peer = {Peer}")]
+        private partial void LogSubscriberEntered(int channelNumber, string peer);
+        [LoggerMessage(2, LogLevel.Information, "Channel subscriber exited. Channel number = {ChannelNumber}, Peer = {Peer}")]
+        private partial void LogSubscriberExited(int channelNumber, string peer);
 
         /// <summary>
         /// Writes the ANT response update to the stream.
@@ -37,7 +35,7 @@ namespace AntPlusServer.Services
         /// <param name="responseStream">Subscribed stream.</param>
         /// <param name="channelResponse">ANT channel response received.</param>
         /// <returns>Task to await</returns>
-        private async Task WriteUpdateAsync(IServerStreamWriter<ChannelResponseUpdate> responseStream, AntResponse channelResponse)
+        private async Task WriteUpdateAsync(IServerStreamWriter<ChannelResponseUpdate> responseStream, ServerCallContext context, AntResponse channelResponse)
         {
             try
             {
@@ -56,9 +54,12 @@ namespace AntPlusServer.Services
             catch (Exception e)
             {
                 // Handle any errors caused by broken connection, etc.
-                logger.LogError(e, "Failed to write message. Channel = {ChannelNumber}", channelResponse.ChannelNumber);
+                LogFailedToWriteMessage(e, context.Peer, channelResponse.ChannelNumber);
             }
         }
+
+        [LoggerMessage(3, LogLevel.Error, "Failed to write message to stream. Channel = {ChannelNumber}, Peer = {Peer}")]
+        private partial void LogFailedToWriteMessage(Exception e, string peer, int channelNumber);
 
         /// <summary>
         /// This task completes when the connection is closed by the client.
