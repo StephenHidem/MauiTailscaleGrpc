@@ -17,7 +17,7 @@ namespace AntPlusServer.Services
             using IAntRadioSubscriber subscriber = subscriberFactory.CreateAntRadioSubscriber(antRadio);
 
             // create a response handler delegate and add it to subscriber
-            async void handler(object? sender, AntResponse args) => await WriteUpdateAsync(responseStream, args);
+            async void handler(object? sender, AntResponse args) => await WriteUpdateAsync(responseStream, context, args);
             subscriber.OnAntRadioResponse += handler;
 
             await AwaitCancellation(context.CancellationToken);
@@ -38,7 +38,7 @@ namespace AntPlusServer.Services
         /// <param name="responseStream">Subscribed stream.</param>
         /// <param name="radioResponse">ANT radio response received.</param>
         /// <returns>Task to await</returns>
-        private async Task WriteUpdateAsync(IServerStreamWriter<AntResponseReply> responseStream, AntResponse radioResponse)
+        private async Task WriteUpdateAsync(IServerStreamWriter<AntResponseReply> responseStream, ServerCallContext context, AntResponse radioResponse)
         {
             try
             {
@@ -47,9 +47,12 @@ namespace AntPlusServer.Services
             catch (Exception e)
             {
                 // Handle any errors caused by broken connection, etc.
-                logger.LogError(e, "Failed to write radio response.");
+                LogFailedToWriteRadioResponse(e, context.Peer);
             }
         }
+
+        [LoggerMessage(3, LogLevel.Error, "Failed to write radio response to stream. Peer = {Peer}")]
+        private partial void LogFailedToWriteRadioResponse(Exception e, string peer);
 
         /// <summary>
         /// This task completes when the connection is closed by the client.
