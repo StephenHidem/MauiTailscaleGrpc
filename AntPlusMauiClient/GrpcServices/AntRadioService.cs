@@ -108,7 +108,7 @@ namespace AntPlusMauiClient.GrpcServices
             }
         }
 
-        [LoggerMessage(1, LogLevel.Debug, "AntRadioService exception occurred")]
+        [LoggerMessage(1, LogLevel.Error, "AntRadioService exception occurred")]
         private partial void LogAntRadioServiceException(Exception e);
 
         /// <summary>
