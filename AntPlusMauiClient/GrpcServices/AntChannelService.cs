@@ -51,15 +51,13 @@ namespace AntPlusMauiClient.GrpcServices
             }
             catch (RpcException ex) when (ex.StatusCode == StatusCode.Unavailable)
             {
-                logger.LogInformation("RpcException: unavailable");
+                // Handle the case where the gRPC service is unavailable
+                logger.LogWarning(2, "gRPC service is unavailable");
             }
             catch (RpcException ex) when (ex.StatusCode == StatusCode.Cancelled)
             {
-                logger.LogInformation("RpcException: operation cancelled");
-            }
-            catch (OperationCanceledException)
-            {
-                logger.LogInformation("OperationCanceledException");
+                // Gracefully handle cancellation of the subscription
+                logger.LogInformation(3, "Channel response subscription cancelled");
             }
         }
 

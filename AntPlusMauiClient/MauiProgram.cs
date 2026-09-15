@@ -32,12 +32,12 @@ namespace AntPlusMauiClient
                 });
 
             builder.Logging.AddSerilog(new LoggerConfiguration()
-                .MinimumLevel.Information()
+                .MinimumLevel.Debug()
                 .WriteTo.Debug(outputTemplate:
                     "[{Timestamp:HH:mm:ss} {Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}"
                 )
                 .WriteTo.Seq("http://docker-tailscale.tail7aec11.ts.net")   // TODO: Update this to your Seq server URL
-                .CreateLogger(), dispose: true);
+                .CreateLogger());
 
             return builder.Build();
         }
@@ -45,6 +45,7 @@ namespace AntPlusMauiClient
         private static MauiAppBuilder RegisterAppServices(this MauiAppBuilder mauiAppBuilder)
         {
             mauiAppBuilder.Services
+                .AddTransient<AntChannelService>()
                 .AddSingleton<IAntRadio, AntRadioService>()
                 .AddSingleton<CancellationTokenSource>()
 

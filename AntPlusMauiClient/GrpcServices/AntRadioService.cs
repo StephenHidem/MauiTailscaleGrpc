@@ -13,12 +13,19 @@ namespace AntPlusMauiClient.GrpcServices
     /// <summary>
     /// Service for interacting with ANT radio using gRPC.
     /// </summary>
-    public partial class AntRadioService : IAntRadio
+    /// <remarks>
+    /// Initializes a new instance of the <see cref="AntRadioService"/> class.
+    /// </remarks>
+    /// <param name="services">The service provider.</param>
+    /// <param name="logger">The logger instance.</param>
+    /// <param name="cancellationTokenSource">The cancellation token source.</param>
+    /// <param name="grpcChannelOptions">Optional gRPC channel configuration options.</param>
+    public partial class AntRadioService(
+        IServiceProvider services, ILogger<AntRadioService> logger, CancellationTokenSource cancellationTokenSource,
+        GrpcChannelOptions? grpcChannelOptions = default) : IAntRadio
     {
-        private readonly ILoggerFactory _loggerFactory;
-        private readonly ILogger<AntRadioService> _logger;
-        private readonly CancellationToken _cancellationToken;
-        private readonly GrpcChannelOptions _grpcChannelOptions;
+        private readonly CancellationToken _cancellationToken = cancellationTokenSource.Token;
+        private readonly GrpcChannelOptions _grpcChannelOptions = grpcChannelOptions ?? new GrpcChannelOptions();
         private gRPCAntRadio.gRPCAntRadioClient? _client;
         private GrpcChannel? _grpcChannel;
 
@@ -57,22 +64,6 @@ namespace AntPlusMauiClient.GrpcServices
         /// Event triggered when an RPC exception is received.
         /// </summary>
         public event EventHandler<RpcException>? RpcExceptionReceived;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AntRadioService"/> class.
-        /// </summary>
-        /// <param name="loggerFactory">The logger factory.</param>
-        /// <param name="cancellationTokenSource">The cancellation token source.</param>
-        /// <param name="grpcChannelOptions">Optional gRPC channel configuration options.</param>
-        public AntRadioService(
-            ILoggerFactory loggerFactory, CancellationTokenSource cancellationTokenSource,
-            GrpcChannelOptions? grpcChannelOptions = default)
-        {
-            _loggerFactory = loggerFactory;
-            _logger = _loggerFactory.CreateLogger<AntRadioService>();
-            _cancellationToken = cancellationTokenSource.Token;
-            _grpcChannelOptions = grpcChannelOptions ?? new GrpcChannelOptions();
-        }
 
         /// <summary>
         /// Creates a gRPC channel to the ANT radio server and retrieves its properties.
@@ -133,11 +124,8 @@ namespace AntPlusMauiClient.GrpcServices
             }
             catch (RpcException ex) when (ex.StatusCode == StatusCode.Cancelled)
             {
-                LogAntRadioServiceException(ex);
-            }
-            catch (OperationCanceledException)
-            {
-                _logger.LogInformation("OperationCanceledException");
+                // This exception is expected when the cancellation token is triggered, so we can ignore it.
+                logger.LogInformation(3, "Radio response subscription cancelled");
             }
         }
 
@@ -154,7 +142,7 @@ namespace AntPlusMauiClient.GrpcServices
         public IAntChannel GetChannel(int num)
         {
             _ = _client!.GetChannel(new GetChannelRequest { ChannelNumber = (byte)num });
-            return new AntChannelService(_loggerFactory.CreateLogger<AntChannelService>(), (byte)num, _grpcChannel!);
+            return ActivatorUtilities.CreateInstance<AntChannelService>(services, (byte)num, _grpcChannel!);
         }
 
         /// <inheritdoc/>
@@ -176,7 +164,7 @@ namespace AntPlusMauiClient.GrpcServices
             AntChannelService[] channels = new AntChannelService[reply.NumChannels];
             for (byte i = 0; i < reply.NumChannels; i++)
             {
-                channels[i] = new AntChannelService(_loggerFactory.CreateLogger<AntChannelService>(), i, _grpcChannel);
+                channels[i] = ActivatorUtilities.CreateInstance<AntChannelService>(services, i, _grpcChannel);
             }
             channels[0].HandleChannelResponseUpdates(_cancellationToken);
             return channels;
