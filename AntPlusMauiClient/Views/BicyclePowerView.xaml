@@ -11,29 +11,31 @@
         <tabview:SfTabView.Items>
             <tabview:SfTabItem Header="Bicycle">
                 <tabview:SfTabItem.Content>
-                    <VerticalStackLayout>
-                        <ContentView Content="{Binding TorqueSensorView}"/>
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Standard Power" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding Sensor.PedalPower, StringFormat='Pedal Power (%): {0}'}"/>
-                                <Label Text="{Binding Sensor.PedalContribution, StringFormat='Pedal Contribution: {0}'}"/>
-                                <Label Text="{Binding Sensor.InstantaneousCadence, StringFormat='Instantaneous Cadence (RPM): {0}'}"/>
-                                <Label Text="{Binding Sensor.InstantaneousPower, StringFormat='Instantaneous Power (Watts): {0}'}"/>
-                                <Label Text="{Binding Sensor.AveragePower, StringFormat='Average Power (Watts): {0:F3}'}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Torque Effectiveness and Pedal Smoothness" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding Sensor.CombinedPedalSmoothness, StringFormat='Combined Pedal Smoothness: {0}'}"/>
-                                <Label Text="{Binding Sensor.LeftPedalSmoothness, StringFormat='Left Pedal Smoothness: {0}'}"/>
-                                <Label Text="{Binding Sensor.LeftTorqueEffectiveness, StringFormat='Left Torque Effectiveness: {0}'}"/>
-                                <Label Text="{Binding Sensor.RightPedalSmoothness, StringFormat='Right Pedal Smoothness: {0}'}"/>
-                                <Label Text="{Binding Sensor.RightTorqueEffectiveness, StringFormat='Right Torque Effectiveness: {0}'}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                    </VerticalStackLayout>
+                    <ScrollView>
+                        <VerticalStackLayout>
+                            <ContentView Content="{Binding TorqueSensorView}"/>
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Standard Power" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <Label Text="{Binding Sensor.PedalPower, StringFormat='Pedal Power (%): {0}'}"/>
+                                    <Label Text="{Binding Sensor.PedalContribution, StringFormat='Pedal Contribution: {0}'}"/>
+                                    <Label Text="{Binding Sensor.InstantaneousCadence, StringFormat='Instantaneous Cadence (RPM): {0}'}"/>
+                                    <Label Text="{Binding Sensor.InstantaneousPower, StringFormat='Instantaneous Power (Watts): {0}'}"/>
+                                    <Label Text="{Binding Sensor.AveragePower, StringFormat='Average Power (Watts): {0:F3}'}"/>
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Torque Effectiveness and Pedal Smoothness" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <Label Text="{Binding Sensor.CombinedPedalSmoothness, StringFormat='Combined Pedal Smoothness: {0}'}"/>
+                                    <Label Text="{Binding Sensor.LeftPedalSmoothness, StringFormat='Left Pedal Smoothness: {0}'}"/>
+                                    <Label Text="{Binding Sensor.LeftTorqueEffectiveness, StringFormat='Left Torque Effectiveness: {0}'}"/>
+                                    <Label Text="{Binding Sensor.RightPedalSmoothness, StringFormat='Right Pedal Smoothness: {0}'}"/>
+                                    <Label Text="{Binding Sensor.RightTorqueEffectiveness, StringFormat='Right Torque Effectiveness: {0}'}"/>
+                                </VerticalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+                    </ScrollView>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Calibration">
@@ -84,30 +86,32 @@
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Parameters">
                 <tabview:SfTabItem.Content>
-                    <VerticalStackLayout>
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Crank Settings" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding Sensor.Crank.CrankLength, StringFormat='Crank Length: {0}'}"/>
-                                <Label Text="{Binding Sensor.Crank.CrankStatus, StringFormat='Crank Status: {0}'}"/>
-                                <Label Text="{Binding Sensor.Crank.MismatchStatus, StringFormat='Mismatch Status: {0}'}"/>
-                                <Label Text="{Binding Sensor.Crank.AvailabilityStatus, StringFormat='Availability Status: {0}'}"/>
-                                <Label Text="{Binding Sensor.Crank.CustomCalibration, StringFormat='Custom Calibration: {0}'}"/>
-                                <Label Text="{Binding Sensor.Crank.AutoCrankLength, StringFormat='Auto Crank Length: {0}'}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Crank Control" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="*, *" ColumnSpacing="16" RowSpacing="8" Margin="8">
-                                    <Button Text="Get Crank Settings" Command="{Binding GetParametersCommand}"
+                    <ScrollView>
+                        <VerticalStackLayout>
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Crank Settings" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <Label Text="{Binding Sensor.Crank.CrankLength, StringFormat='Crank Length: {0}'}"/>
+                                    <Label Text="{Binding Sensor.Crank.CrankStatus, StringFormat='Crank Status: {0}'}"/>
+                                    <Label Text="{Binding Sensor.Crank.MismatchStatus, StringFormat='Mismatch Status: {0}'}"/>
+                                    <Label Text="{Binding Sensor.Crank.AvailabilityStatus, StringFormat='Availability Status: {0}'}"/>
+                                    <Label Text="{Binding Sensor.Crank.CustomCalibration, StringFormat='Custom Calibration: {0}'}"/>
+                                    <Label Text="{Binding Sensor.Crank.AutoCrankLength, StringFormat='Auto Crank Length: {0}'}"/>
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Crank Control" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="*, *" ColumnSpacing="16" RowSpacing="8" Margin="8">
+                                        <Button Text="Get Crank Settings" Command="{Binding GetParametersCommand}"
                                             CommandParameter="{x:Static bp:SubPage.CrankParameters}"/>
-                                    <Button Text="Set Crank Length" Grid.Row="1" Command="{Binding SetCrankLengthCommand}"/>
-                                    <Entry Text="{Binding CrankLength}" Placeholder="Crank length from 110mm to 236.6mm" Grid.Row="1" Grid.Column="1"/>
-                                </Grid>
-                            </VerticalStackLayout>
-                        </Border>
-                    </VerticalStackLayout>
+                                        <Button Text="Set Crank Length" Grid.Row="1" Command="{Binding SetCrankLengthCommand}"/>
+                                        <Entry Text="{Binding CrankLength}" Placeholder="Crank length from 110mm to 236.6mm" Grid.Row="1" Grid.Column="1"/>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+                    </ScrollView>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Common Data Pages">

@@ -12,102 +12,106 @@
         <tabview:SfTabView.Items>
             <tabview:SfTabItem Header="Heart Rate Monitor">
                 <tabview:SfTabItem.Content>
-                    <VerticalStackLayout>
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Heart Rate" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding HeartRate.HeartRateData.ComputedHeartRate, StringFormat='Heart Rate: {0}'}"/>
-                                <Label Text="{Binding HeartRate.HeartRateData.RRInterval, StringFormat='RR Interval: {0}'}"/>
-                                <Label Text="{Binding HeartRate.HeartRateData.AccumulatedHeartBeatEventTime, StringFormat='Accumulated Heartbeat Event Time: {0}'}"/>
-                                <Label Text="{Binding HeartRate.CumulativeOperatingTime, StringFormat='Cumulative Operating Time: {0}'}"/>
-                                <Label Text="{Binding HeartRate.EventType, StringFormat='Heartbeat Event Type: {0}'}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border>
-                            <chart:SfCartesianChart>
-                                <chart:SfCartesianChart.XAxes>
-                                    <chart:NumericalAxis AutoScrollingDelta="120000" ShowMajorGridLines="False"/>
-                                </chart:SfCartesianChart.XAxes>
-                                <chart:SfCartesianChart.YAxes>
-                                    <chart:NumericalAxis Minimum="0" Maximum="255"/>
-                                </chart:SfCartesianChart.YAxes>
-                                <chart:LineSeries ItemsSource="{Binding HeartRateDataSeries}"
+                    <ScrollView>
+                        <VerticalStackLayout>
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Heart Rate" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <Label Text="{Binding HeartRate.HeartRateData.ComputedHeartRate, StringFormat='Heart Rate: {0}'}"/>
+                                    <Label Text="{Binding HeartRate.HeartRateData.RRInterval, StringFormat='RR Interval: {0}'}"/>
+                                    <Label Text="{Binding HeartRate.HeartRateData.AccumulatedHeartBeatEventTime, StringFormat='Accumulated Heartbeat Event Time: {0}'}"/>
+                                    <Label Text="{Binding HeartRate.CumulativeOperatingTime, StringFormat='Cumulative Operating Time: {0}'}"/>
+                                    <Label Text="{Binding HeartRate.EventType, StringFormat='Heartbeat Event Type: {0}'}"/>
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border>
+                                <chart:SfCartesianChart>
+                                    <chart:SfCartesianChart.XAxes>
+                                        <chart:NumericalAxis AutoScrollingDelta="120000" ShowMajorGridLines="False"/>
+                                    </chart:SfCartesianChart.XAxes>
+                                    <chart:SfCartesianChart.YAxes>
+                                        <chart:NumericalAxis Minimum="0" Maximum="255"/>
+                                    </chart:SfCartesianChart.YAxes>
+                                    <chart:LineSeries ItemsSource="{Binding HeartRateDataSeries}"
                                                       XBindingPath="AccumulatedHeartBeatEventTime"
                                                       YBindingPath="ComputedHeartRate"
                                                       StrokeWidth="2"
                                                       Fill="Red"/>
-                            </chart:SfCartesianChart>
-                        </Border>
-                    </VerticalStackLayout>
+                                </chart:SfCartesianChart>
+                            </Border>
+                        </VerticalStackLayout>
+                    </ScrollView>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Info">
                 <tabview:SfTabItem.Content>
-                    <VerticalStackLayout>
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Manufacturer Info" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding HeartRate.ManufacturerInfo.ManufacturingIdLsb, StringFormat='Man ID LSB: {0}'}"/>
-                                <Label Text="{Binding HeartRate.ManufacturerInfo.SerialNumber, StringFormat='Serial Number: {0}'}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Product Info" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding HeartRate.ProductInfo.HardwareVersion, StringFormat='Hardware Version: {0}'}"/>
-                                <Label Text="{Binding HeartRate.ProductInfo.SoftwareVersion, StringFormat='Software Version: {0}'}"/>
-                                <Label Text="{Binding HeartRate.ProductInfo.ModelNumber, StringFormat='Model Number: {0}'}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Battery Status" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Label Text="{Binding HeartRate.BatteryStatus.BatteryLevel, StringFormat='Battery Level: {0}'}"/>
-                                <Label Text="{Binding HeartRate.BatteryStatus.BatteryStatus, StringFormat='Battery Status: {0}'}"/>
-                                <Label Text="{Binding HeartRate.BatteryStatus.BatteryVoltage, StringFormat='Battery Voltage: {0:F1}'}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                    </VerticalStackLayout>
+                    <ScrollView>
+                        <VerticalStackLayout>
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Manufacturer Info" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <Label Text="{Binding HeartRate.ManufacturerInfo.ManufacturingIdLsb, StringFormat='Man ID LSB: {0}'}"/>
+                                    <Label Text="{Binding HeartRate.ManufacturerInfo.SerialNumber, StringFormat='Serial Number: {0}'}"/>
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Product Info" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <Label Text="{Binding HeartRate.ProductInfo.HardwareVersion, StringFormat='Hardware Version: {0}'}"/>
+                                    <Label Text="{Binding HeartRate.ProductInfo.SoftwareVersion, StringFormat='Software Version: {0}'}"/>
+                                    <Label Text="{Binding HeartRate.ProductInfo.ModelNumber, StringFormat='Model Number: {0}'}"/>
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Battery Status" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <Label Text="{Binding HeartRate.BatteryStatus.BatteryLevel, StringFormat='Battery Level: {0}'}"/>
+                                    <Label Text="{Binding HeartRate.BatteryStatus.BatteryStatus, StringFormat='Battery Status: {0}'}"/>
+                                    <Label Text="{Binding HeartRate.BatteryStatus.BatteryVoltage, StringFormat='Battery Voltage: {0:F1}'}"/>
+                                </VerticalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+                    </ScrollView>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Capabilities">
-                <VerticalStackLayout>
-                    <Border>
-                        <VerticalStackLayout>
-                            <Label Text="Capabilities" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{Binding HeartRate.Capabilities.Supported, StringFormat='Capabilities Supported: {0}'}"/>
-                            <Label Text="{Binding HeartRate.Capabilities.Enabled, StringFormat='Capabilities Enabled: {0}'}"/>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <Border>
-                        <VerticalStackLayout>
-                            <Label Text="Gym Mode" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="24">
-                                <HorizontalStackLayout>
-                                    <CheckBox IsChecked="{Binding EnableGymMode}" IsEnabled="{Binding IsGymModeSupported}"/>
-                                    <Label Text="Enable Gym Mode" VerticalOptions="Center" IsEnabled="{Binding IsGymModeSupported}"/>
-                                </HorizontalStackLayout>
-                                <Button Grid.Column="1" Text="Set Gym Mode" Command="{Binding SetGymModeCommand}"/>
-                            </Grid>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <Border>
-                        <VerticalStackLayout RadioButtonGroup.GroupName="SportMode" RadioButtonGroup.SelectedValue="{Binding ModeRequested}">
-                            <Label Text="Sport Mode" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="24">
-                                <VerticalStackLayout>
-                                    <RadioButton Content="Generic" Value="{x:Static ant:SportMode.Generic}"/>
-                                    <RadioButton Content="Running" Value="{x:Static ant:SportMode.Running}" IsEnabled="{Binding IsRunningSupported}"/>
-                                    <RadioButton Content="Cycling" Value="{x:Static ant:SportMode.Cycling}" IsEnabled="{Binding IsCyclingSupported}"/>
-                                    <RadioButton Content="Swimming" Value="{x:Static ant:SportMode.Swimming}" IsEnabled="{Binding IsSwimmingSupported}"/>
-                                </VerticalStackLayout>
-                                <Button Grid.Column="1" VerticalOptions="Center" Text="Set Sport Mode" Command="{Binding SetSportModeCommand}"/>
-                            </Grid>
-                        </VerticalStackLayout>
-                    </Border>
-                </VerticalStackLayout>
+                <ScrollView>
+                    <VerticalStackLayout>
+                        <Border>
+                            <VerticalStackLayout>
+                                <Label Text="Capabilities" Style="{StaticResource HeaderLabelStyle}"/>
+                                <Label Text="{Binding HeartRate.Capabilities.Supported, StringFormat='Capabilities Supported: {0}'}"/>
+                                <Label Text="{Binding HeartRate.Capabilities.Enabled, StringFormat='Capabilities Enabled: {0}'}"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border>
+                            <VerticalStackLayout>
+                                <Label Text="Gym Mode" Style="{StaticResource HeaderLabelStyle}"/>
+                                <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="24">
+                                    <HorizontalStackLayout>
+                                        <CheckBox IsChecked="{Binding EnableGymMode}" IsEnabled="{Binding IsGymModeSupported}"/>
+                                        <Label Text="Enable Gym Mode" VerticalOptions="Center" IsEnabled="{Binding IsGymModeSupported}"/>
+                                    </HorizontalStackLayout>
+                                    <Button Grid.Column="1" Text="Set Gym Mode" Command="{Binding SetGymModeCommand}"/>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border>
+                            <VerticalStackLayout RadioButtonGroup.GroupName="SportMode" RadioButtonGroup.SelectedValue="{Binding ModeRequested}">
+                                <Label Text="Sport Mode" Style="{StaticResource HeaderLabelStyle}"/>
+                                <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="24">
+                                    <VerticalStackLayout>
+                                        <RadioButton Content="Generic" Value="{x:Static ant:SportMode.Generic}"/>
+                                        <RadioButton Content="Running" Value="{x:Static ant:SportMode.Running}" IsEnabled="{Binding IsRunningSupported}"/>
+                                        <RadioButton Content="Cycling" Value="{x:Static ant:SportMode.Cycling}" IsEnabled="{Binding IsCyclingSupported}"/>
+                                        <RadioButton Content="Swimming" Value="{x:Static ant:SportMode.Swimming}" IsEnabled="{Binding IsSwimmingSupported}"/>
+                                    </VerticalStackLayout>
+                                    <Button Grid.Column="1" VerticalOptions="Center" Text="Set Sport Mode" Command="{Binding SetSportModeCommand}"/>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </ScrollView>
             </tabview:SfTabItem>
         </tabview:SfTabView.Items>
     </tabview:SfTabView>

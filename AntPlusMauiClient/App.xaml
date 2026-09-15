@@ -40,6 +40,11 @@
                 <Setter Property="FontSize" Value="Title" />
             </Style>
 
+            <Style TargetType="tabview:SfTabView">
+                <Setter Property="TabWidthMode" Value="SizeToContent" />
+                <Setter Property="IsScrollButtonEnabled" Value="True" />
+            </Style>
+
             <Style TargetType="tabview:SfTabItem">
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource Secondary}, Light={StaticResource SecondaryDarkText}}"/>

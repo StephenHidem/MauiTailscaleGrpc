@@ -10,54 +10,58 @@
         <tabview:SfTabView.Items>
             <tabview:SfTabItem Header="Geocache">
                 <tabview:SfTabItem.Content>
-                    <VerticalStackLayout>
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Data Pages" Style="{StaticResource HeaderLabelStyle}"/>
-                                <VerticalStackLayout Style="{StaticResource IndentedContentStyle}">
-                                    <Label Text="{Binding Geocache.TrackableId, StringFormat='Trackable ID: {0}'}"/>
-                                    <Label Text="{Binding Geocache.ProgrammingPIN, StringFormat='Programming PIN: {0}'}"/>
-                                    <Label Text="{Binding Geocache.TotalPagesProgrammed, StringFormat='Total Pages Programmed: {0}'}"/>
-                                    <Label Text="{Binding Geocache.NextStageLatitude, StringFormat='Next Stage Latitude: {0:F6}'}"/>
-                                    <Label Text="{Binding Geocache.NextStageLongitude, StringFormat='Next Stage Longitude: {0:F6}'}"/>
-                                    <Label Text="{Binding Geocache.Hint, StringFormat='Hint: {0}'}"/>
-                                    <Label Text="{Binding Geocache.NumberOfVisits, StringFormat='Number of visits: {0}'}"/>
-                                    <Label Text="{Binding Geocache.LastVisitTimestamp, StringFormat='Last visit: {0}'}"/>
+                    <ScrollView>
+                        <VerticalStackLayout>
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Data Pages" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <VerticalStackLayout Style="{StaticResource IndentedContentStyle}">
+                                        <Label Text="{Binding Geocache.TrackableId, StringFormat='Trackable ID: {0}'}"/>
+                                        <Label Text="{Binding Geocache.ProgrammingPIN, StringFormat='Programming PIN: {0}'}"/>
+                                        <Label Text="{Binding Geocache.TotalPagesProgrammed, StringFormat='Total Pages Programmed: {0}'}"/>
+                                        <Label Text="{Binding Geocache.NextStageLatitude, StringFormat='Next Stage Latitude: {0:F6}'}"/>
+                                        <Label Text="{Binding Geocache.NextStageLongitude, StringFormat='Next Stage Longitude: {0:F6}'}"/>
+                                        <Label Text="{Binding Geocache.Hint, StringFormat='Hint: {0}'}"/>
+                                        <Label Text="{Binding Geocache.NumberOfVisits, StringFormat='Number of visits: {0}'}"/>
+                                        <Label Text="{Binding Geocache.LastVisitTimestamp, StringFormat='Last visit: {0}'}"/>
+                                    </VerticalStackLayout>
+                                    <Button Text="Request PIN" Command="{Binding RequestPINCommand}"/>
+                                    <Button Text="Log Visit" Command="{Binding LogVisitCommand}"/>
                                 </VerticalStackLayout>
-                                <Button Text="Request PIN" Command="{Binding RequestPINCommand}"/>
-                                <Button Text="Log Visit" Command="{Binding LogVisitCommand}"/>
-                            </VerticalStackLayout>
-                        </Border>
-                        <Border>
-                            <VerticalStackLayout>
-                                <Label Text="Authentication" Style="{StaticResource HeaderLabelStyle}"/>
-                                <Button Text="Request Authentication" Command="{Binding RequestAuthenticationCommand}"/>
-                                <VerticalStackLayout Style="{StaticResource IndentedContentStyle}">
-                                    <Label Text="{Binding Geocache.AuthenticationToken, StringFormat='Authentication Token: {0}', Converter={StaticResource ByteArrayToString}}" VerticalOptions="Center" Margin="16"/>
+                            </Border>
+                            <Border>
+                                <VerticalStackLayout>
+                                    <Label Text="Authentication" Style="{StaticResource HeaderLabelStyle}"/>
+                                    <Button Text="Request Authentication" Command="{Binding RequestAuthenticationCommand}"/>
+                                    <VerticalStackLayout Style="{StaticResource IndentedContentStyle}">
+                                        <Label Text="{Binding Geocache.AuthenticationToken, StringFormat='Authentication Token: {0}', Converter={StaticResource ByteArrayToString}}" VerticalOptions="Center" Margin="16"/>
+                                    </VerticalStackLayout>
                                 </VerticalStackLayout>
-                            </VerticalStackLayout>
-                        </Border>
-                    </VerticalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+                    </ScrollView>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Programming">
                 <tabview:SfTabItem.Content>
-                    <VerticalStackLayout>
-                        <Grid RowDefinitions="*, *, *, *" ColumnDefinitions="Auto, *">
-                            <Label Text="Trackable ID:" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
-                            <Entry Text="{Binding TrackableId}" MaxLength="9" Grid.Row="0" Grid.Column="1"/>
-                            <Label Text="PIN:" Grid.Row="1" Grid.Column="0" VerticalOptions="Center"/>
-                            <Entry Text="{Binding Pin}" MaxLength="10" Grid.Row="1" Grid.Column="1"/>
-                            <Label Text="Latitude:" Grid.Row="2" Grid.Column="0" VerticalOptions="Center"/>
-                            <Entry Text="{Binding Latitude}" Grid.Row="2" Grid.Column="1"/>
-                            <Label Text="Longitude:" Grid.Row="3" Grid.Column="0" VerticalOptions="Center"/>
-                            <Entry Text="{Binding Longitude}" Grid.Row="3" Grid.Column="1"/>
-                        </Grid>
-                        <Label Text="Hint:"/>
-                        <Editor Text="{Binding Hint}" MaxLength="168" AutoSize="TextChanges"/>
-                        <Button Text="Program Geocache" Command="{Binding ProgramGeocacheCommand}"/>
-                        <Button Text="Erase Geocache" Command="{Binding EraseGeocacheCommand}"/>
-                    </VerticalStackLayout>
+                    <ScrollView>
+                        <VerticalStackLayout>
+                            <Grid RowDefinitions="*, *, *, *" ColumnDefinitions="Auto, *">
+                                <Label Text="Trackable ID:" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
+                                <Entry Text="{Binding TrackableId}" MaxLength="9" Grid.Row="0" Grid.Column="1"/>
+                                <Label Text="PIN:" Grid.Row="1" Grid.Column="0" VerticalOptions="Center"/>
+                                <Entry Text="{Binding Pin}" MaxLength="10" Grid.Row="1" Grid.Column="1"/>
+                                <Label Text="Latitude:" Grid.Row="2" Grid.Column="0" VerticalOptions="Center"/>
+                                <Entry Text="{Binding Latitude}" Grid.Row="2" Grid.Column="1"/>
+                                <Label Text="Longitude:" Grid.Row="3" Grid.Column="0" VerticalOptions="Center"/>
+                                <Entry Text="{Binding Longitude}" Grid.Row="3" Grid.Column="1"/>
+                            </Grid>
+                            <Label Text="Hint:"/>
+                            <Editor Text="{Binding Hint}" MaxLength="168" AutoSize="TextChanges"/>
+                            <Button Text="Program Geocache" Command="{Binding ProgramGeocacheCommand}"/>
+                            <Button Text="Erase Geocache" Command="{Binding EraseGeocacheCommand}"/>
+                        </VerticalStackLayout>
+                    </ScrollView>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem Header="Common Data Pages">

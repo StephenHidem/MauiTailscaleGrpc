@@ -68,25 +68,26 @@
             </tabview:SfTabItem.Content>
         </tabview:SfTabItem>
         <tabview:SfTabItem Header="Capabilities and Settings">
-            <VerticalStackLayout>
-                <Border>
-                    <VerticalStackLayout>
-                        <Label Text="Supported Training Modes" Style="{StaticResource HeaderLabelStyle}"/>
-                        <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8" Style="{StaticResource IndentedContentStyle}">
-                            <VerticalStackLayout VerticalOptions="Center">
-                                <Label Text="{Binding FitnessEquipment.TrainingModes, StringFormat='Capabilities: {0}'}"/>
-                                <Label Text="{Binding FitnessEquipment.MaxTrainerResistance, StringFormat='Max. Resistance (Newtons): {0}'}"/>
-                            </VerticalStackLayout>
-                            <Button Text="Request Capabilities" Command="{Binding RequestCapabilitiesCommand}" Grid.Column="1"/>
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
-                <Border>
-                    <VerticalStackLayout>
-                        <Label Text="Resistance Settings" Style="{StaticResource HeaderLabelStyle}"/>
-                        <Grid ColumnDefinitions="Auto, Auto, *" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8" Style="{StaticResource IndentedContentStyle}">
-                            <Button Text="Set Target Power" Command="{Binding SetTargetPowerCommand}"/>
-                            <editors:SfNumericUpDown Grid.Column="1"
+            <ScrollView>
+                <VerticalStackLayout>
+                    <Border>
+                        <VerticalStackLayout>
+                            <Label Text="Supported Training Modes" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Grid ColumnDefinitions="Auto, Auto" ColumnSpacing="16" RowSpacing="8" Style="{StaticResource IndentedContentStyle}">
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Label Text="{Binding FitnessEquipment.TrainingModes, StringFormat='Capabilities: {0}'}"/>
+                                    <Label Text="{Binding FitnessEquipment.MaxTrainerResistance, StringFormat='Max. Resistance (Newtons): {0}'}"/>
+                                </VerticalStackLayout>
+                                <Button Text="Request Capabilities" Command="{Binding RequestCapabilitiesCommand}" Grid.Column="1"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border>
+                        <VerticalStackLayout>
+                            <Label Text="Resistance Settings" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Grid ColumnDefinitions="Auto, Auto, *" RowDefinitions="*, *, *, *" ColumnSpacing="16" RowSpacing="8" Style="{StaticResource IndentedContentStyle}">
+                                <Button Text="Set Target Power" Command="{Binding SetTargetPowerCommand}"/>
+                                <editors:SfNumericUpDown Grid.Column="1"
                                                      Placeholder="Target Power"
                                                      Value="{Binding TargetPowerWatts}"
                                                      ShowClearButton="False"
@@ -94,10 +95,10 @@
                                                      Maximum="4000"
                                                      SmallChange="0.25"
                                                      LargeChange="10.0"/>
-                            <Label Text="0 - 4000 Watts" VerticalOptions="Center" Grid.Column="2"/>
+                                <Label Text="0 - 4000 Watts" VerticalOptions="Center" Grid.Column="2"/>
 
-                            <Button Grid.Row="1" Text="Set Basic Resistance" Command="{Binding SetBasicResistanceCommand}"/>
-                            <editors:SfNumericUpDown Grid.Column="1" Grid.Row="1"
+                                <Button Grid.Row="1" Text="Set Basic Resistance" Command="{Binding SetBasicResistanceCommand}"/>
+                                <editors:SfNumericUpDown Grid.Column="1" Grid.Row="1"
                                                      Placeholder="Basic Resistance"
                                                      Value="{Binding BasicResistancePercent}"
                                                      ShowClearButton="False"
@@ -105,18 +106,18 @@
                                                      Maximum="100"
                                                      SmallChange="0.5"
                                                      LargeChange="1.0"/>
-                            <Label Text="0 - 100 Percent" VerticalOptions="Center" Grid.Row="1" Grid.Column="2"/>
+                                <Label Text="0 - 100 Percent" VerticalOptions="Center" Grid.Row="1" Grid.Column="2"/>
 
-                            <Button Grid.Row="2" Text="Set Track Resistance" Command="{Binding SetTrackResistanceCommand}"/>
-                            <VerticalStackLayout Grid.Column="1" Grid.Row="2">
-                                <editors:SfNumericUpDown Placeholder="Grade"
+                                <Button Grid.Row="2" Text="Set Track Resistance" Command="{Binding SetTrackResistanceCommand}"/>
+                                <VerticalStackLayout Grid.Column="1" Grid.Row="2">
+                                    <editors:SfNumericUpDown Placeholder="Grade"
                                                          Value="{Binding Grade}"
                                                          ShowClearButton="False"
                                                          Minimum="-200"
                                                          Maximum="200"
                                                          SmallChange="0.01"
                                                          LargeChange="1.0"/>
-                                <editors:SfNumericUpDown Placeholder="Coeff. of Rolling Resistance"
+                                    <editors:SfNumericUpDown Placeholder="Coeff. of Rolling Resistance"
                                                          Value="{Binding CoefficientOfRollingResistance}"
                                                          ShowClearButton="False"
                                                          Minimum="0"
@@ -124,45 +125,46 @@
                                                          SmallChange="0.00005"
                                                          LargeChange="0.0005"
                                                          MaximumNumberDecimalDigits="5"/>
-                            </VerticalStackLayout>
-                            <Grid Grid.Column="2" Grid.Row="2" RowDefinitions="*, *">
-                                <Label Text="-200 - +200 Grade" VerticalOptions="Center"/>
-                                <Label Text="0 - 0.0127 CRR" VerticalOptions="Center" Grid.Row="1"/>
-                            </Grid>
+                                </VerticalStackLayout>
+                                <Grid Grid.Column="2" Grid.Row="2" RowDefinitions="*, *">
+                                    <Label Text="-200 - +200 Grade" VerticalOptions="Center"/>
+                                    <Label Text="0 - 0.0127 CRR" VerticalOptions="Center" Grid.Row="1"/>
+                                </Grid>
 
-                            <Button Grid.Row="3" Text="Set Wind Resistance" Command="{Binding SetWindResistanceCommand}"/>
-                            <VerticalStackLayout Grid.Column="1" Grid.Row="3">
-                                <editors:SfNumericUpDown Placeholder="Wind Resistance"
+                                <Button Grid.Row="3" Text="Set Wind Resistance" Command="{Binding SetWindResistanceCommand}"/>
+                                <VerticalStackLayout Grid.Column="1" Grid.Row="3">
+                                    <editors:SfNumericUpDown Placeholder="Wind Resistance"
                                                          Value="{Binding WindResistanceCoefficient}"
                                                          ShowClearButton="False"
                                                          Minimum="0"
                                                          Maximum="1.86"
                                                          SmallChange="0.01"
                                                          LargeChange="0.10"/>
-                                <editors:SfNumericUpDown Placeholder="Wind Speed"
+                                    <editors:SfNumericUpDown Placeholder="Wind Speed"
                                                          Value="{Binding WindSpeed}"
                                                          ShowClearButton="False"
                                                          Minimum="-127"
                                                          Maximum="127"
                                                          SmallChange="1"
                                                          LargeChange="10"/>
-                                <editors:SfNumericUpDown Placeholder="Drafting Factor"
+                                    <editors:SfNumericUpDown Placeholder="Drafting Factor"
                                                          Value="{Binding DraftingFactor}"
                                                          ShowClearButton="False"
                                                          Minimum="0"
                                                          Maximum="1"
                                                          SmallChange="0.01"
                                                          LargeChange="0.10"/>
-                            </VerticalStackLayout>
-                            <Grid Grid.Column="2" Grid.Row="3" RowDefinitions="*, *, *">
-                                <Label Text="0 - 1.86 Wind Resistance" VerticalOptions="Center"/>
-                                <Label Text="-127 - +127 Wind Speed" VerticalOptions="Center" Grid.Row="1"/>
-                                <Label Text="0 - 1.00 Drafting Factor" VerticalOptions="Center" Grid.Row="2"/>
+                                </VerticalStackLayout>
+                                <Grid Grid.Column="2" Grid.Row="3" RowDefinitions="*, *, *">
+                                    <Label Text="0 - 1.86 Wind Resistance" VerticalOptions="Center"/>
+                                    <Label Text="-127 - +127 Wind Speed" VerticalOptions="Center" Grid.Row="1"/>
+                                    <Label Text="0 - 1.00 Drafting Factor" VerticalOptions="Center" Grid.Row="2"/>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
-            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </ScrollView>
         </tabview:SfTabItem>
     </tabview:SfTabView>
 </ContentView>
