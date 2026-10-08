@@ -24,11 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="ant_channel.proto" />
-    <Protobuf Include="ant_configuration.proto" />
-    <Protobuf Include="ant_control.proto" />
-    <Protobuf Include="ant_crypto.proto" />
-    <Protobuf Include="ant_radio.proto" />
+    <Protobuf Include="ant_channel.proto" GrpcServices="Client" />
+    <Protobuf Include="ant_configuration.proto" GrpcServices="Client" />
+    <Protobuf Include="ant_control.proto" GrpcServices="Client" />
+    <Protobuf Include="ant_crypto.proto" GrpcServices="Client" />
+    <Protobuf Include="ant_radio.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

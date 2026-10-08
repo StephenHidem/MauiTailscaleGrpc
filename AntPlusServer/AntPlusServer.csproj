@@ -22,7 +22,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AntGrpc.Shared\AntGrpc.Shared.csproj" />
+    <Folder Include="Protos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\AntGrpc.Shared\ant_channel.proto" GrpcServices="Server">
+      <Link>Protos\ant_channel.proto</Link>
+    </Protobuf>
+    <Protobuf Include="..\AntGrpc.Shared\ant_configuration.proto" GrpcServices="Server">
+      <Link>Protos\ant_configuration.proto</Link>
+    </Protobuf>
+    <Protobuf Include="..\AntGrpc.Shared\ant_control.proto" GrpcServices="Server">
+      <Link>Protos\ant_control.proto</Link>
+    </Protobuf>
+    <Protobuf Include="..\AntGrpc.Shared\ant_crypto.proto" GrpcServices="Server">
+      <Link>Protos\ant_crypto.proto</Link>
+    </Protobuf>
+    <Protobuf Include="..\AntGrpc.Shared\ant_radio.proto" GrpcServices="Server">
+      <Link>Protos\ant_radio.proto</Link>
+    </Protobuf>
   </ItemGroup>
 
 </Project>
