@@ -1,0 +1,23 @@
+{
+  "Services": {
+    "svc:antplus-service": {
+      "TCP": {
+        "443": {
+          "HTTPS": true
+        },
+        "80": {
+          "HTTP": true
+        }
+      },
+      "Web": {
+        "antplus-service.tail7aec11.ts.net:443": {
+          "Handlers": {
+            "/": {
+              "Proxy": "http://host.docker.internal:5073"
+            }
+          }
+        }
+      }
+    }
+  }
+}
