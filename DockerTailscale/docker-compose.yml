@@ -11,7 +11,7 @@ services:
       - TS_ENABLE_HEALTH_CHECK=true
       - TS_SERVE_CONFIG=/var/lib/tailscale/serve-config.json
     volumes:
-      - tailscale-state:/var/lib/tailscale
+      - ./tailscale-state:/var/lib/tailscale
       - ./serve-config.json:/var/lib/tailscale/serve-config.json:ro
     cap_add:
       - net_admin
@@ -37,7 +37,7 @@ services:
       - ACCEPT_EULA=Y
       - SEQ_FIRSTRUN_ADMINPASSWORD=${SEQ_ADMIN_PASSWORD}
     volumes:
-      - seq-data:/data
+      - ./seq-data:/data
     depends_on:
       tailscale:
         condition: service_healthy
@@ -54,7 +54,3 @@ services:
       timeout: 5s
       retries: 3
       start_period: 15s
-
-volumes:
-  seq-data:
-  tailscale-state:
