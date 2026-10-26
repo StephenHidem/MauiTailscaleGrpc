@@ -42,7 +42,8 @@ services:
       tailscale:
         condition: service_healthy
     restart: unless-stopped
-    network_mode: "service:tailscale"
+    ports:
+      - "5341:80"
     deploy:
       resources:
         limits:
