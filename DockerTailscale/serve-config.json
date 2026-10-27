@@ -7,6 +7,9 @@
         },
         "80": {
           "HTTP": true
+        },
+        "5341": {
+          "HTTP": true
         }
       },
       "Web": {
@@ -14,6 +17,20 @@
           "Handlers": {
             "/": {
               "Proxy": "http://host.docker.internal:5073"
+            }
+          }
+        },
+        "antplus-service.tail7aec11.ts.net:80": {
+          "Handlers": {
+            "/": {
+              "Proxy": "http://seq:80"
+            }
+          }
+        },
+        "antplus-service.tail7aec11.ts.net:5341": {
+          "Handlers": {
+            "/": {
+              "Proxy": "http://seq:5341"
             }
           }
         }
