@@ -10,7 +10,8 @@ namespace AntPlusServer.Services
     {
         public override async Task Subscribe(SubscribeRequest request, IServerStreamWriter<ChannelResponseUpdate> responseStream, ServerCallContext context)
         {
-            LogSubscriberEntered((int)request.ChannelNumber, context.Peer);
+            string clientIp = context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer;
+            LogSubscriberEntered((int)request.ChannelNumber, clientIp);
             using IAntChannelSubscriber subscriber = subscriberFactory.CreateAntChannelSubscriber(antRadio.GetChannel((int)request.ChannelNumber));
 
             // create a response handler delegate and add it to subscriber
@@ -21,12 +22,12 @@ namespace AntPlusServer.Services
 
             // remove our response handler from the subscriber
             subscriber.OnAntChannelResponse -= handler;
-            LogSubscriberExited((int)request.ChannelNumber, context.Peer);
+            LogSubscriberExited((int)request.ChannelNumber, clientIp);
         }
 
-        [LoggerMessage(1, LogLevel.Information, "Channel subscriber entered. Channel number = {ChannelNumber}, Peer = {Peer}")]
+        [LoggerMessage(1, LogLevel.Information, "Channel subscriber entered. Channel number = {ChannelNumber}, Client IP = {Peer}")]
         private partial void LogSubscriberEntered(int channelNumber, string peer);
-        [LoggerMessage(2, LogLevel.Information, "Channel subscriber exited. Channel number = {ChannelNumber}, Peer = {Peer}")]
+        [LoggerMessage(2, LogLevel.Information, "Channel subscriber exited. Channel number = {ChannelNumber}, Client IP = {Peer}")]
         private partial void LogSubscriberExited(int channelNumber, string peer);
 
         /// <summary>
@@ -54,11 +55,11 @@ namespace AntPlusServer.Services
             catch (Exception e)
             {
                 // Handle any errors caused by broken connection, etc.
-                LogFailedToWriteMessage(e, context.Peer, channelResponse.ChannelNumber);
+                LogFailedToWriteMessage(e, context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer, channelResponse.ChannelNumber);
             }
         }
 
-        [LoggerMessage(3, LogLevel.Error, "Failed to write message to stream. Channel = {ChannelNumber}, Peer = {Peer}")]
+        [LoggerMessage(3, LogLevel.Error, "Failed to write message to stream. Channel = {ChannelNumber}, Client IP = {Peer}")]
         private partial void LogFailedToWriteMessage(Exception e, string peer, int channelNumber);
 
         /// <summary>

@@ -13,7 +13,8 @@ namespace AntPlusServer.Services
 
         public override async Task Subscribe(Empty request, IServerStreamWriter<AntResponseReply> responseStream, ServerCallContext context)
         {
-            LogSubscriberEntered(context.Peer);
+            string clientIp = context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer;
+            LogSubscriberEntered(clientIp);
             using IAntRadioSubscriber subscriber = subscriberFactory.CreateAntRadioSubscriber(antRadio);
 
             // create a response handler delegate and add it to subscriber
@@ -24,12 +25,12 @@ namespace AntPlusServer.Services
 
             // remove our response handler from the subscriber
             subscriber.OnAntRadioResponse -= handler;
-            LogSubscriberExited(context.Peer);
+            LogSubscriberExited(clientIp);
         }
 
-        [LoggerMessage(1, LogLevel.Information, "Radio subscriber entered. Peer = {Peer}")]
+        [LoggerMessage(1, LogLevel.Information, "Radio subscriber entered. Client IP = {Peer}")]
         private partial void LogSubscriberEntered(string peer);
-        [LoggerMessage(2, LogLevel.Information, "Radio subscriber exited. Peer = {Peer}")]
+        [LoggerMessage(2, LogLevel.Information, "Radio subscriber exited. Client IP = {Peer}")]
         private partial void LogSubscriberExited(string peer);
 
         /// <summary>
@@ -47,11 +48,11 @@ namespace AntPlusServer.Services
             catch (Exception e)
             {
                 // Handle any errors caused by broken connection, etc.
-                LogFailedToWriteRadioResponse(e, context.Peer);
+                LogFailedToWriteRadioResponse(e, context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer);
             }
         }
 
-        [LoggerMessage(3, LogLevel.Error, "Failed to write radio response to stream. Peer = {Peer}")]
+        [LoggerMessage(3, LogLevel.Error, "Failed to write radio response to stream. Client IP = {Peer}")]
         private partial void LogFailedToWriteRadioResponse(Exception e, string peer);
 
         /// <summary>
