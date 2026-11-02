@@ -3,6 +3,7 @@ using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using SmallEarthTech.AntRadioInterface;
+using System.Net;
 
 namespace AntPlusServer.Services
 {
@@ -11,7 +12,9 @@ namespace AntPlusServer.Services
         public override async Task Subscribe(SubscribeRequest request, IServerStreamWriter<ChannelResponseUpdate> responseStream, ServerCallContext context)
         {
             string clientIp = context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer;
-            LogSubscriberEntered((int)request.ChannelNumber, clientIp);
+            // get client name from client IP address from DNS reverse lookup
+            string clientName = Dns.GetHostEntry(clientIp).HostName;
+            LogSubscriberEntered((int)request.ChannelNumber, clientIp, clientName);
             using IAntChannelSubscriber subscriber = subscriberFactory.CreateAntChannelSubscriber(antRadio.GetChannel((int)request.ChannelNumber));
 
             // create a response handler delegate and add it to subscriber
@@ -22,13 +25,13 @@ namespace AntPlusServer.Services
 
             // remove our response handler from the subscriber
             subscriber.OnAntChannelResponse -= handler;
-            LogSubscriberExited((int)request.ChannelNumber, clientIp);
+            LogSubscriberExited((int)request.ChannelNumber, clientIp, clientName);
         }
 
-        [LoggerMessage(1, LogLevel.Information, "Channel subscriber entered. Channel number = {ChannelNumber}, Client IP = {Peer}")]
-        private partial void LogSubscriberEntered(int channelNumber, string peer);
-        [LoggerMessage(2, LogLevel.Information, "Channel subscriber exited. Channel number = {ChannelNumber}, Client IP = {Peer}")]
-        private partial void LogSubscriberExited(int channelNumber, string peer);
+        [LoggerMessage(1, LogLevel.Information, "Channel subscriber entered. Channel number = {ChannelNumber}, Client IP = {Peer}, Client Name = {ClientName}")]
+        private partial void LogSubscriberEntered(int channelNumber, string peer, string clientName);
+        [LoggerMessage(2, LogLevel.Information, "Channel subscriber exited. Channel number = {ChannelNumber}, Client IP = {Peer}, Client Name = {ClientName}")]
+        private partial void LogSubscriberExited(int channelNumber, string peer, string clientName);
 
         /// <summary>
         /// Writes the ANT response update to the stream.
@@ -55,12 +58,15 @@ namespace AntPlusServer.Services
             catch (Exception e)
             {
                 // Handle any errors caused by broken connection, etc.
-                LogFailedToWriteMessage(e, context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer, channelResponse.ChannelNumber);
+                string clientIp = context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer;
+                // get client name from client IP address from DNS reverse lookup
+                string clientName = Dns.GetHostEntry(clientIp).HostName;
+                LogFailedToWriteMessage(e, clientIp, clientName, channelResponse.ChannelNumber);
             }
         }
 
-        [LoggerMessage(3, LogLevel.Error, "Failed to write message to stream. Channel = {ChannelNumber}, Client IP = {Peer}")]
-        private partial void LogFailedToWriteMessage(Exception e, string peer, int channelNumber);
+        [LoggerMessage(3, LogLevel.Error, "Failed to write message to stream. Channel = {ChannelNumber}, Client IP = {Peer}, Client Name = {ClientName}")]
+        private partial void LogFailedToWriteMessage(Exception e, string peer, string clientName, int channelNumber);
 
         /// <summary>
         /// This task completes when the connection is closed by the client.

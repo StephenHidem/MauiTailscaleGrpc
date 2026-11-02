@@ -3,6 +3,7 @@ using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using SmallEarthTech.AntRadioInterface;
+using System.Net;
 using System.Text;
 
 namespace AntPlusServer.Services
@@ -14,7 +15,9 @@ namespace AntPlusServer.Services
         public override async Task Subscribe(Empty request, IServerStreamWriter<AntResponseReply> responseStream, ServerCallContext context)
         {
             string clientIp = context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer;
-            LogSubscriberEntered(clientIp);
+            // get client name from client IP address from DNS reverse lookup
+            string clientName = Dns.GetHostEntry(clientIp).HostName;
+            LogSubscriberEntered(clientIp, clientName);
             using IAntRadioSubscriber subscriber = subscriberFactory.CreateAntRadioSubscriber(antRadio);
 
             // create a response handler delegate and add it to subscriber
@@ -25,13 +28,13 @@ namespace AntPlusServer.Services
 
             // remove our response handler from the subscriber
             subscriber.OnAntRadioResponse -= handler;
-            LogSubscriberExited(clientIp);
+            LogSubscriberExited(clientIp, clientName);
         }
 
-        [LoggerMessage(1, LogLevel.Information, "Radio subscriber entered. Client IP = {Peer}")]
-        private partial void LogSubscriberEntered(string peer);
-        [LoggerMessage(2, LogLevel.Information, "Radio subscriber exited. Client IP = {Peer}")]
-        private partial void LogSubscriberExited(string peer);
+        [LoggerMessage(1, LogLevel.Information, "Radio subscriber entered. Client IP = {Peer}, Client Name = {ClientName}")]
+        private partial void LogSubscriberEntered(string peer, string clientName);
+        [LoggerMessage(2, LogLevel.Information, "Radio subscriber exited. Client IP = {Peer}, Client Name = {ClientName}")]
+        private partial void LogSubscriberExited(string peer, string clientName);
 
         /// <summary>
         /// Writes the ANT response update to the stream.
@@ -48,12 +51,15 @@ namespace AntPlusServer.Services
             catch (Exception e)
             {
                 // Handle any errors caused by broken connection, etc.
-                LogFailedToWriteRadioResponse(e, context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer);
+                string clientIp = context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer;
+                // get client name from client IP address from DNS reverse lookup
+                string clientName = Dns.GetHostEntry(clientIp).HostName;
+                LogFailedToWriteRadioResponse(e, clientIp, clientName);
             }
         }
 
-        [LoggerMessage(3, LogLevel.Error, "Failed to write radio response to stream. Client IP = {Peer}")]
-        private partial void LogFailedToWriteRadioResponse(Exception e, string peer);
+        [LoggerMessage(3, LogLevel.Error, "Failed to write radio response to stream. Client IP = {Peer}, Client Name = {ClientName}")]
+        private partial void LogFailedToWriteRadioResponse(Exception e, string peer, string clientName);
 
         /// <summary>
         /// This task completes when the connection is closed by the client.
