@@ -4,8 +4,6 @@ using AntPlusMauiClient.Pages;
 using AntPlusMauiClient.ViewModels;
 using AntPlusMauiClient.Views;
 using CommunityToolkit.Maui;
-using Grpc.Net.Client;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using SmallEarthTech.AntPlus.Extensions.Hosting;
 using SmallEarthTech.AntRadioInterface;
@@ -32,6 +30,7 @@ namespace AntPlusMauiClient
                 });
 
             builder.Logging.AddSerilog(new LoggerConfiguration()
+                .Enrich.WithProperty("DeviceName", DeviceInfo.Name)
                 .MinimumLevel.Debug()
                 .WriteTo.Debug(outputTemplate:
                     "[{Timestamp:HH:mm:ss} {Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}"
