@@ -77,10 +77,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="GrpcServices\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\AntGrpc.Shared\AntGrpc.Shared.csproj" />
 	</ItemGroup>
 

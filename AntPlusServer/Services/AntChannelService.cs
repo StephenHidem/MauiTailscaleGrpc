@@ -11,9 +11,10 @@ namespace AntPlusServer.Services
     {
         public override async Task Subscribe(SubscribeRequest request, IServerStreamWriter<ChannelResponseUpdate> responseStream, ServerCallContext context)
         {
+            // get client IP address from request headers or context
             string clientIp = context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer;
-            // get client name from client IP address from DNS reverse lookup
-            string clientName = Dns.GetHostEntry(clientIp).HostName;
+            // get client name from request headers or default to "Unknown" if not available
+            string clientName = context.RequestHeaders.GetValue("x-client-name") ?? "Unknown";
             LogSubscriberEntered((int)request.ChannelNumber, clientIp, clientName);
             using IAntChannelSubscriber subscriber = subscriberFactory.CreateAntChannelSubscriber(antRadio.GetChannel((int)request.ChannelNumber));
 

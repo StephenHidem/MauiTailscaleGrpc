@@ -4,6 +4,7 @@ using AntCryptoGrpcService;
 using AntRadioGrpcService;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
+using Grpc.Core.Interceptors;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Logging;
 using SmallEarthTech.AntRadioInterface;
@@ -28,6 +29,7 @@ namespace AntPlusMauiClient.GrpcServices
         private readonly GrpcChannelOptions _grpcChannelOptions = grpcChannelOptions ?? new GrpcChannelOptions();
         private gRPCAntRadio.gRPCAntRadioClient? _client;
         private GrpcChannel? _grpcChannel;
+        private CallInvoker? _callInvoker;
 
         /// <summary>
         /// Gets a UriBuilder configured for the ANT+ service endpoint.
@@ -73,8 +75,10 @@ namespace AntPlusMauiClient.GrpcServices
         {
             try
             {
+                // add custom headers to the gRPC channel for client identification
                 _grpcChannel = GrpcChannel.ForAddress(UriBuilder.Uri, _grpcChannelOptions);
-                _client = new gRPCAntRadio.gRPCAntRadioClient(_grpcChannel);
+                _callInvoker = _grpcChannel.Intercept(new ClientNameInterceptor());
+                _client = new gRPCAntRadio.gRPCAntRadioClient(_callInvoker);
 
                 // get properties from server
                 PropertiesReply reply = await _client.GetPropertiesAsync(new Empty(), cancellationToken: _cancellationToken);
@@ -83,9 +87,9 @@ namespace AntPlusMauiClient.GrpcServices
                 Version = reply.Version;
 
                 // create other service clients
-                _control = new gRPCAntControl.gRPCAntControlClient(_grpcChannel);
-                _config = new gRPCAntConfiguration.gRPCAntConfigurationClient(_grpcChannel);
-                _crypto = new gRPCAntCrypto.gRPCAntCryptoClient(_grpcChannel);
+                _control = new gRPCAntControl.gRPCAntControlClient(_callInvoker);
+                _config = new gRPCAntConfiguration.gRPCAntConfigurationClient(_callInvoker);
+                _crypto = new gRPCAntCrypto.gRPCAntCryptoClient(_callInvoker);
 
                 // subscribe to radio response updates
                 HandleRadioResponseUpdates(_cancellationToken);
@@ -142,7 +146,7 @@ namespace AntPlusMauiClient.GrpcServices
         public IAntChannel GetChannel(int num)
         {
             _ = _client!.GetChannel(new GetChannelRequest { ChannelNumber = (byte)num });
-            return ActivatorUtilities.CreateInstance<AntChannelService>(services, (byte)num, _grpcChannel!);
+            return ActivatorUtilities.CreateInstance<AntChannelService>(services, (byte)num, _callInvoker!);
         }
 
         /// <inheritdoc/>
@@ -164,7 +168,7 @@ namespace AntPlusMauiClient.GrpcServices
             AntChannelService[] channels = new AntChannelService[reply.NumChannels];
             for (byte i = 0; i < reply.NumChannels; i++)
             {
-                channels[i] = ActivatorUtilities.CreateInstance<AntChannelService>(services, i, _grpcChannel);
+                channels[i] = ActivatorUtilities.CreateInstance<AntChannelService>(services, i, _callInvoker!);
             }
             channels[0].HandleChannelResponseUpdates(_cancellationToken);
             return channels;

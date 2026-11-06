@@ -19,7 +19,8 @@ builder.Services.AddSingleton<IAntChannelSubscriberFactory, AntChannelSubscriber
 
 builder.Host.UseSerilog((context, services, configuration) => configuration
     .ReadFrom.Configuration(context.Configuration)
-    .ReadFrom.Services(services));
+    .ReadFrom.Services(services)
+    .Enrich.WithProperty("Server", Environment.MachineName));
 var app = builder.Build();
 
 try

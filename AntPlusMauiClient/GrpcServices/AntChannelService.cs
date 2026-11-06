@@ -21,7 +21,7 @@ namespace AntPlusMauiClient.GrpcServices
     /// <param name="logger">The logger instance.</param>  
     /// <param name="channelNumber">The channel number.</param>  
     /// <param name="grpcChannel">The gRPC channel.</param>  
-    public partial class AntChannelService(ILogger<AntChannelService> logger, byte channelNumber, GrpcChannel grpcChannel) : IAntChannel
+    public partial class AntChannelService(ILogger<AntChannelService> logger, byte channelNumber, CallInvoker grpcChannel) : IAntChannel
     {
         private readonly gRPCAntChannel.gRPCAntChannelClient _client = new(grpcChannel);
 

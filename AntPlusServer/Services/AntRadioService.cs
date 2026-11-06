@@ -14,9 +14,10 @@ namespace AntPlusServer.Services
 
         public override async Task Subscribe(Empty request, IServerStreamWriter<AntResponseReply> responseStream, ServerCallContext context)
         {
+            // get client IP address from request headers or context
             string clientIp = context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer;
-            // get client name from client IP address from DNS reverse lookup
-            string clientName = Dns.GetHostEntry(clientIp).HostName;
+            // get client name from request headers or default to "Unknown" if not available
+            string clientName = context.RequestHeaders.GetValue("x-client-name") ?? "Unknown";
             LogSubscriberEntered(clientIp, clientName);
             using IAntRadioSubscriber subscriber = subscriberFactory.CreateAntRadioSubscriber(antRadio);
 
@@ -52,8 +53,8 @@ namespace AntPlusServer.Services
             {
                 // Handle any errors caused by broken connection, etc.
                 string clientIp = context.RequestHeaders.GetValue("x-forwarded-for") ?? context.Peer;
-                // get client name from client IP address from DNS reverse lookup
-                string clientName = Dns.GetHostEntry(clientIp).HostName;
+                // get client name from request headers or default to "Unknown" if not available
+                string clientName = context.RequestHeaders.GetValue("x-client-name") ?? "Unknown";
                 LogFailedToWriteRadioResponse(e, clientIp, clientName);
             }
         }
