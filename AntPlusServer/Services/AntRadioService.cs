@@ -8,6 +8,15 @@ using System.Text;
 
 namespace AntPlusServer.Services
 {
+    /// <summary>
+    /// Provides gRPC operations for discovering, configuring, and communicating with
+    /// an ANT radio device.
+    /// </summary>
+    /// <param name="logger">The logger used to record subscriber and response-stream events.</param>
+    /// <param name="antRadio">The ANT radio interface used to communicate with the device.</param>
+    /// <param name="subscriberFactory">
+    /// The factory used to create subscribers for receiving asynchronous ANT radio responses.
+    /// </param>
     public partial class AntRadioService(ILogger<AntRadioService> logger, IAntRadio antRadio, IAntRadioSubscriberFactory subscriberFactory) : gRPCAntRadio.gRPCAntRadioBase
     {
         public static IAntChannel[] AntChannels { get; private set; } = [];

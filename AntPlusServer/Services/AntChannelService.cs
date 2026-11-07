@@ -7,6 +7,14 @@ using System.Net;
 
 namespace AntPlusServer.Services
 {
+    /// <summary>
+    /// This service provides gRPC methods for interacting with ANT channels. It allows clients to subscribe
+    /// to channel updates, assign and configure channels, send data, and manage channel settings. The service
+    /// uses the ANT radio interface to communicate with the underlying hardware.
+    /// </summary>
+    /// <param name="logger">The logger instance for logging information and errors.</param>
+    /// <param name="antRadio">The ANT radio interface for interacting with ANT hardware.</param>
+    /// <param name="subscriberFactory">The factory for creating ANT channel subscribers.</param>
     public partial class AntChannelService(ILogger<AntChannelService> logger, IAntRadio antRadio, IAntChannelSubscriberFactory subscriberFactory) : gRPCAntChannel.gRPCAntChannelBase
     {
         public override async Task Subscribe(SubscribeRequest request, IServerStreamWriter<ChannelResponseUpdate> responseStream, ServerCallContext context)
