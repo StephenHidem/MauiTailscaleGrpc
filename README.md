@@ -18,7 +18,24 @@ boxes - free with a decent feature set, simple setup/administration, and secure.
 the gates to just any hacker or script kiddie.
 
 I set up Tailscale on my home computer and my phone, and I was able to connect to my home network, aka
-tailnet. This was great, but I needed a way to interact with my ANT+ sensors over Tailscale.
+tailnet. This allowed me to connect to the gRPC server running on my home computer from my phone, and I could interact with the ANT+ sensors I was simulating.
+
+Then the bane of any developer's existence struck - <b>scope creep</b>.
+What I wanted to do was expose a service on my tailnet that clients could connect to. This would allow me to define the server as a Tailscale service, and I could connect to it from my phone without the client specifying the machine the server was running on. This would allow me to run the server on any machine in my tailnet, and the client would still be able to connect to it.
+
+Secondly, I wanted a logging dashboard to monitor the client/server interactions. My libraries and the application use structured logging, so Serilog with Seq was the obvious choice. I wanted to run Seq in a docker container, and I wanted to expose it as a Tailscale service as well.
+
+## Docker to the Rescue
+
+Tailscale services require a tag-based identity for the host machine. I didn't want to use a tag for my home computer, so I created a docker container that runs the Tailscale service and connects to my tailnet. This allows the gRPC server to communicate with the MAUI client application over the Tailscale service.
+
+The `DockerTailscale/docker-compose.yml` file defines two services: a Tailscale container that provides the tagged tailnet identity and serves the configured Tailscale services, and a Seq container that provides the structured logging dashboard. Seq depends on the Tailscale container’s health status and persists its data locally. Both services restart automatically and have resource limits and health checks configured.
+
+The `DockerTailscale/.env` file contains environment variables for the Docker containers. I use this file to store sensitive information such as the Tailscale authentication key and Seq admin password. The `.env` file is not included in the repository for security reasons, so you will need to create your own `.env` file with the appropriate values. 'DockerTailscale/.env.example' is provided as a template for creating your own `.env` file.
+
+The `DockerTailscale/serve-config.json` file configures the Tailscale service and its reverse proxies. HTTPS traffic on port 443 is forwarded to the local gRPC server at `host.docker.internal:5073`, while HTTP traffic on ports 80 and 5341 is forwarded to the Seq logging service.
+
+The Seq logging dashboard is accessible at `http://localhost:5341` or `http://<tailscale-service-name>:5341` from any device connected to the tailnet.
 
 ## AntGrpc.Shared Project
 
@@ -26,9 +43,9 @@ gRPC is a modern, high-performance framework for remote procedure calls. It uses
 and Protocol Buffers as the interface description language. gRPC is well-suited for connecting and
 communicating between distributed systems.
 
-The AntGrpc.Shared project contains the Protocol Buffer definitions and generates code for both the
-server and client applications. It defines the services and messages used for communication between
-the gRPC server and the MAUI client application.
+The AntGrpc.Shared project contains the Protocol Buffer definitions. The project is configured to generate client only code for the MAUI client application and it's linked as a project reference in the AntPlusMauiClient project.
+
+The server-side code is generated in the AntPlusServer project. The Protocol Buffer definitions are copied to the AntPlusServer project.
 
 ## ANT+ Server Project
 
@@ -52,24 +69,9 @@ functionality to communicate with ANT+ devices.
 
 ### Client App Configuration
 
-The MAUI client application is configured to connect to the gRPC server using the Tailscale service name. This allows the app to
-communicate securely with the server over the Tailscale network, without needing to expose any ports or configure firewalls.
-The application can also be configured to connect to the server using its IP address and port, but using the Tailscale service
-name is more convenient and secure. The localhost configuration is also available for testing purposes when running the server
-and client on the same machine. See the #define directive at the top of AntRadioService.cs for more details.
+The MAUI client application is configured to connect to the gRPC server using the Tailscale service name. This allows the app to communicate securely with the server over the Tailscale network, without needing to expose any ports or configure firewalls. The application can also be configured to connect to the server using its machine name and port, but using the Tailscale service name is more convenient. The localhost configuration is also available for testing purposes when running the server and client on the same machine.
 
-## Tailscale
-
-I've added my phone and my PC to my tailnet per [Tailscale documentation](https://tailscale.com/docs/features/access-control/device-management).
-I also created a docker container that serves as the host for the Tailscale service I've defined. The reason for this is that
-a tag based identity is required for Tailscale service hosts, and I didn't want to add a tag to my home computer. The container
-is configured to run the Tailscale service and connect to my tailnet using the Tailscale CLI. This allows the gRPC server to
-communicate with the MAUI client application over the Tailscale network. See [Use Docker Compose](https://tailscale.com/docs/features/containers/docker/how-to/connect-docker-container).
-
-## Docker
-
-I create the docker container from a simple docker-compose.yml file. I execute docker `compose up -d` from a terminal command line at
-the same directory level that the compose file is located in.
+Build->Configuration->AntPlusMauiClient options allow you to select machine, tailscale service, or localhost configuration. The debug and release project configruations will use localhost.
 
 ## Supporting Documents
 

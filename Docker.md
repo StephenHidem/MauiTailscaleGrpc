@@ -1,5 +1,7 @@
 # Create Docker Container
 
+<b>Note: I'm just keeping this section here for reference.</b>
+
 [Connect a Docker container to your tailnet with Docker Compose · Tailscale Docs](https://tailscale.com/docs/features/containers/docker/how-to/connect-docker-container)
 
 Once you have your Tailscale Service set up, you can connect a Docker container to your tailnet using Docker Compose. Here's how you can do it:
