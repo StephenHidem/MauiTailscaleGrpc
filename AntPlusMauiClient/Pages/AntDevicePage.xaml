@@ -14,10 +14,10 @@
                    HeightRequest="60"
                    Grid.Column="0"
                    Grid.RowSpan="2"/>
-            <Label Text="{Binding SelectedDevice}" FontSize="Title" VerticalOptions="Center"
+            <Label Text="{Binding SelectedDevice}" FontSize="24" VerticalOptions="Center"
                    Grid.Column="1"
                    Grid.Row="0"/>
-            <Label Text="{Binding SelectedDevice.ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}" FontSize="Subtitle" VerticalOptions="Center"
+            <Label Text="{Binding SelectedDevice.ChannelId.DeviceNumber, StringFormat='Device Number - {0}'}" FontSize="18" VerticalOptions="Center"
                    Grid.Column="1"
                    Grid.Row="1"/>
         </Grid>

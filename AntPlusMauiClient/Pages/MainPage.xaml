@@ -17,20 +17,20 @@
                         <Image Grid.Row="1" Grid.RowSpan="3" Source="antplus.png" Aspect="AspectFit" HeightRequest="48" Margin="16" VerticalOptions="Start" SemanticProperties.Description="ant plus server" />
 
                         <VerticalStackLayout Grid.ColumnSpan="2" Margin="16,16,0,0" >
-                            <Label Text="ANT+ Server" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{x:Static pm:MainPageModel.ServerUrl}" FontSize="Default" Margin="24, 0"/>
+                            <Label Text="ANT+ Server" FontSize="12" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Label Text="{x:Static pm:MainPageModel.ServerUrl}" FontSize="14" Margin="24, 0"/>
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1" Grid.Row="1">
-                            <Label Text="Product Description" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{Binding ProductDescription}" FontSize="Default" Margin="24, 0"/>
+                            <Label Text="Product Description" FontSize="12" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Label Text="{Binding ProductDescription}" FontSize="14" Margin="24, 0"/>
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1" Grid.Row="2">
-                            <Label Text="Serial Number" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{Binding SerialNumber}" FontSize="Default" Margin="24, 0"/>
+                            <Label Text="Serial Number" FontSize="12" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Label Text="{Binding SerialNumber}" FontSize="14" Margin="24, 0"/>
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1" Grid.Row="3" Margin="0,0,0,16">
-                            <Label Text="Host Version" FontSize="Caption" Style="{StaticResource HeaderLabelStyle}"/>
-                            <Label Text="{Binding HostVersion}" FontSize="Default" Margin="24, 0"/>
+                            <Label Text="Host Version" FontSize="12" Style="{StaticResource HeaderLabelStyle}"/>
+                            <Label Text="{Binding HostVersion}" FontSize="14" Margin="24, 0"/>
                         </VerticalStackLayout>
                     </Grid>
                 </exp:SfExpander.Header>
@@ -63,7 +63,7 @@
             </exp:SfExpander>
         </Border>
 
-        <Label Text="ANT+ Devices" FontSize="Title" HorizontalOptions="Center" Grid.Row="1" Margin="0, 8, 0, 0"/>
+        <Label Text="ANT+ Devices" FontSize="24" HorizontalOptions="Center" Grid.Row="1" Margin="0, 8, 0, 0"/>
         <BoxView HeightRequest="2" HorizontalOptions="Fill" Grid.Row="2" Margin="0,0,0,8"/>
 
         <CollectionView x:Name="antDevices" Grid.Row="3" ItemsSource="{Binding AntDevices}"
@@ -91,7 +91,7 @@
                HorizontalOptions="Center" VerticalOptions="Center">
             <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
                 <ActivityIndicator IsRunning="{Binding IsBusy}" Color="SteelBlue" WidthRequest="50" HeightRequest="50"/>
-                <Label Text="Connecting..." TextColor="Black" FontSize="Medium" HorizontalOptions="Center"/>
+                <Label Text="Connecting..." TextColor="Black" FontSize="17" HorizontalOptions="Center"/>
             </VerticalStackLayout>
         </Border>
     </Grid>

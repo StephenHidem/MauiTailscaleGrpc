@@ -27,11 +27,11 @@
                                 <Border>
                                     <exp:SfExpander>
                                         <exp:SfExpander.Header>
-                                            <Label Text="{Binding Index, StringFormat='Index {0}'}" FontAttributes="Bold" FontSize="Medium" Padding="10,0"/>
+                                            <Label Text="{Binding Index, StringFormat='Index {0}'}" FontAttributes="Bold" FontSize="17" Padding="10,0"/>
                                         </exp:SfExpander.Header>
                                         <exp:SfExpander.Content>
                                             <VerticalStackLayout Padding="10">
-                                                <Label Text="{Binding Name, StringFormat='Name: {0}'}" FontAttributes="Bold" FontSize="Medium"/>
+                                                <Label Text="{Binding Name, StringFormat='Name: {0}'}" FontAttributes="Bold" FontSize="17"/>
                                                 <Label Text="{Binding Bearing, StringFormat='Bearing: {0}'}"/>
                                                 <HorizontalStackLayout Spacing="16">
                                                     <Label Text="{Binding Color, StringFormat='Color: {0}'}"/>
