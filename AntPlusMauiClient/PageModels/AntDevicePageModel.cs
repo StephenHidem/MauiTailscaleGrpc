@@ -38,7 +38,7 @@ namespace AntPlusMauiClient.PageModels
         private readonly ILogger<AntDevicePageModel> _logger;
 
         [ObservableProperty]
-        public partial AntDevice? Device { get; set; }
+        public partial AntDevice? SelectedDevice { get; set; }
 
         [ObservableProperty]
         public partial ContentView? AntDeviceView { get; set; }
@@ -58,21 +58,21 @@ namespace AntPlusMauiClient.PageModels
                 _logger.LogWarning("AntDevice query parameter is missing or invalid.");
                 return;
             }
-            Device = device;
+            SelectedDevice = device;
 
             // Determine the ViewModel and View types based on the device type
-            var deviceType = Device.GetType();
+            var deviceType = SelectedDevice.GetType();
             var (viewModelType, contentViewType) = DeviceViewMap.GetValueOrDefault(deviceType, (typeof(UnknownDeviceViewModel), typeof(UnknownDeviceView)));
 
             try
             {
-                var viewModelInstance = ActivatorUtilities.CreateInstance(_serviceProvider, viewModelType, Device);
+                var viewModelInstance = ActivatorUtilities.CreateInstance(_serviceProvider, viewModelType, SelectedDevice);
                 AntDeviceView = (ContentView)ActivatorUtilities.CreateInstance(_serviceProvider, contentViewType, viewModelInstance);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error creating view for device type {DeviceType}", deviceType.Name);
-                var fallbackViewModel = ActivatorUtilities.CreateInstance(_serviceProvider, typeof(UnknownDeviceViewModel), Device);
+                var fallbackViewModel = ActivatorUtilities.CreateInstance(_serviceProvider, typeof(UnknownDeviceViewModel), SelectedDevice);
                 AntDeviceView = (ContentView)ActivatorUtilities.CreateInstance(_serviceProvider, typeof(UnknownDeviceView), fallbackViewModel);
             }
         }
